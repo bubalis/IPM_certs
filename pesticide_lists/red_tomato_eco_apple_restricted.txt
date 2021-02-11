@@ -1,0 +1,48 @@
+spinetoram
+chlorpyrifos
+afidopyropen
+chlorantraniliprole
+cyantraniliprole
+cyclaniliprole
+thiamethoxam
+acetamiprid
+clothianidin
+imidacloprid
+bifenthrin
+beta-cyfluthrin
+fenpropathrin
+dinotefuran
+lambda-cyhalothrin
+streptomycin sulfate
+kasugamycin
+copper hydroxide
+copper oxychloride
+copper hydroxide
+benzovindiflupyr
+penthiopyrad
+fluopyram
+trifloxystrobin
+fluxapyroxad, 
+pyraclostrobin
+pydiflumetofen
+fluxapyroxad
+trifloxystrobin
+boscalid
+pyraclostrobin
+kresoxim-methyl
+fenbuconazole
+cyprodinil, 
+difenoconazole
+fenarimol
+triflumizole
+myclobutanil
+flutriafol
+mefentrifluconazole
+paraquat dichloride
+clethodim
+simazine
+terbacil
+2,4-D
+diphenylamine
+ethephon
+carbaryl

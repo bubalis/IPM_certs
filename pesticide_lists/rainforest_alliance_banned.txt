@@ -1,0 +1,137 @@
+Acrolein
+Alachlor
+Aldicarb
+alpha-BHC alpha-HCH
+Alpha-chlorohydrin
+Aluminum phosphide
+Anthracene oil
+Arsenic and its compounds
+Atrazine
+Azafenidin
+Azinphos-ethyl
+Azinphos-methyl
+Benomyl
+Beta-cyfluthrin
+Cyfluthrin
+beta-HCH 
+beta-BCH
+Blasticidin-S
+Borax disodium
+tetraborate
+decahydrate
+Boric acid
+Brodifacoum
+Bromadiolone
+Bromethalin
+Butoxycarboxim
+Cadusafos
+Captafol
+Carbendazim
+Carbofuran
+Chlordane
+Chlorethoxyphos
+Chlorfenvinphos
+Chlormephos
+Chlorophacinone
+Clothianidin
+Coumaphos
+Coumatetralyl
+Creosote
+DDT
+Demeton-S-methyl
+Dichlorvos DDVP
+Dicrotophos
+Difenacoum
+Difethialone
+Dinocap
+Dinoterb
+Diphacinone
+Disulfoton
+DNOC and its salts
+Edifenphos
+Endosulfan
+Endosulfan I (alpha)
+E-Phosphamidon
+Epichlorohydrin
+EPN
+Epoxiconazole
+Ethiofencarb
+Ethoprophos Ethoprop
+Ethylene dibromide
+1,2-dibromoethane
+Ethylene dichloride 
+1,2-Dichloroethane
+Ethylene oxide
+Ethylene thiourea
+Famphur
+Fenamiphos
+Fenchlorazole-ethyl
+Fipronil
+Flocoumafen
+Fluazifop-butyl
+Flucythrinate
+Flumioxazin
+Fluoroacetamide
+Flusilazole
+Formetanate
+Furathiocarb
+Glufosinate-ammonium
+Heptenophos
+Hexachlorobenzene
+alpha-hch
+beta-hch
+BHC mixed isomers
+Imidacloprid
+Isoxathion
+Lindane
+Linuron
+Magnesium phosphide
+Mecarbam
+Mercury and its compounds
+Methamidophos
+Methidathion
+Methiocarb
+Methomyl
+Methyl bromide
+Mevinphos
+Monocrotophos
+Nicotine
+Nitrobenzene
+Omethoate
+Oxamyl
+Oxydemeton-methyl
+Paraquat dichloride
+Parathion
+Parathion-methyl
+Pentachlorphenol
+Pentachlorobenzene
+Phorate
+Phosphamidon
+Phosphine
+Propetamphos
+Propylene oxide
+Oxirane
+Quizalofop-p-tefuryl
+Silafluofen
+Sodium fluoroacetate
+Strychnine
+Sulfluramid
+Sulfotep
+Tebupirimifos
+Tefluthrin
+Terbufos
+Thiamethoxam
+Thiofanox
+Thiometon
+Thiram
+Triazophos
+Trichlorfon
+metrifonato
+Tridemorph
+Triflumizole
+Vamidothion
+Vinclozolin
+Warfarin
+zeta-Cypermethrin
+Zinc phosphide
+Z-Phosphamidon

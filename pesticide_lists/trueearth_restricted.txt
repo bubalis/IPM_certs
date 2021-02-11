@@ -1,0 +1,53 @@
+chlorpyrifos
+cyclaniliprole
+chlorantraniliprole
+spinetoram
+cyantraniliprole
+Lorsba
+Verdepryn
+afidopyropen
+trifloxystrobin
+boscalid,pyraclostrobin
+kresoxim-methyl
+Ceyv
+fenbuconazole
+mefentrifluconazole
+thiamethoxam
+acetamiprid
+clothianidin
+imidacloprid
+streptomycin sulfate
+kasugamycin
+copper hydroxide,copper oxychloride
+copper hydroxide
+benzovindiflupyr
+penthiopyrad
+fluopyram,trifloxystrobin
+fluxapyroxad,pyraclostrobin
+Miravi
+thiamethoxam
+acetamiprid
+clothianidin
+imidacloprid
+streptomycin sulfate
+kasugamycin
+copper hydroxidecopper oxychloride
+copper hydroxide
+benzovindiflupyr
+penthiopyrad
+fluopyramtrifloxystrobin
+fluxapyroxad,pyraclostrobin
+Miravi
+cyprodinildifenoconazole
+fenarimol
+triflumizole
+myclobutanil
+flutriafol
+paraquat dichloride
+clethodim
+terbacil
+2,4-D
+diphenylamine
+ethephon
+carbaryl
+pydiflumetofen

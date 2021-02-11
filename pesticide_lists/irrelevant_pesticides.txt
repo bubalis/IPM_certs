@@ -1,0 +1,40 @@
+2,4,5-T 
+Chlorobenzilate 
+Nitrofen (TOK)
+2,4,5-TCP 
+DBCP 
+Octamethylpyrophosphoramide
+OMPA
+2,3,4,5-Bistetrahydro2-furaldehyde
+Dieldrin 
+PCB
+Polychlorinated biphenyls (except mono- and dichlorinated)
+Aldrin 
+Dinoseb
+Dinoseb and its salts
+Safrole
+Benzene hexachloride 
+Endrin 
+Silvex
+Binapacryl
+Ethyl hexyleneglycol (6-12) 
+Strobane 
+Terpene polychlorinates
+Cadmium
+Ethylene dibromide 
+EDB
+TDE
+Carbon tetrachloride 
+Ethylene dichloride 
+EDC
+Thallium sulfate
+Chloranil 
+Heptachlor 
+Toxaphene 
+camphechlor
+Chlordecone 
+kepone 
+Leptophos 
+Vinyl chloride
+Chlordimeform 
+Mirex

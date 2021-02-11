@@ -1,0 +1,49 @@
+2,4,5-T
+Alachlor
+Aldicarb
+Aldrin
+Alpha-BHC 
+Alpha-HCH
+Azinphos-methyl
+Beta hexachlorocyclohexane
+Binapacryl
+Brodifacoum
+Bromadiolone
+Bromethalin
+Calcium cyanide
+Captafol
+Chlordane
+Chlordecone
+Chlordimeform
+Chlorethoxyphos
+Chlormephos
+Chlorobenzilate
+Chlorophacinone
+DDT
+Dieldrin
+Difenacoum
+Difethialone
+Dinoseb 
+Diphacinone
+Disulfoton
+Dinitro-ortho-cresol
+Parathion-methyl 
+Methyl-parathion
+Pentachlorobenzene
+Pentachlorophenol 
+Perfluorooctane sulfonic acid
+perfluorooctane sulfonyl fluoride
+Phenylmercury acetate
+Phorate
+Phosphamidon 
+Polychlorinated biphenyls 
+Polychlorinated naphthalenes
+Sodium Fluoroacetate
+Sulfotep
+Tebupirimifos
+Terbufos
+Tetrabromodiphenyl ether
+pentabromodiphenyl ether
+Toxaphene 
+Camphechlor
+Tributyltin

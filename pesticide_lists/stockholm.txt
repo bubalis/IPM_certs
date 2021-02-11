@@ -1,0 +1,24 @@
+Aldrin
+alpha-hch
+beta-hch
+Chlordane
+Chlordecone
+Decabromodiphenyl ether
+DDT
+Dicofol
+Dieldrin
+Endosulfan
+Endrin
+Heptachlor
+Hexabromobiphenyl
+Hexabromocyclododecane
+Hexabromdiphenylether
+Heptabromdiphenylether
+Hexachlorobenzene
+Hexachlorobutadiene
+Lindane
+Mirex
+Pentachlorobenzene
+Pentachlorophenol
+Perfluorooctanoic acid (PFOA), its salts and PFOA-related compounds
+Perfluorooctane sulfonic acid (PFOS), its salts and perfluorooctane sulfonyl fluoride

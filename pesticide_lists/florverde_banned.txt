@@ -1,0 +1,91 @@
+1,2-Dibromo-3-Chloropropane (DBCP)
+1,2-Dibromoethane Ethylene Dibromide (EDB)
+1,2-Dichloroethane Ethylene Dichloride (EDC)
+2,3,4,5-Bis (2-Butylene) Tetrahydro-2-Furaldehyde
+2,4,5-Trichlorophenol
+2,4,5-T
+2,4,5-Trichlorophenoxyacetic Acid 
+2,4-D, Isooctyl Ester
+4,6-Dinitro-O-Cresol
+Alachlor
+Aldicarb
+Aldrin
+Arsenic Oxide (3)
+Azinphos Methyl
+Azodrin
+Benomylo
+Binapacryl
+Bromoxynil Butyrate
+Cadmium Compounds
+Calcium Arsenate
+Captafol
+Carbofuran
+Carbon Tetrachloride
+Chloranil
+Chlordane
+Chlordecone
+Chlordimeform
+Chlorobenzilate
+Chloromethoxypropylmercuric Acetate 
+Copper Arsenate
+Dichloro Diphenyl Dichloroethane
+Dichloro Diphenyl Trichloroethane
+Di(Phenylmercury)Dodecenylsuccinate 
+Dicofol
+Dieldrin
+Dinitrobutyl Phenol
+Dinitro-Ortho-Cresol
+Dinoseb, Its Acetate And Salts
+Endosulfan
+Endrin
+Ethyl P-Nitrophenyl Thio-Phosphonate
+Ethyl Hexylene glycol 
+Ethylene Dichloride
+Ethylene Oxide
+Fluoroacetamide
+Fonofos
+Fosfamidon Formulación Líquida Soluble
+Gamma-Lindane
+Heptachlor
+Hexachlorobenzene
+Hexachlorociclohexane
+Inorganic Mercury Compounds
+Isobenzan
+Lead Arsenate
+Leptophos
+Lindano 
+1,2,3,4,5,6-Hexachlorocyclohexane
+Maneb
+Melipax
+Mercuric Oxide
+Mercurous Chloride
+Methamidofos
+Methyl Bromide
+Methyl Parathion
+Mevinphos
+Dodecacloro
+Monocrotophos
+Nitrofen
+Octamethylpyrophosphoramide
+Paraquat
+Parathion
+Pentachlorophenol
+Phenylmercuric Oleate
+Phenylmercury Acetate
+Potassium 2,4,5-Trichlorophenate 
+2,4,5 TCP
+Phosphamidon 
+Pyriminil
+Safrole
+2,4,5-Trichlorophenoxy P Acid 
+Sodium Arsenate
+Sodium Arsenite
+Triethylene Glycol Diglycidyl Ether
+Terpene Polychlorinates 
+Thallium Sulfate
+Toxaphene 
+Camphechlor
+Tributyltin Compounds
+Vinyl Chloride
+Zineb
+

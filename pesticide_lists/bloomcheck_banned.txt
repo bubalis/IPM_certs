@@ -1,0 +1,49 @@
+acephate
+acetamiprid
+allethrin
+amitrole
+azinphos methyl
+borax 
+disodium tetraborate decahydrate
+boric acid
+cadusafos
+carbaryl
+carbendizum
+carbofuran
+chlorpyrifos
+chlorpyrifos methyl
+clothianidin
+demeton (demeton s-methyl)
+diazinon
+dichlorvos (ddvp)
+dicofol
+dimethoate
+disulfoton
+endosulfan
+ethoprop
+fenamiphos
+fenitrothion
+fenvalerate
+fipronil
+hexachlorobenzene
+imidacloprid
+lindane
+methamidophos
+methomyl
+methyl parathion
+monocrotophos
+omethoate
+oxamyl
+oxydemeton methyl
+parathion ethyl
+pentachlorophenol
+phorate
+phosmet
+phosphine
+profenofos
+propetamphos
+resmethrin
+sumithrin (phenothrin)
+thiacloprid
+thiamethoxam
+thiazopyr
