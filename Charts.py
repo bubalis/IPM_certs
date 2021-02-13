@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
+"""
+@author: bdube
 
-# In[1]:
-
+This script generates charts for analyzing the data of certifications.
+"""
 
 import os
 import csv
@@ -11,6 +11,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import json
+from collections import OrderedDict
 
 
 charts_dir='figures'
@@ -48,22 +49,30 @@ def multi_remove(string, pieces):
     return string
 
 def column_switcher(row, old_col, new_col, string):
+    '''Move data in row that contains {string} from old_col
+    to new_col.'''
+    
     if str(string) in str(row[old_col]):
         pieces=[i for i in str(row[old_col]).split(',') if string in i]
-        print(str(row[old_col]))
+        #print(str(row[old_col]))
+        
         row[new_col]=' ,'.join(pieces) +' , '+str(row[new_col])
         row[old_col]=multi_remove(str(row[old_col]), pieces)
         
     return row
 
+
 def buffer_switcher(row): 
-    row=column_switcher(row, 'Agronomic Practices', 'Pesticide Practices', 'spray')
-    row=column_switcher(row, 'Agronomic Practices', 'Pesticide Practices', 'pesticides')
-    row=column_switcher(row, 'Agronomic Practices', 'Pesticide Practices', 'buffer zones')
+    '''Switch data from  Agronomic Practices to Pesticide Practices'''
+    for string in ['spray', 'pesticide', 'buffer']:    
+        row = column_switcher(row, 'Agronomic Practices', 
+                        'Pesticide Practices', string)
     return row
 
-def performance_switcher(row): 
-    row= column_switcher(row, 'Performance Standard', 
+def performance_switcher(row):
+    '''Change over data that contains "free" or
+    "vague" from performance to non-quantitative'''
+    row = column_switcher(row, 'Performance Standard', 
                            'Non-Quantitative Performance Standards', 
                           'vague')
     return column_switcher(row, 'Performance Standard', 
@@ -71,428 +80,13 @@ def performance_switcher(row):
                           'free')
 
 def threshold_fixer(row):
+    '''Make data for threshold column from Monitoring column
+    if the word threshold appears. '''
     if 'threshold' in row['Monitoring']:
         row['Threshold']=row['Monitoring']
     return row
 
 
-
-
-
-
-# In[7]:
-
-    
-
-df=pd.read_csv('all_data.csv')
-df.fillna('', inplace=True)
-df=df[df['CertName']!='Eco Apple Stonefruit']
-df['CertName']=df['CertName'].apply(ecoapple_fix)
-
-
-df=df.apply(buffer_switcher, axis=1)
-df=df.apply(performance_switcher, axis=1)
-df=df.apply(threshold_fixer, axis=1)
-
-
-
-
-
-df['MOA rotation']=df['Pesticide Practices'].str.contains('moa rotation')
-df['Sprayer Calibration']=df['Pesticide Practices'].str.contains('calibration')
-
-
-
-
-df['crop rotation']=df['Agronomic Practices'].str.contains('rotation')
-df['cover crop']=df['Agronomic Practices'].str.contains('cover crop')
-
-
-df['weather model']=df['Monitoring'].str.contains('dd model|weather model', regex=True)
-df['pesticide containers']=df['Materials/Waste Mgmt'].str.contains('containers')
-df['ppe']=df['Worker Safety'].str.contains('ppe')
-
-
-
-
-df=df[[c for c in df.columns if 'Unnamed' not in c]]
-columns=['CertName']+[c for c in df.columns if c!="CertName"]
-
-df=df[columns]
-
-
-# In[12]:
-
-
-df['requirement']=(df['Required/Core or Improvement'].str.lower()=='required') | (df['Required/Core or Improvement'].str.lower()=='level 2')
-df['scorecard']=(df['Required/Core or Improvement'].str.lower()=='scorecard') | (df['Required/Core or Improvement']=='C')
-df['improvement']=(df['Required/Core or Improvement'].str.lower()=='improvement') | (df['Required/Core or Improvement']=='B')
-
-
-
-counts=pd.concat([df[df.columns[:9]],df[df.columns[9:]].applymap(is_valid)], axis=1)
-counts=pd.concat([df[df.columns[:9]],df[df.columns[9:]].applymap(is_valid)], axis=1)
-gb=counts.groupby('CertName')
-
-data=gb.sum()
-data['total']=gb.count().max(axis=1)
-
-for column in data.columns[:-1]:
-    data[column]=data[column]/data['total']
-data.drop(columns='total', inplace=True)
-
-counts=gb.sum()
-
-results={}
-for column in data.columns:
-    results[column]=data[column].astype(bool).sum()
-    
-results
-
-
-
-
-
-struct=counts[['requirement', 'improvement', 'scorecard', 'Performance Standard']]
-
-
-
-# In[21]:
-
-
-prim_scorecard=struct[struct['requirement']<=3].index.to_list()
-
-
-prim_req=struct[(struct['scorecard']==0) & (struct['improvement']==0)].index.to_list()
-
-
-# In[23]:
-
-
-mixed=[i for i in struct.index if (i not in prim_scorecard) & (i not in prim_req)]
-
-
-# In[24]:
-
-
-for li in [prim_scorecard, prim_req, mixed]:
-    print(len(li))
-
-
-# In[25]:
-
-
-results=[len(li) for li in [prim_scorecard, prim_req, mixed]]
-plt.pie(results, labels=['Score Card', "Requirements", 'Mixed'])
-print(results)
-plt.title('Types of Certifications')
-plt.savefig(os.path.join(charts_dir, 'struct_pie.png'))
-plt.show()
-
-
-#classifiers of certificationsL
-single_commodity=['RTRS', 'CAFE', 'RSPO', 'LIVE', 'SIP', 'LODI Rules',
-       'FlorVerde', 'Red Tomato Eco Apple', 'Protected Harvest Citrus',
-       'BCI', 'BloomCheck', 'CMIA', 'HealthyGrown', 'TrueEarth']
-
-multi_commodity=[ 'Sustainable Food Group', 'Global GAPS', 'Food Alliance',
-       'Rainforest Alliance', 'Fair Trade USA', "UTZ"]
-
-regional_designation=['SIP', 'LODI Rules', 'BloomCheck', 
-                      'Red Tomato Eco Apple', 'HealthyGrown', 'LIVE', 'Protected Harvest Citrus', 'TrueEarth']
-
-global_south=['BCI', "CMIA", 'CAFE', 'RSPO', 'RTRS', 
-              'Fair Trade USA', 'Rainforest Alliance', 
-              "FlorVerde", 'Global GAPS', "UTZ"]
-
-domestic=['Sustainable Food Group',
-                       'Food Alliance']
-
-
-# In[ ]:
-
-
-
-
-
-
-def intersect_lists(l1, l2):
-    '''Return a list of elements that are in both l1 and l2'''
-    return list(set(l1).intersection(set(l2)))
-
-
-# In[31]:
-
-
-from itertools import combinations
-
-
-
-
-dom_single_com=intersect_lists(single_commodity, domestic)
-dom_multi_com=intersect_lists(multi_commodity, domestic)
-reg_single_com=intersect_lists(single_commodity, regional_designation)
-south_single_com=intersect_lists(single_commodity, global_south)
-south_multi_com=intersect_lists(multi_commodity, global_south)
-
-categories=[dom_multi_com, 
-            #dom_single_com, 
-            reg_single_com, 
-            south_single_com, 
-            south_multi_com]
-
-# In[33]:
-
-
-labels=['Domestic, Multi-Commodity', 
-        #'Domestic, Single-Commodity',
-        "Regional Designation, Single Commodity", 
-        'Global South, Single Commodity',
-       'Global South, Multi-Commodity']
-
-
-# In[34]:
-
-
-results=[len(li) for li in categories]
-plt.pie(results, labels=labels)
-print(results)
-plt.title('Types of Certifications in the Sample')
-plt.savefig(os.path.join(charts_dir, ))
-
-
-# In[35]:
-
-df=df[df['CertName']!='']
-re_index=[x for y in categories for x in y]
-print(re_index)
-
-# In[77]:
-
-
-def re_indexer(df):
-    '''Change the order of certs so that they are grouped by geo/commodity scope.'''
-    df=df.reset_index()
-    df=df[df['CertName']!='']
-    df['reindex_num']=df['CertName'].apply(lambda x: re_index.index(x)).to_list()
-    df=df.sort_values(by='reindex_num')
-    return df.drop(columns='reindex_num')
-
-
-
-# In[38]:
-
-
-counts=re_indexer(counts)
-data=re_indexer(data)
-
-
-
-
-# In[39]:
-
-
-
-
-commodities={'coffee': ['CAFE'], 
-            'potatoes': ['HealthyGrown'],
-            'flowers': ['FlorVerde', 'BloomCheck'],
-            'cotton': ['BCI', 'CMIA'],
-            'Palm Oil': ['RSPO'],
-            'wine/grapes':['LIVE', 'SIP', 'LODI Rules'],
-            'Citrus': ['Protected Harvest Citrus'],
-            'Apple/StoneFruit': ['Red Tomato Eco Apple', 'TrueEarth']}
-
-
-# In[42]:
-
-plt.close()
-results=[len(v) for v in commodities.values()]
-plt.pie(results, labels=commodities.keys())
-plt.title('Single Commodity Certifications')
-plt.savefig(os.path.join(charts_dir, 'cropspie.png'))
-
-
-
-# In[47]:
-category_colors=['salmon', 
-                 #'goldenrod',  
-                 'skyblue', 
-                 'palegreen', 
-                 'plum']
-
-colors=[]
-for cat, color in zip(categories, category_colors):
-    colors+=[color]*len(cat)
-labels=['US, Multi-Comm',
-#'US, Single-Comm',
-'Regional, 1-Comm',
- 'Low-Inc, 1-Comm',
-'Low-Inc, Multi-Comm']
-
-
-# In[50]:
-
-
-def uniq(inp):
-    '''Return a list of all unique values in iterable, while keeping order'''
-    output = []
-    for x in inp:
-        if x not in output:
-            output.append(x)
-    return output
-
-
-import matplotlib.patches as mpatches
-
-
-abbrv_dict={}
-for certName in re_index:
-    if len(certName)<5:
-        abbrv_dict[certName]=certName
-    elif certName in ['FlorVerde', 'HealthyGrown', 'Protected Harvest Citrus',
-                      'BloomCheck', 'TrueEarth', 'Sustainable Food Group',
-                      'Food Alliance', 'Fair Trade USA', 'Rainforest Alliance'
-                      ]:
-        abbrv_dict[certName]=''.join([c for c in certName if c.upper()==c and c])
-    else:
-        print(certName)
-
-abbrv_dict['Global GAPS']='GGAPS'
-abbrv_dict['LODI Rules']='LODI'
-abbrv_dict['Red Tomato Eco Apple']='EA'
-
-#%%
-abbrvs=[]
-for name in re_index:
-    abbrvs.append(abbrv_dict[name])
-
-
-
-#%%
-
-data['scorecard/improvement']=data['scorecard']+data['improvement']
-
-
-
-
-# In[767]:
-
-
-summary=pd.DataFrame(np.array([data[data.index.isin(cat)].astype(bool).mean() 
-                               for cat in categories]).T, 
-                     index=data.columns, columns=labels)
-
-
-summary['Category']=summary.index
-
-lf=summary.melt(id_vars='Category')
-
-
-# In[772]:
-
-
-lf.rename(columns={'value':'proportion', 'variable': "Cert Type"}, inplace=True)
-
-
-
-lf=lf[lf['Category'].str.contains('Applies')==False]
-
-
-
-
-lf1=lf.iloc[:6]
-
-
-
-'''
-lf1=lf[lf['Category'].isin(lf['Category'].unique()[:6])]
-sns.barplot(x='Category', y='proportion', hue='Cert Type', data=lf1)
-plt.xticks(rotation=90)
-
-
-# In[777]:
-
-
-lf2=lf[lf['Category'].isin(lf['Category'].unique()[6:12])]
-sns.barplot(x='Category', y='proportion', hue='Cert Type', data=lf2)
-plt.xticks(rotation=90)
-
-
-# In[778]:
-
-
-lf3=lf[lf['Category'].isin(lf['Category'].unique()[12:18])]
-sns.barplot(x='Category', y='proportion', hue='Cert Type', data=lf3)
-plt.xticks(rotation=90)
-
-
-# In[779]:
-
-
-lf4=lf[lf['Category'].isin(lf['Category'].unique()[18:])]
-sns.barplot(x='Category', y='proportion', hue='Cert Type', data=lf4)
-plt.xticks(rotation=90)
-'''
-
-
-
-
-crop_1=data[data.index.isin(single_commodity)].astype(bool)
-any_crop=data[data.index.isin(multi_commodity)].astype(bool)
-
-
-# In[254]:
-
-
-by_com=pd.DataFrame(np.array([crop_1.mean(), any_crop.mean()]).T, index=data.columns, 
-             columns=['Single Commodity', 'Multi-Commodity'])
-
-
-
-
-for name in df['Performance Standard'].unique():
-    if name:
-        print(df[df['Performance Standard']==name]['CertName'].iloc[0])
-        print (name)
-        
-
-
-counts=pd.concat([df[df.columns[:9]],df[df.columns[9:]].applymap(is_valid)], axis=1)
-counts=pd.concat([df[df.columns[:9]],df[df.columns[9:]].applymap(is_valid)], axis=1)
-gb=counts.groupby(['CertName', 'requirement', 'improvement'])
-
-data=gb.sum()
-
-
-# In[1204]:
-
-
-data.reset_index()['requirement']
-
-
-# In[86]:
-
-
-counts=pd.concat([df[df.columns[:9]],df[df.columns[9:]].applymap(is_valid)], axis=1)
-counts=pd.concat([df[df.columns[:9]],df[df.columns[9:]].applymap(is_valid)], axis=1)
-gb=counts.groupby(['CertName', 'requirement', 'improvement'])
-
-data=gb.sum()
-
-
-
-req_indexer=data.reset_index()['requirement']==1
-data_req=data[req_indexer.tolist()]
-improve_indexer=(data.reset_index()['improvement']==1)
-data_impr=data[improve_indexer.tolist()]
-
-non_reqindexer=(req_indexer+improve_indexer)==0
-data_nonreq=data[non_reqindexer.tolist()]
-
-
-#%%%
-data_sets=[data_req, data_impr, data_nonreq]
 
 def append_null_rows(df, col_name, row_names):
     '''Add empty data for columns without data.'''
@@ -506,84 +100,67 @@ def append_null_rows(df, col_name, row_names):
 
 
 def transform_for_plotting(ds):
-    print(ds.shape[0])
+    '''Add null rows to dataset for where x val is empty.
+    drop index column.
+    Re-order dataset to the '''
+    #print(ds.shape[0])
     ds.reset_index(inplace=True)
-    print(ds.shape[0])
+    #print(ds.shape[0])
     ds=append_null_rows(ds, 'CertName', [c for c in counts['CertName'].unique() ])
-    print(ds.shape[0])
+    #print(ds.shape[0])
     ds.drop(columns=['index'], inplace=True)
-    print(ds.shape[0])
-    ds=re_indexer(ds)
+    
+    ds=re_indexer(ds, re_index_list)
     return ds
 
-data_req=transform_for_plotting(data_req)
-data_nonreq=transform_for_plotting(data_nonreq)
-data_impr=transform_for_plotting(data_impr)
+
+
+def re_indexer(df, re_index_list):
+    '''Change the order of certs so that they are grouped by geo/commodity scope.'''
+    df=df.reset_index()
+    df=df[df['CertName']!='']
+    df['reindex_num']=df['CertName'].apply(lambda x: re_index_list.index(x)).to_list()
+    df=df.sort_values(by='reindex_num')
+    return df.drop(columns='reindex_num')
+
+
+def intersect_lists(l1, l2):
+    '''Return a list of elements that are in both l1 and l2'''
+    return list(set(l1).intersection(set(l2)))
+
+
+def uniq(inp):
+    '''Return a list of all unique values in iterable, while keeping order'''
+    output = []
+    for x in inp:
+        if x not in output:
+            output.append(x)
+    return output
+
+
+def stackplot_col(ax, col, dfs, hatches, **plot_kwargs):
+    '''Plot a single ax as a stack plot.'''
     
-
-# In[87]:
-
-
-
-
-# In[88]:
-'''
-data_req=append_null_rows(data_req, 'CertName', [c for c in counts['CertName'].unique() ])
-data_nonreq=append_null_rows(data_nonreq, 'CertName', [c for c in counts['CertName'].unique() ])
-
-
-data_req.drop(columns=['requirement', 'index'], inplace=True)
-data_nonreq.drop(columns=['requirement', 'index'], inplace=True)
-
-#data_nonreq.drop(0, inplace=True)
-
-
-
-
-data_req=re_indexer(data_req)
-data_nonreq=re_indexer(data_nonreq)
-'''
-
-cols=['Agronomic Practices',
- 'Biosecurity/Sanitation',
- 'Planning',
- 'Education/training']
-
-
-
-# In[97]:
-patches=[]
-for color, label in zip(uniq(colors), labels):
-    print(color)
-    patches.append(mpatches.Patch(color=color, label=label))
-
-patches2=patches+[ mpatches.Patch(label='Score-Card', hatch=r'\\\\', edgecolor='black', facecolor='white'),
-                  mpatches.Patch(label='Improvement to Mandate', edgecolor='black', hatch='O', facecolor='white'),
-                  mpatches.Patch(label='Mandatory', facecolor='white', edgecolor='black'), 
-                 
-                 ]
-
-patches_p=patches+[ mpatches.Patch(label='Not Registered by EPA', hatch=r'\\\\', edgecolor='black', facecolor='white'),
-                  mpatches.Patch(label='Registered by EPA', facecolor='white', edgecolor='black'), 
-                 ]
-# In[98]:
-
-
-
-
-def stackplot_col(ax, col, dfs, hatches):
     b=np.zeros(dfs[0].shape[0])
     for df, hatch in zip(dfs, hatches):
         
-        ax.bar(x=abbrvs, bottom=b, height=df[col], color=colors, edgecolor='black', hatch=hatch)
+        ax.bar(x=abbrvs, bottom=b, height=df[col], color=colors, edgecolor='black', 
+               hatch=hatch, **plot_kwargs)
         b=df[col].to_numpy()+b
         print(b)
         plt.setp(ax.get_xticklabels(), rotation=90)
         ax.set_title(col, size=20)
     return ax
 
-def stack_plotter(cols, *dfs, hatches):
+def stack_plotter(cols, *dfs, hatches, **plot_kwargs):
+    '''Make a plot of multiple stacked bar charts next to one another.
+    Each column is plotted on its own ax.
+    *dfs represents the data to be stacked. 
+    hatches represent the hatches for each piece of the stack plot.
+    **plot_kwargs: kwargs for the ax.bar function. 
+    '''
     
+    ymax = np.sum([np.array(df[cols]) for df in dfs], axis=0).max()*1.1
     fig, axes=plt.subplots(1,len(cols), figsize=(20,5))
     #axes=[a for l in axes for a in l]
     #axes[0].legend(handles=patches)
@@ -591,47 +168,55 @@ def stack_plotter(cols, *dfs, hatches):
     if len (cols)>1:
         for i, column in enumerate(cols):
             ax=axes[i]
-            stackplot_col(ax, column, dfs, hatches)
+            stackplot_col(ax, column, dfs, hatches,  **plot_kwargs)
+            ax.set_ylim(0, ymax)
     elif len (cols)==1:
-        stackplot_col(axes, cols[0], dfs, hatches)
+        stackplot_col(axes, cols[0], dfs, hatches, **plot_kwargs)
+        axes.set_ylim(0, ymax)
     else:
         raise ValueError
         
     return fig, axes
 
-def std_stack_plot(cols,  df1, df2, df3, save_name):
+def std_stack_plot(cols,  df1, df2, df3, save_name, handles, **plot_kwargs):
+    '''Make a standard stack plot of the data in [cols],
+    stacking tha values of df1, df2, and df3 on top of each other.
+    save the figure as save_name.
+    '''
+    
     fig, axes=stack_plotter(cols,  df1, df2, df3, hatches=['',  'O', r'\\\\',])
     axes[0].set_ylabel('Number of Criteria', size=20)
-    plt.legend(handles=patches2, markerscale=4)
+    plt.legend(handles=handles, markerscale=4)
     plt.tight_layout()
     plt.savefig(os.path.join('figures',save_name))
 
 
 #%%
-def p_df(index, val_dict, pest_cat):
+def p_df(index, val_dict, pest_cat, re_index_list):
+    '''Make a dataframe of numbers of pesticide counts.'''
     data=[val_dict.get(i) for i in index]
     df=pd.DataFrame({f"{pest_cat} Pesticides".title(): data, 'CertName': index})
-    df=re_indexer(df)
+    df=re_indexer(df, re_index_list)
     return df
 
-def make_pesticide_dfs(index):
+def make_pesticide_dfs(index, re_index_list):
+    '''Assemble dfs for pesticides.'''
     dfs=[]
     for category in ('banned', 'restricted'):
-        pest_lists=json.loads(open(f'cert_pest_lists_{category}.txt').read())
-        pesticide_dfs=[p_df(index, pest_lists[key], category) for key in ('num_epa_reg', 'num_not_reg_epa')]
+        pest_lists=json_from_file(
+            os.path.join('data', f'cert_pest_lists_{category}.txt'))
+        pesticide_dfs=[p_df(index, pest_lists[key], category, re_index_list) for key in ('num_epa_reg', 'num_not_reg_epa')]
         dfs.append(pesticide_dfs)
     return dfs
                             
-
-
-pest_dfs=make_pesticide_dfs(counts['CertName'].unique())
-
-def pest_list_plotter(pest_dfs):
+def pest_list_plotter(pest_dfs, handles):
+    '''Plotter function for pesticide data.'''
+    
     fig, axes=plt.subplots(1,2, figsize=(20,5))
     for group, string , ax in zip(pest_dfs, ('Banned', 'Restricted'), axes):
         ax=stackplot_col(ax, f'{string} Pesticides', group, ['', r'\\\\'])
     axes[0].set_ylabel('Number of Pesticides', size=20)
-    plt.legend(handles=patches_p, markerscale=4)
+    plt.legend(handles=handles, markerscale=4)
     plt.tight_layout()
     axes[0].scatter(6, 150, marker='*', s=350)
     
@@ -639,40 +224,261 @@ def pest_list_plotter(pest_dfs):
     plt.savefig(os.path.join('figures', 'pesticide_plotter.png'))
 
 
-pest_list_plotter(pest_dfs)
-#%%
-cols=['Record-Keeping',
+
+def clean_data(df):
+    '''Clean the loaded dataframe.'''
+    df.fillna('', inplace=True)
+    df=df[df['CertName']!='']
+    df=df[df['CertName']!='Eco Apple Stonefruit']
+    df['CertName']=df['CertName'].apply(ecoapple_fix)
+    df=df.apply(buffer_switcher, axis=1)
+    df=df.apply(performance_switcher, axis=1)
+    df=df.apply(threshold_fixer, axis=1)
+    
+    return df[[c for c in df.columns if 'Unnamed' not in c]]
+
+def add_columns(df):
+    '''Add additional calculated columns to dataframe based on 
+    text the elements of the data.'''
+    
+    df['MOA rotation']=df['Pesticide Practices'].str.contains('moa rotation')
+    df['Sprayer Calibration']=df['Pesticide Practices'].str.contains('calibration')    
+    df['crop rotation']=df['Agronomic Practices'].str.contains('rotation')
+    df['cover crop']=df['Agronomic Practices'].str.contains('cover crop')    
+    df['weather model']=df['Monitoring'].str.contains('dd model|weather model', regex=True)
+    df['pesticide containers']=df['Materials/Waste Mgmt'].str.contains('containers')
+    df['ppe']=df['Worker Safety'].str.contains('ppe')
+    
+    df['requirement']=(df['Required/Core or Improvement'].str.lower()=='required') | (df['Required/Core or Improvement'].str.lower()=='level 2')
+    df['scorecard']=(df['Required/Core or Improvement'].str.lower()=='scorecard') | (df['Required/Core or Improvement']=='C')
+    df['improvement']=(df['Required/Core or Improvement'].str.lower()=='improvement') | (df['Required/Core or Improvement']=='B')
+    
+    return df
+
+def split_on_structure(counts):
+    '''Return dictionary of different certification structures.
+    keys: structure labels
+    values: List of certification names classified as that structure'''
+    out_dict = {}
+    struct=counts[['requirement', 'improvement', 'scorecard', 'Performance Standard']]
+    
+    out_dict['Score Card'] = struct[struct['requirement']<=3].index.to_list()
+    
+    out_dict['Requirements'] = struct[(struct['scorecard']==0) & (struct['improvement']==0)].index.to_list()
+    
+    out_dict['Mixed'] = [i for i in struct.index if 
+                         (i not in out_dict['Score Card']) & 
+                         (i not in out_dict['Requirements'])]
+    return out_dict
+
+
+
+def plot_cert_structures(dic):
+    results=[len(li) for li in dic.values()]
+    plt.pie(results, labels=dic.keys())
+    print(results)
+    plt.savefig(os.path.join(charts_dir, 'struct_pie.png'))
+    plt.show()
+
+
+def make_counts_df(df):
+    '''Return a dataframe of counts of different column categories, 
+    by certification.'''
+    counts=pd.concat([df[df.columns[:9]],df[df.columns[9:]].applymap(is_valid)], axis=1)
+    counts['CertName'] = df ['CertName']
+    gb=counts.groupby('CertName')
+    counts=gb.sum()
+    counts['total']=gb.count().max(axis=1)
+    return counts
+
+def set_abbrvs(re_index_list, corrections):
+    '''Return a list of abbreviations for plotting.
+    Make them in the same order as re_index_list'''
+    abbrv_dict={}
+    for certName in re_index_list:
+        if len(certName)<5:
+            abbrv_dict[certName]=certName
+        else:
+            abbrv_dict[certName]=''.join(
+                            [c for c in certName if c.upper()==c and c])
+    
+    abbrv_dict.update(corrections)
+    abbrvs=[abbrv_dict[name] for name in re_index_list]
+    return abbrvs, abbrv_dict
+
+def group_certs(c_dict):
+    category_dict = OrderedDict()
+    for key1 in ['Domestic', 'Regional Designation', 'Global South']:
+        for key2 in ['Single Commodity', 'Multi-Commodity']:
+            category_dict[f'{key1}, {key2}'] = intersect_lists(
+                                                c_dict[key1],
+                                                c_dict[key2])
+    
+    return {k:v for k,v in category_dict.items() if v}
+
+def pie_from_dict(di):
+    '''Make a piechart from a dictionary.
+    dic: keys: names of categories
+    values: the names that fit those categories.'''
+    ax = plt.pie([len (v) for v in di.values()], labels = di.keys())
+    return ax
+
+
+def cert_type_pie(category_dict):
+    ax = pie_from_dict(category_dict)
+    plt.title('Types of Certifications in the Sample')
+    plt.savefig(os.path.join(charts_dir, 'Cert_type_pie'))
+    plt.show()
+
+def json_from_file(path):
+    return json.loads(open(path).read())
+
+df=pd.read_csv(os.path.join('data', 'all_data.csv'))
+df = add_columns(clean_data(df))
+
+columns=['CertName']+[c for c in df.columns if c!="CertName"]
+
+
+counts = make_counts_df(df)
+
+norm_df = counts.copy()
+for column in norm_df.columns[:-1]:
+    norm_df[column]=norm_df[column]/norm_df['total']
+norm_df.drop(columns='total', inplace=True)
+
+
+struct_dict = split_on_structure(counts)
+plot_cert_structures(struct_dict)
+
+#classifiers of certifications
+
+classifier_dict = json_from_file(
+    os.path.join('data', 'classifications.json'))
+
+
+category_dict = group_certs(classifier_dict)
+re_index_list=[x for y in category_dict.values() for x in y]
+
+
+norm_df=re_indexer(norm_df, re_index_list)
+
+
+
+commodities = json_from_file(os.path.join('data', 'commodities.json'))
+ax=pie_from_dict(commodities)
+plt.title('Single Commodity Certifications')
+plt.savefig(os.path.join(charts_dir, 'cropspie.png'))
+plt.show()
+
+
+# In[47]:
+category_colors=['salmon', 
+                 #'goldenrod',  
+                 'skyblue', 
+                 'palegreen', 
+                 'plum']
+
+colors=[]
+for cat, color in zip(category_dict.values(), category_colors):
+    colors+=[color]*len(cat)
+
+labels=['US, Multi-Comm',
+#'US, Single-Comm',
+'Regional, 1-Comm',
+ 'Low-Inc, 1-Comm',
+'Low-Inc, Multi-Comm']
+
+
+abbrvs, abbrv_dict = set_abbrvs(re_index_list, 
+                    corrections = {'Global GAPS': 'GGAPS',
+                                   'LODI Rules' : 'LODI',
+                                   'Red Tomato Eco Apple' :'EA',
+                                   'Fair Trade Intl' : 'FTMH'})
+
+
+
+norm_df['scorecard/improvement'] = norm_df[['scorecard', 'improvement']].sum(axis=1)
+
+
+
+summary=pd.DataFrame(np.array(
+    [norm_df[norm_df.index.isin(cat)].astype(bool).mean() 
+                               for cat in category_dict.values()]).T, 
+                     index=norm_df.columns, columns=labels)
+
+
+summary['Category']=summary.index
+
+
+crop_1=norm_df[norm_df['CertName'].isin(classifier_dict['Single Commodity'])]
+any_crop=norm_df[norm_df['CertName'].isin(classifier_dict['Multi-Commodity'])]
+
+
+by_com=pd.DataFrame(np.array([crop_1.mean(), any_crop.mean()]).T, index=norm_df.columns, 
+             columns=['Single Commodity', 'Multi-Commodity'])
+   
+
+counts=pd.concat([df[df.columns[:9]],df[df.columns[9:]].applymap(is_valid)], axis=1)
+counts ['CertName'] = df['CertName'] 
+gb=counts.groupby(['CertName', 'requirement', 'improvement'])
+by_req_type=gb.sum()
+
+by_req_type.reset_index()['requirement']
+
+req_indexer=by_req_type.reset_index()['requirement']==1
+data_req= transform_for_plotting(by_req_type[req_indexer.tolist()])
+improve_indexer=(by_req_type.reset_index()['improvement']==1)
+data_impr=transform_for_plotting(by_req_type[improve_indexer.tolist()])
+
+non_reqindexer=(req_indexer+improve_indexer)==0
+data_nonreq = transform_for_plotting(by_req_type[non_reqindexer.tolist()])
+
+data_sets=[data_req, data_impr, data_nonreq]
+
+
+
+#Make patches for plotting
+base_patches=[]
+for color, label in zip(uniq(colors), labels):
+    print(color)
+    base_patches.append(mpatches.Patch(color=color, label=label))
+
+patches=base_patches+[mpatches.Patch(label='Score-Card', hatch=r'\\\\', edgecolor='black', facecolor='white'),
+                  mpatches.Patch(label='Improvement to Mandate', edgecolor='black', hatch='O', facecolor='white'),
+                  mpatches.Patch(label='Mandatory', facecolor='white', edgecolor='black'), 
+                 
+                 ]
+
+patches_p=base_patches+[ mpatches.Patch(label='Not Registered by EPA', hatch=r'\\\\', edgecolor='black', facecolor='white'),
+                  mpatches.Patch(label='Registered by EPA', facecolor='white', edgecolor='black'), 
+                 ]
+
+pest_dfs=make_pesticide_dfs(counts['CertName'].unique(), re_index_list)
+pest_list_plotter(pest_dfs, handles = patches_p)
+
+#dict for plotting:
+cols_dict={
+    'admin': ['Record-Keeping',
  'Planning',
  'Education/training',
- 'Monitoring',]
-std_stack_plot(cols, data_req, data_impr, data_nonreq,  "admin.png")
-
-
-
-
-
-std_stack_plot([
+ 'Monitoring'],
+  
+    'worker' : [
  'Worker Safety',
- 'Materials/Waste Mgmt'], data_req, data_impr, data_nonreq,  "worker.png")
+ 'Materials/Waste Mgmt'],
+
+'farm_pratices' :
+      ['Pesticide Practices', 
+      'Prohibited Practice',  
+      'Agronomic Practices',
+      'Biosecurity/Sanitation',]
+     }
 
 
-cols=['Pesticide Practices', 'Prohibited Practice',  'Agronomic Practices','Biosecurity/Sanitation',]
-std_stack_plot(cols,data_req, data_impr, data_nonreq,  "farm_practices.png")
+for name, cols in cols_dict.items():
+    std_stack_plot(cols, data_req, data_impr, data_nonreq,  
+               f"{name}.png", handles=patches)
 
-
-
-
-
-plt.legend(handles=patches2)
+plt.legend(handles=patches)
 ax=plt.gca()
 ax.axis('off')
-
-
-
-
-
-# In[ ]:
-
-
-
-

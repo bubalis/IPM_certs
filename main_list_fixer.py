@@ -27,7 +27,7 @@ def string_replacer(string, mapping):
 
 
 def data_loader():
-    df=pd.read_csv('all_data.csv')
+    df=pd.read_csv(os.path.join('data','all_data.csv'))
     df.fillna('', inplace=True)
     df=df[df['CertName']!='Eco Apple Stonefruit']
     df['CertName']=df['CertName'].apply(ecoapple_fix)
@@ -45,12 +45,15 @@ def ensure_list(item):
 
 
 def clip_alias(string):
+    '''Clip off an alias of a chemical, by removing all text in parentheses.'''
     if '(' in string:
         return re.split(r'\(.*\)', string)[0].strip()
     else:
         return string
 #%%
 def CAS_getter(dic, name):
+    '''Retrieve the CAS number of name from dic.'''
+    
     res=dic.get(name.strip().lower())
     if not res:
         res=dic.get(clip_alias(name.strip()).lower())
@@ -71,7 +74,7 @@ def load_ref_num_dict(name):
 if __name__=='__main__':
     rp=pd.read_csv(os.path.join('pesticide_lists', 'restricted_pesticides.txt'), sep='\t')
 
-    dic=load_ref_num_dict()
+    dic=load_ref_num_dict('ref_nums.txt')
 
 
     new_data=[]

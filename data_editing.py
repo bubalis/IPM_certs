@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-'''This script assembles the workbook notes into a single csv file.'''
+"""This script assembles the workbook notes into a single csv file."""
 
 
 import openpyxl as xl
@@ -8,21 +8,15 @@ import pandas as pd
 import os
 
 
-wb_path='Cert_coding.xlsx'
-wb=xl.load_workbook(wb_path)
-
-
-
-
-
 
 def all_unique_codes(wb):
+    '''Gather all unique codes in the manually encoded spreadsheet.'''
     unique_names=[]
     for sheet in wb.sheetnames:
         if sheet in ['Master', "Excluded"]:
             pass
         else:
-            df=pd.read_excel(wb_path, sheet_name=sheet)
+            df=pd.read_excel(wb_path, sheet_name=sheet, engine='openpyxl')
             df=df.fillna('')
             for column in df.columns[8:]:
                 li=list(df[column].unique())
@@ -30,36 +24,6 @@ def all_unique_codes(wb):
                 unique_names+=li
                 
     return list(set([str(n).lower() for n in unique_names if n]))
-
-
-
-
-names=all_unique_codes(wb)
-
-
-
-
-
-
-
-
-def workbook_editor(wb, corrections):
-    for sheet in wb.sheetnames:
-            if sheet in ['Master', 'Excluded']:
-                pass
-            else:
-                df=pd.read_excel(wb_path, sheet_name=sheet)
-                df=df.fillna('')
-                for column in df.columns[8:]:
-                    li=list(df[column].unique())
-                    #print(li)
-                    unique_names+=li
-                
-    return list(set([str(n).lower() for n in unique_names if n]))
-
-
-
-
 
 
 corrections={'on-site research': 'on-farm research',
@@ -134,31 +98,35 @@ def corrector(string):
 
 
 
-
-df=pd.DataFrame()
-for sheet in wb.sheetnames:
-    if sheet=='Master':
-        pass
-    else:
-        df2=pd.read_excel(wb_path, sheet_name=sheet)
-        df2=df2.dropna(how='all')
-        df2=df2.fillna('')
-        for col in df2.columns[8:]:
-            df2[col]=df2[col].apply(lambda x: str(x).lower())
-            df2[col]=df2[col].apply(corrector)
-            df2['CertName']=sheet
-        df=df.append(df2)
-
-df.rename(columns={'Required Practice': 'Pesticide Practices'}, inplace=True)
-
-
-
-for col in df.columns[5:]:
-    df[col]=df[col].apply(corrector)
-
-
-
-
-df.to_csv('all_data.csv')
+if __name__ == '__main__':
+    wb_path=os.path.join('data','Cert_coding.xlsx')
+    wb=xl.load_workbook(wb_path)
+    names=all_unique_codes(wb)
+    
+    df=pd.DataFrame()
+    for sheet in wb.sheetnames:
+        if sheet=='Master':
+            pass
+        else:
+            df2=pd.read_excel(wb_path, sheet_name=sheet, engine='openpyxl')
+            df2=df2.dropna(how='all')
+            df2=df2.fillna('')
+            for col in df2.columns[8:]:
+                df2[col]=df2[col].apply(lambda x: str(x).lower())
+                df2[col]=df2[col].apply(corrector)
+                df2['CertName']=sheet
+            df=df.append(df2)
+    
+    df.rename(columns={'Required Practice': 'Pesticide Practices'}, inplace=True)
+    
+    
+    
+    for col in df.columns[5:]:
+        df[col]=df[col].apply(corrector)
+    
+    
+    
+     
+    df.to_csv(os.path.join('data', 'all_data.csv'))
 
 

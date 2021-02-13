@@ -12,11 +12,14 @@ import json
 import os
 #%%
 def filter_reqs(df):
-    return df[df['Required/Core or Improvement'].isin(['ScoreCard', 
-                                                       'Scorecard', '', 
-                                                       'scorecard',
-                                                       'C', 'recommended',
-                                                       'Improvement'])==False]
+    '''Only get requirements that are fully required, eventually.
+    Do not include scorecard / optional standards. '''
+    return df[df['Required/Core or Improvement'].isin(
+        ['ScoreCard', 
+        'Scorecard', '', 
+        'scorecard',
+       'C', 'recommended',
+        'Improvement'])==False]
 
 
 df=data_loader()
@@ -56,7 +59,8 @@ assert ('Tributyltin Compounds'.lower() in ref_num_dict)
 
 #%%
 
-exclude=['only use legal pesticides','any pesticides prohibited by law',
+exclude=['only use legal pesticides',
+         'any pesticides prohibited by law',
          'must only use legal pesticides',
   'must only handle pesticides labelled for pest',
   'obey all laws', 
@@ -121,6 +125,12 @@ def make_plist():
 plist_dic=make_plist()
 
 def load_propre_list(name, list_type, cas_nums_incl=False):
+    '''Load the text file listing the cert-specific list of
+    banned or restricted pesticides.
+    args:
+        _name_: certification name
+        _list_type_ : "banned" or "restricted" '''
+    
     print(name)
     with cwd('pesticide_lists'):
        
@@ -185,7 +195,7 @@ def data_saver(data, string):
     data_to_save['num_epa_reg']={k: len(
         [c for c in v if c in epa_cas]) 
         for k,v in data.items() }
-    with open(f'cert_pest_lists_{string}.txt', 'w+') as file:
+    with open(os.path.join('data', f'cert_pest_lists_{string}.txt'), 'w+') as file:
         print(json.dumps(data_to_save), file=file)
     return data_to_save
 
@@ -193,7 +203,10 @@ def data_saver(data, string):
 
 
 #%%
-for list_type, column in zip(('banned', 'restricted'),('Prohibited Material','Limited Use Substances')): 
+for list_type, column in zip(
+        ('banned', 'restricted'),
+        ('Prohibited Material','Limited Use Substances')): 
+    
     print(list_type)
     by_cert={cert: [i for i in 
                     ban[ban['CertName']==cert][column].unique() if i]
