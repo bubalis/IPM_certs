@@ -353,7 +353,7 @@
 41,,,,8 INTEGRATED PROTECTION MEASURES FOR FARM CROPS ,8.3,14.0,3.0,The grower does not apply pesticides in dust form.  ,Required,,,,,,,,,,,,pesticides in dust form,,,,,,,,,,,,,LIVE,nan,nan,nan,nan,nan,nan,nan
 42,,,,8 INTEGRATED PROTECTION MEASURES FOR FARM CROPS ,8.3,14.0,4.0,"The grower has rotated mode of action when applying pesticides on the farm. Pesticide mode of action is rotated by target pest (excluding herbicides, sulfur, oil, and biofungicides). For herbicide resistance management requirements, see Chapter ",Required,,,,,,,,,,,,,,,,moa rotation,,,,,,,,,LIVE,nan,nan,nan,nan,nan,nan,nan
 43,,,,8 INTEGRATED PROTECTION MEASURES FOR FARM CROPS ,8.3,14.0,5.0,The grower uses less than 20 pounds of sulfur per acre.,Scorecard,Green,,,,,,,,,,,,,sulphur: <20 lbs/acre,,,,,,,,,,,LIVE,nan,nan,nan,nan,nan,nan,nan
-44,,,,8 INTEGRATED PROTECTION MEASURES FOR FARM CROPS ,8.3,14.0,6.0,The grower communicates with neighboring farms to ensure that mode of action (MOA) rotation is occurring on contiguous properties,Scorecard,Green,,,,,,coordinate with neighbors on moa rotation,,,,,,,,,,,,,,,,,,LIVE,nan,nan,nan,nan,nan,nan,nan
+44,,,,8 INTEGRATED PROTECTION MEASURES FOR FARM CROPS ,8.3,14.0,6.0,The grower communicates with neighboring farms to ensure that mode of action (MOA) rotation is occurring on contiguous properties,Scorecard,Green,,,,,,,,,,,,,,,coordinate with neighbors on moa rotation,,,,,,,,,LIVE,nan,nan,nan,nan,nan,nan,nan
 45,,,,8 INTEGRATED PROTECTION MEASURES FOR FARM CROPS ,8.3,14.0,7.0,The grower does not use botryticides within three weeks of harvest. ,Scorecard,Green,,,,,,,,,,,,,botryticides within 3 weeks of harvest,,,,,,,,,,,LIVE,nan,nan,nan,nan,nan,nan,nan
 46,,,,8 INTEGRATED PROTECTION MEASURES FOR FARM CROPS ,8.5,15.0,1.0,"If EPA-registered pesticides are used, the grower has recorded and conformed to required pre-harvest intervals (PHI). ",Required,,,,,,,,,,,,,,obey pre-harvest intervals,,,,,,,,,,,LIVE,nan,nan,nan,nan,nan,nan,nan
 47,,,,8 INTEGRATED PROTECTION MEASURES FOR FARM CROPS ,8.5,15.0,2.0,The grower has not applied pesticide for powdery mildew after 50% color change (véraison). ,Required,,,,,,,,,,,,,,fungicides for powdery mildew: after 50% color change,,,,,,,,,,,LIVE,nan,nan,nan,nan,nan,nan,nan
@@ -379,6 +379,415 @@
 67,,,,12 WORKER HEALTH AND SAFETY,12.2,18.0,5.0,All personnel who apply pesticides can demonstrate their competence via official qualifications or specific training course attendance certificates. ,Scorecard,Yellow,,,,,,workers handling pesticides are certified,,,,,,,,,,,,,,,,,,LIVE,nan,nan,nan,nan,nan,nan,nan
 68,,,,12 WORKER HEALTH AND SAFETY,12.2,18.0,6.0," Permanent and legible signs are posted that indicate potential hazards (e.g. waste pits, fuel tanks, electrical equipment, toxic material, pesticide and fertilizer storage facilities). ",Scorecard,Green,,,,,,,,,permenant signs label hazards,,,,,,,,,,,,,,,LIVE,nan,nan,nan,nan,nan,nan,nan
 1048573,,,,,5.1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,LIVE,nan,nan,nan,nan,nan,nan,nan
+0,,,,3: Viticulture,11,56.0,,"No soil samples were
+taken for biological
+problems during preplanting,
+but the
+previous crop or cover
+vegetation was
+considered when
+planting and managing
+the new vineyard.",Scorecard,,,,,consider previous vegetation when planting,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+1,,,,3: Viticulture,11,58.0,,"To mitigate potential
+biological problems
+strategies were used
+during development or
+redevelopment such as
+removing as many
+roots as possible from
+the previous (perennial)
+crop, using resistant
+rootstocks, using nonhost
+cover crops.",Scorecard,,,,remove previous perennial roots when establishing vineyard,,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+2,,,,3: Viticulture,11,59.0,3 and 4,"Rootstocks were
+chosen to resist the
+soil-borne pests present
+in the vineyard or
+region
+And
+Rootstocks were
+certified virus free, or
+were tested for viruses
+and confirmed negative
+And
+Rootstocks were
+chosen to provide
+proper vigor when
+matched with the soil
+and scion, aiming for
+optimum production
+for wine quality.",Improvement,,,,"virus free-rootstocks, pest-resistant rootstocks",,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+3,,,,3: Viticulture,11,62.0,3 and 4,"The scion was either
+certified virus free, or
+has been tested for
+viruses and confirmed
+negative",Improvement,,,,virus-free scion wood used,,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+4,,,,3: Viticulture,18,65.0,2,"During initial vineyard
+establishment and/or
+development, efforts
+were made to
+understand and protect
+important habitat.",Required,,,,,efforts made to understand and protect habitat for pest predators,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+5,,,,3: Viticulture,18,65.0,3 & 4,"Hedgerows, shrubs, or
+grasses with native and,
+if appropriate, nonnative
+flowering plants
+were maintained
+throughout the property",Improvement,,,hedgerows and native flowering plants maintained,,,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+6,,,,3: Viticulture,19,66.0,2,"Resident, native, or
+non-native vegetation
+was allowed to grow
+without mowing or
+disking in some noncrop
+areas (e.g., fence
+lines, ditch banks).",Scorecard,,,allow vegetation to grow in some areas,,,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+7,,,,3: Viticulture,19,66.0,3 & 4,"If present, non-native
+plants were removed to
+enhance native habitat
+using any required
+permits (e.g., Fish and
+Game Code § 1600)
+And
+Ponds or other water
+sources were provided
+for birds and other
+wildlife, if appropriate .",Improvement,,,water sources for wildlife ,remove invasive plants,,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+8,,,,4: Soil management,13,92.0,,"An annual resident
+cover crop (nonseeded)
+was managed
+between vine rows
+during winter.",Scorecard,,,winter cover-crops between rows,,,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+9,,,,6: Pest management,1,133.0,,"The vineyard was
+monitored periodically
+for insect and mite
+pests during the
+growing season.",Required,,,,,,,,monitor weekly for insects and mites,records kept of monitoring,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+10,,,,6: Pest management,2,134.0,,"Vineyard workers*
+were trained and
+encouraged to draw
+attention to pests and
+diseases problems but
+could not accurately
+identify key pest
+species and diseases.",Required,,,,,,,workers trained to identify pests,workers trained to identify pests,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+11,,,,6: Pest management,3,135.0,,"Control decisions for
+leafhoppers, mites, and
+thrips were based on
+economic thresholds*
+(e.g., leafhopper
+nymphs per leaf,
+number of leafhopper
+adults, percent leaves
+with mites, leaf
+damage).",Required,,,,,,,,,,,,calendar spraying,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+12,,,,6: Pest management ,4,139.0,,"Non-target risks (e.g.,
+impacts to beneficial
+insects and mites and
+environmental and
+human health) were
+considered when
+selecting and using
+insecticides or
+miticides.",Required,,,,,"non-target species ""taken into account""",,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+13,,,,6: Pest management ,5,143.0,,"Cultural practices (e.g.,
+leaf removal*, cover
+crops, hedgerows,
+sanitation, dust control,
+irrigation) were
+considered for
+managing insect and
+mite pests in the
+vineyard",Required,,,,,"cultural practices ""were considered""",,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+14,,,,6: Pest management ,6,144.0,,"Vehicle speed was
+controlled on any
+unpaved roads
+surrounding the
+vineyard and vineyard
+traffic was limited
+And
+Vineyard practices that
+create dust were
+identified and their
+impact was minimized.",Scorecard,,,dust mitigation for mite management,,,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+15,,,,6: Pest management ,7,145.0,,"Necessary treatments
+for moth pests were
+based on accumulated
+degree-days* (see Box
+6-I), initiated by
+pheromone trap counts
+and calculated using
+weather station data
+and computerized
+insect-growth
+models**
+And
+Problematic
+populations and growth
+stages were confirmed
+by in-field monitoring
+and use of economic
+thresholds.",Required,,,,,,,,moths treated based on time of year or crop phenology,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+16,,,,6: Pest management ,8,148.0,,"Pest hotspots were
+identified only as an
+indicator of a problem
+And
+The entire block or
+vineyard was treated
+when controlling mites
+or leafhoppers.",Required,,,,,,,,pest hot-spots identified,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+17,,,,6: Pest management ,9,149.0,,"Signs of
+mealybugs were
+monitored
+annually in the
+vineyard
+And
+If found, infested
+and non-infested
+areas were treated.",Required,,,,,,,,mealybugs monitored annually,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+18,,,,6: Pest management ,10,153.0,,"A soil-borne pest
+management strategy
+has been developed
+And
+The strategy includes
+sampling the vineyard
+soil at least once every
+5 years for soil-borne
+pests such as
+phylloxera and/or
+parasitic nematodes
+And
+Sampling results were
+used to determine and
+take appropriate
+management
+action(s)**.",Scorecard,,,,,soil-borne ipm plan exists,,,sample soil for soil-borne pests at least once every 5 years,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+19,,,,6: Pest management ,11,158.0,,"The vineyard was
+monitored periodically
+for diseases during
+critical periods.",Required,,,,,,,,monitor weekly for disease,,disease-monitoring records kept,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+20,,,,6: Pest management ,12,159.0,,"Application decisions
+for powdery mildew
+were based on an
+established calendar
+program
+And
+Fungicide rates were
+altered based on
+vineyard conditions
+and/or monitoring
+And
+Fungicides with
+different modes of
+action were ‘rotated’ at
+least once within the
+season Or only sulfur
+products were used.",Scorecard,,,,,,,,fungicide rates altered based on monitoring,,,,,,,,moa rotation for fungicides,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+21,,,,6: Pest management ,13,162.0,,"Non-target risks (e.g.,
+impacts to beneficial
+organisms and human
+and environmental
+health) were considered
+when selecting and
+using fungicides for
+powdery mildew and
+Botrytis control",Required,,,,,non-target risks (considered) for fungicides,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+22,,,,6: Pest management ,14,163.0,,"Susceptible varieties
+were pruned late during
+dormancy.*",Scorecard,,,pruning for canker management,,,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+23,,,,6: Pest management ,15,164.0,,"Fungicides for bunch
+rot were applied only
+between bloom and
+bunch closure, unless
+prolonged wet weather
+necessitated
+applications to protect
+shoots or ripe fruit
+And
+Practices were used to
+reduce physical fruit
+damage (predisposes
+berries to bunch rot)
+such as adjusting
+irrigation to limit berry
+size and splitting, and
+controlling feeding by
+OLR, orange tortrix,
+and birds.",Scorecard,,,limit fruit size to reduce bunch-rot,,,,,,,,,,,,,time-limit fungicide application for bunch-rot,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+24,,,,6: Pest management ,15,164.0,other,"Practices are used to reduce physical
+fruit damage and weather and growth
+stage was considered prior to applying
+any fungicides. ",Required,,,,,"cultural practices for bunch-rot ""considered""",,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+25,,,,6: Pest management ,16,166.0,,"A strategy for PD
+management has been
+developed and includes
+monitoring of blue-green
+sharpshooters
+And
+Management of PD
+consists of insecticide
+applications for bluegreen
+sharpshooter, if
+necessary.",Required,,,,management insect disease vector with pesticides,have strategy for blue-green sharpshooter,,,monitor for blue-green sharpshooter,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+26,,,,6: Pest management ,17,168.0,,"The vineyard was
+monitored
+periodically* (e.g., at
+least twice a year) for
+weeds.",Required,,,,,,,,monitor for weeds 1x per week,weed monitoring records,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+27,,,,6: Pest management ,18,169.0,,"The person(s) making
+pest management
+decisions could identify
+the weeds in the
+vineyard which were
+targeted for control.",Scorecard,,,,,,,workers can identify important weeds,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+28,,,,6: Pest management ,19,170.0,,"Cost, efficacy, and
+timing were considered
+when selecting control
+tactics.",Scorecard,,,,,"weed management plan considers cost, efficacy, timing",,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+29,,,,6: Pest management ,20,171.0,,"The person(s) making
+pest management
+decisions was aware of
+ground water
+protection areas*,
+where applicable, and
+associated restrictions
+for herbicide use
+And
+Pest management
+decisions were made
+with awareness of
+herbicide leaching
+potential.",Required,,,,,take into account herbicide leaching potential,,worker is aware of groundwater protection areas,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+30,,,,6: Pest management ,21,173.0,,"The entire berm or vine
+row was treated with
+herbicides
+And
+Some weeds were
+tolerated.",Scorecard,,,tolerate some weeds,,,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+31,,,,6: Pest management ,22,177.0,,"The vineyard was
+monitored at least
+quarterly for vertebrate
+pests (as appropriate
+based on
+species/lifecycles
+present).",Required,,,,,,,,monitor for vertebrate pests monthly,records of vertebrate pest monitoring,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+32,,,,6: Pest management ,23,178.0,,"Anticoagulant and/or
+strychnine baits were
+regularly used to
+control vertebrate pests
+but extra precautions
+were taken to ensure
+non-target animals
+cannot ingest them
+And/Or
+Fumigants or explosive
+devices may have been
+used.",Required,,,,,,,,,,,,,,,,ensure that non-target animals do not eat rodenticides,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+33,,,,6: Pest management ,24,179.0,,"One maintained owl
+box* existed for every
+100 or more vineyard
+acres.",Scorecard,,,nest boxes for owls,,,,,,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+34,,,,6: Pest management ,25,182.0,,"Conventional dilute
+sprayers were
+predominantly used
+and produce large
+droplets but without air
+induction nozzles.",Scorecard,,,,,,,,,,,,,,,,large-droplet sprayers used,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+35,,,,6: Pest management ,26,183.0,,"The sprayer was
+calibrated every year
+And
+Nozzle wear, nozzle
+variation, and spray
+coverage were checked
+at least every other
+year.",Required,,,,,,,,,,,,,,,,sprayer calibration and spray-coverage checks,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+36,,,,6: Pest management ,27,,,"Nozzles were
+positioned and adjusted
+as canopy size and
+density changed during
+the season.",Required,,,,,,,,,,,,,,,,adjust and reposition nozzles as canopy cover changes,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+37,,,,6: Pest management ,28,,,"Reasonable buffer
+zones* were
+established near any
+sensitive areas**",Required,,,,,,,,,,,,,,,,spray buffer zones,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+38,,,,6: Pest management ,29,190.0,,"Pesticide applications
+were avoided when
+conditions would lead
+to drift (e.g., winds
+exceed 7 mph,
+inversion conditions)
+And
+Low effective rates
+were used and nozzles
+were selected and
+maintained to deliver
+the largest
+recommended droplets
+of uniform size.",Scorecard,,,,,,,,,,,,,,,,take measures to mitigate drift,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+39,,,,6: Pest management ,30,,,"Some pesticides were
+stored during the winter
+And
+Best practices for
+pesticide storage were
+used – dry products
+were stored above
+liquid products, the
+distance between the
+storage site and the
+nearest pond, stream or
+well prevents
+contamination. Storage
+is located in a place
+where flooding is not a
+concern and the storage
+area had an
+impermeable floor to
+contain leaks, and only
+undamaged original
+containers were stored.",Scorecard,,,,,,,,,,,pesticides stored safely,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+40,,,,6: Pest management ,31,,,"All workers were
+provided with pesticide
+safety training and
+required personal
+protective equipment
+(PPE)
+And
+Either a double-check
+valve was used when
+filling spray tanks with
+water or a six-inch air
+gap was maintained
+between the spray tank
+and water source.",Scorecard,,,,,,,,,,follow law for ppe,safety precautions for filling/mixing,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+41,,,,6: Pest management ,32,,,"A pesticide emergency
+response plan was
+posted or binders are
+available in vehicles",Scorecard,,,,,pesticide emergency response plan,,,,,,pesticide emergency response plan,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+42,,,,6: Pest management ,34,,,,Required,,,,,,,,,,,,,propreitary list,propreitary list,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
+43,,,,6: Pest management ,35,199.0,,"Virus symptoms (e.g.,
+reduced yield, leaf
+discoloration, poor
+ripening) were
+monitored during the
+fall in the vineyard and
+infected areas were
+mapped, if applicable
+And
+The vineyard had been
+tested for the presence
+of economically
+important viruses (e.g.,
+leafroll, fanleaf, and
+red blotch) within the
+past three years, and
+virus testing samples
+were taken following
+lab sampling protocols
+And
+The economically
+important viruses in my
+region were known
+(e.g., leafroll, fanleaf,
+and red blotch).",Scorecard,,,,,,,economically important viruses are known,testing for viruses and monitoring for virus symptoms,,,,,,,,,,,,,,,,,CCSW,nan,nan,nan,nan,nan,nan,nan
 0,,,,1.1 Conservation and Enhancement of Biological Diversity,,4.0,1.0, You must have and update at least every ﬁve years a conservation plan based on the type(s) of habitat aﬀected by new vineyard development and/or ongoing vineyard operations. A Natural Resource Conservation Service Conservation Plan or equivalent qualiﬁes.,Required,,,,,conservation and biodiverstiy plan,,,,,,,,,,,,,,,,,,,,SIP,nan,nan,nan,nan,nan,nan,nan
 1,,,,1.1 Conservation and Enhancement of Biological Diversity,,4.0,2.0,Farming practices must allow for botanical diversity in and/or around the vineyard.,Required,,,vague: allow for biodiversity,,,,,,,,,,,,,,,,,,,,,,SIP,nan,nan,nan,nan,nan,nan,nan
 2,,,,1.1 Conservation and Enhancement of Biological Diversity,,4.0,3.0,"Did you consult with your local agencies (i.e. Natural Resources Conservation Service (NRCS), Resource Conservation District (RCD), University of California Cooperative Extension (UCCE), or use agency resources (websites, etc.) to complete a conservation plan?",scorecard,,,,,consulted with govt agencies for planning,,,,,,,,,,,,,,,,,,,,SIP,nan,nan,nan,nan,nan,nan,nan
@@ -680,56 +1089,56 @@
 64,,,,"USE WITH RESTRICTIONS (MODERATE to HIGH-RISK PESTICIDES), RESTRICTIONS WHICH EXCEED THE PRODUCT LABEL ",,18.0,,,Required,,,,,,,,,,,,,,propreitary list,,,,,,,,,,,Red Tomato Eco Apple,nan,nan,nan,nan,nan,nan,nan
 65,,,,DO NOT USE,,25.0,,,Required,,,,,,,,,,,,,propreitary list,,,,,,,,,,,,Red Tomato Eco Apple,nan,nan,nan,nan,nan,nan,nan
 69,,,,Restricted List,Prohibited List,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco Apple,nan,nan,nan,nan,nan,nan,nan
-0,,,,1. Operations and Management ,1,8,2.0,"2.  Are all applicable local, state and national laws, codes and regulations met which govern all aspects of applications of pesticides, nutrients, amendments, irrigation and other inputs? S ",Required,,,,,,,,,,,,follows all laws,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-1,,,,1. Operations and Management ,1,8,3.0,"3.  Pesticides no longer used or no longer registered for use are returned to dealer or disposed of at the next collection.  While in storage, obsolete pesticides are clearly marked and separated from pesticides in current use. S ",Required,,,,,,,,,,,old pesticides returned to dealer,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-2,,,,1. Operations and Management ,1,8,4.0,  Grower has attended one or more educational meetings within the last year. D List meetings: ,Required,,,,,,,attend at least 1 educational meeting,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-3,,,,1. Operations and Management ,1,8,5.0,"Application records include at least the date and time application started and ended, crop, block(s), acreage, trade name and formulation of material applied (with EPA registration number, active ingredient, target pest for pesticides and duration of Restricted-Entry Interval), rate per acre, application method, air temperature, wind speed and direction. D ",Required,,,,,,,,,records of all pesticide use,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-4,,,,1. Operations and Management ,1,8,6.0,"Grower belongs to state and/or regional grower organization(s), in addition to participation in Red Tomato programs. D List organizations: ",Required,,,,,,,belongs to at least one farmer org,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-5,,,,1. Operations and Management ,1,9,7.0,1.  Pesticide costs per acre are documented for all applications. D,ScoreCard,1.0,,,,,,,,include cost-per-acre of applications,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-6,,,,1. Operations and Management ,1,9,8.0,2.  Workers handling or applying pesticides receive an annual medical examination or physical to ensure fitness for job duties. ,ScoreCard,2.0,,,,,,,,,workers who handle pesticides receive: annual medical evaluations,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-7,,,,1. Operations and Management ,1,9,9.0,3.  Grower has hosted a field day or other production-related educational meeting within the last three years. D List date and name/description of event(s): ,ScoreCard,3.0,,,,,,hosted educational event,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-8,,,,1. Operations and Management ,1,9,10.0,"4.  Grower has conducted on-farm research using control (untreated) trees for comparison within the last three years.  Describe each experiment, its purpose and dates. D Attach additional pages if necessary",ScoreCard,4.0,,,,,,on-farm research (must have control group),,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-9,,,,1. Operations and Management ,1,9,11.0,5.  Orchard is represented on 50% or more of the monthly Eco Apple conference calls. ,ScoreCard,1.0,,,,,,attends monthly conference calls of certification group (at least 50% attendance),,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-10,,,,"2. Ecosystem, Soil and Water Conservation ",2,10,3.0,3.  A vegetated buffer separates surface water from edge of crop by at least 50 feet. ,Required,,,vegetated buffer from surface water (50 ft),,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-11,,,,"2. Ecosystem, Soil and Water Conservation ",2,10,13.0,4.  Pesticide mixing is at least 120 feet from well heads. S,Required,,,,,,,,,,,pesticide mixing >120 ft from well-heads,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-12,,,,"2. Ecosystem, Soil and Water Conservation ",2,11,2.0,"2.  If irrigation is used, drip or trickle is installed to ensure proper water supply and minimize water use and foliage wetness. S ",ScoreCard,1.0,,irrigation managed to avoid disease spread,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-13,,,,"2. Ecosystem, Soil and Water Conservation ",2,11,4.0,"4.  If overhead irrigation is used, applications are timed to minimize risk of spreading plant pathogens. S ",ScoreCard,1.0,,irrigation managed to avoid disease spread,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-14,,,,"2. Ecosystem, Soil and Water Conservation ",2,12,13.0," An NRCS IPM Conservation Activity Plan (activity code 114 or 154) for the farm has been developed or implemented (activity code 595), to identify and reduce environmental and human health risks, and improve crop yield and quality. S ",ScoreCard,3.0,,,,ipm plan developed in accordance with nrcs standards,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-15,,,,3. Pesticide-Risk Reduction ,3,13,1.0,"  Plant and tree canopies are maintained to allow penetration of light, air and spray material using pruning or plant growth regulators, e.g., Apogee (prohexadione calcium). S ",Required,,,pruning ,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-16,,,,3. Pesticide-Risk Reduction ,3,13,2.0,"2.  Pesticide and nutrient application equipment is calibrated at least annually.  Records are maintained and include name of person completing calibration, date of calibration, equipment description and procedures, results and adjustments from calibration. D ",Required,,,,,,,,,,,,,,,,sprayer calibration,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-17,,,,3. Pesticide-Risk Reduction ,3,13,3.0,3.  Pesticide drift is minimized by monitoring current wind direction and speed using (Please select all that apply) S:  A. Hand-held monitor  B. Weather station  C. Online resources with real time wind-speed data ,Required,,,,,,,,weather monitoring for reduce pesticide drift,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-18,,,,3. Pesticide-Risk Reduction ,3,13,4.0,"4.  If grain-based rodenticides (corn, oats) are used, they are applied in bait stations or burrows only.",Required,,,,,,,,,,,,,,grain-based rodenticides only in bait stations,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-19,,,,3. Pesticide-Risk Reduction ,3,14,1.0, Lower-risk pesticides are identified and used based on outcome from the Pesticide Risk Tool pesticide risk analysis. S ,ScoreCard,1.0,,,,use pesticide risk tool to reduce pesticide risks,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-20,,,,3. Pesticide-Risk Reduction ,3,14,2.0,2.  A full-block application is replaced by a partial-block pesticide application. D ,ScoreCard,2.0,,,,,,,,,,,,,,,partial block applications are used,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-21,,,,3. Pesticide-Risk Reduction ,3,14,3.0,.  A full-block pesticide application is replaced by an application to block perimeter. D ,ScoreCard,2.0,,,,,,,,,,,,,,,perimeter application,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-22,,,,3. Pesticide-Risk Reduction ,3,14,4.0,A full-block pesticide application is replaced by an alternate-row-middle (ARM) application. D ,ScoreCard,2.0,,,,,,,,,,,,,,,alternate-row application,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-23,,,,3. Pesticide-Risk Reduction ,3,14,6.0,6.  No organophosphates are used as insecticides. ,ScoreCard,1.0,,,,,,,,,,,,organophosphates,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-24,,,,3. Pesticide-Risk Reduction ,3,14,7.0, No synthetic pyrethroids are used as insecticides. D ,ScoreCard,1.0,,,,,,,,,,,, pyrethroids ,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-25,,,,3. Pesticide-Risk Reduction ,3,14,8.0,.  Tractor cabs plus required personal protective equipment are used to protect applicators during pesticide applications. S ,ScoreCard,2.0,,,,,,,,,workers spray from within tractor cabs,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-26,,,,3. Pesticide-Risk Reduction ,3,14,9.0,No ‘DANGER’ labeled pesticides are used. D ,ScoreCard,1.0,,,,,,,,,,,,"labelled ""danger""",,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-27,,,,3. Pesticide-Risk Reduction ,3,14,10.0,No ‘WARNING’ labeled pesticides are used. D ,ScoreCard,1.0,,,,,,,,,,,,"labelled ""warning""",,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-28,,,,3. Pesticide-Risk Reduction ,3,15,11.0,11.  Herbicides are not used in alleyways/drive rows. D,ScoreCard,1.0,,,,,,,,,,,,,,,herbicide only under crop,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-29,,,,3. Pesticide-Risk Reduction ,3,15,12.0,"12.  Spray pattern for pesticide application equipment is evaluated and adjusted by assessing droplet size and coverage using water-sensitive cards or dyes, sprayers101.com/confirm-coverage-with-water-sensitive-paper. S",ScoreCard,2.0,,,,,,,,,,,,,,,spray pattern evaluated,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-30,,,,3. Pesticide-Risk Reduction ,3,15,13.0,13.  Spray-control system is used to regulate pesticide application rates. S ,ScoreCard,1.0,,,,,,,,,,,,,,,spray-control system,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-31,,,,3. Pesticide-Risk Reduction ,3,15,14.0,A pre-harvest damage assessment is completed on all Eco blocks prior to the start of harvest. S ,ScoreCard,1.0,,,,,,,pre-harvest damage assessment,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-32,,,,3. Pesticide-Risk Reduction ,3,15,15.0,".  On-site Network for Environment and Weather Applications (NEWA) station is used for pest and disease management, newa.cornell.edu. D ",ScoreCard,3.0,,,,,,,weather station on-site,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-33,,,,4. Pollinator Protection ,4,16,1.0,1.  Existing habitat for pollinators and nesting sites are identified and protected from drift. S ,Required,,,,,,,,,,,,,,,,spraying buffers for pollinator habitat,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-34,,,,4. Pollinator Protection ,4,16,2.0,"2. Pesticides with an EPA pollinator toxicity advisory box on the label are not applied between pink and end of crop bloom, pesticidestewardship.org/wpcontent/uploads/sites/4/2016/07/bee-label-info-graphic.pdf. D ",Required,,,,,,,,,,,,,,epa-labelled pollinator risk: during crop bloom,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-35,,,,4. Pollinator Protection ,4,16,1.0, Non-blooming buffers of ≥ 60 feet are maintained around all field borders where pesticides toxic to pollinators are applied. S ,ScoreCard,1.0,,non-blooming buffers to protect pollinators,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-36,,,,5. Orchard Floor Management ,5,17,1.0,"1.  To suppress insect pest and disease inoculum, pruning debris remaining in the field is (Please select all that apply) S:  A. Flail chopped  B. Mowed  C. Removed ",Required,,,,pruning debris disposed of properly,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-37,,,,5. Orchard Floor Management ,5,17,2.0,2.  Weed-free areas in planting rows do not extend into the row middles or aisles. S,Required,,,weeds/vegetation between rows,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-38,,,,5. Orchard Floor Management ,5,17,3.0, Herbicide mode of action is rotated between each application (during and between seasons). D ,Required,,,,,,,,,,,,,,,,moa rotation (herbicide),,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-39,,,,5. Orchard Floor Management ,5,17,4.0,4.  No more than three applications of an herbicide are made per season to the same application site.  A fourth spot-treatment may be made if desired control is not achieved and must be supported with documentation which identifies weed species not controlled during previous applications. D ,Required,,,,,,,,,,,,more than 3 herbicide applications per site,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-40,,,,5. Orchard Floor Management ,5,18,1.0,".  Weeds targeted with herbicide applications are scouted at least once per season and weed species present and location, e.g., tree row or row middle, are documented. D ",ScoreCard,1.0,,,,,,,herbicide scouting (at least 1x/season),,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-41,,,,5. Orchard Floor Management ,5,18,2.0,"To suppress weeds, improve organic content and soil health prior to replanting, at least one of the following is used (Please select all that apply)S: A. Cover crop(s) (please list cover crop(s) used):  B. Compost C. Crop rotation D. Green manure ",ScoreCard,1.0,,"cover crops, crop rotation",,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-42,,,,5. Orchard Floor Management ,5,18,3.0,3.  Invasive weeds attractive to pollinators are removed from orchard and field borders.S ,ScoreCard,1.0,,,invasive plants removed,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-43,,,,5. Orchard Floor Management ,5,18,4.0, Herbicides are not used in planted rows; weeds are managed by the following non-chemical method(s) (Please select all that apply) D:  A. Cultivation  B. Aeration  C. Over-seeding  D. Avoiding compaction. ,ScoreCard,1.0,,groundcover suppresses alternate hosts of insect pests,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-44,,,,5. Orchard Floor Management ,5,18,5.0," Groundcover is managed to eliminate alternate hosts for plant bugs, e.g., winter-annual weeds, chickweeds, dandelion, clovers, vetch and other legumes. ",ScoreCard,1.0,,,,,,,,,,,,herbicides,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-45,,,,5. Orchard Floor Management ,5,18,6.0,Foraging pollinators are protected by reducing blooming groundcover and broadleaf weeds using mowing or herbicide applications which target drive rows and row middles. S ,ScoreCard,1.0,,,,,,,,,,,,,,,remove blooming plants prior to pesticide application,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-46,,,,5. Orchard Floor Management ,5,18,7.0, Alternate-row mowing is done to preserve beneficials.  Please describe when this practice is implemented:  S ,ScoreCard,1.0,,alternate-row mowing,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-47,,,,7. Energy and Waste Management ,7,21,1.0,"1.  Open burning complies with local ordinances and is limited to yard waste, wood, pruning debris and paper-based products.  Pesticide containers (including paper), plastics, rubber or industrial products may not be disposed of by burning. S ",Required,,,,,,,,,,,pesticide containers not burned,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-48,,,,7. Energy and Waste Management ,7,21,,"3. Disposal of lead-acid batteries, used oil, industrial chemicals and other hazardous materials meet state and federal guidelines, i.e., lead-acid batteries are disposed by taking to approved recycling drop-off locations, e.g., auto-service centers, municipal recycling facilities, etc. S ",Required,,,,,,,,,,,hazmat disposal follows law,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
-49,,,,7. Energy and Waste Management ,7,22,,12.  A pesticide mixing and loading facility is used to catch and retain pesticide rinsate. S ,ScoreCard,3.0,,,,,,,,,,pesticide rinsate caught and retained,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,nan,nan,nan,nan,nan
+0,,,,1. Operations and Management ,1,8,2.0,"2.  Are all applicable local, state and national laws, codes and regulations met which govern all aspects of applications of pesticides, nutrients, amendments, irrigation and other inputs? S ",Required,,,,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,follows all laws,nan,nan,nan,nan
+1,,,,1. Operations and Management ,1,8,3.0,"3.  Pesticides no longer used or no longer registered for use are returned to dealer or disposed of at the next collection.  While in storage, obsolete pesticides are clearly marked and separated from pesticides in current use. S ",Required,,,,,,,,,,,old pesticides returned to dealer,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+2,,,,1. Operations and Management ,1,8,4.0,  Grower has attended one or more educational meetings within the last year. D List meetings: ,Required,,,,,,,attend at least 1 educational meeting,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+3,,,,1. Operations and Management ,1,8,5.0,"Application records include at least the date and time application started and ended, crop, block(s), acreage, trade name and formulation of material applied (with EPA registration number, active ingredient, target pest for pesticides and duration of Restricted-Entry Interval), rate per acre, application method, air temperature, wind speed and direction. D ",Required,,,,,,,,,records of all pesticide use,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+4,,,,1. Operations and Management ,1,8,6.0,"Grower belongs to state and/or regional grower organization(s), in addition to participation in Red Tomato programs. D List organizations: ",Required,,,,,,,belongs to at least one farmer org,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+5,,,,1. Operations and Management ,1,9,7.0,1.  Pesticide costs per acre are documented for all applications. D,ScoreCard,1.0,,,,,,,,include cost-per-acre of applications,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+6,,,,1. Operations and Management ,1,9,8.0,2.  Workers handling or applying pesticides receive an annual medical examination or physical to ensure fitness for job duties. ,ScoreCard,2.0,,,,,,,,,workers who handle pesticides receive: annual medical evaluations,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+7,,,,1. Operations and Management ,1,9,9.0,3.  Grower has hosted a field day or other production-related educational meeting within the last three years. D List date and name/description of event(s): ,ScoreCard,3.0,,,,,,hosted educational event,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+8,,,,1. Operations and Management ,1,9,10.0,"4.  Grower has conducted on-farm research using control (untreated) trees for comparison within the last three years.  Describe each experiment, its purpose and dates. D Attach additional pages if necessary",ScoreCard,4.0,,,,,,on-farm research (must have control group),,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+9,,,,1. Operations and Management ,1,9,11.0,5.  Orchard is represented on 50% or more of the monthly Eco Apple conference calls. ,ScoreCard,1.0,,,,,,attends monthly conference calls of certification group (at least 50% attendance),,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+10,,,,"2. Ecosystem, Soil and Water Conservation ",2,10,3.0,3.  A vegetated buffer separates surface water from edge of crop by at least 50 feet. ,Required,,,vegetated buffer from surface water (50 ft),,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+11,,,,"2. Ecosystem, Soil and Water Conservation ",2,10,13.0,4.  Pesticide mixing is at least 120 feet from well heads. S,Required,,,,,,,,,,,pesticide mixing >120 ft from well-heads,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+12,,,,"2. Ecosystem, Soil and Water Conservation ",2,11,2.0,"2.  If irrigation is used, drip or trickle is installed to ensure proper water supply and minimize water use and foliage wetness. S ",ScoreCard,1.0,,irrigation managed to avoid disease spread,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+13,,,,"2. Ecosystem, Soil and Water Conservation ",2,11,4.0,"4.  If overhead irrigation is used, applications are timed to minimize risk of spreading plant pathogens. S ",ScoreCard,1.0,,irrigation managed to avoid disease spread,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+14,,,,"2. Ecosystem, Soil and Water Conservation ",2,12,13.0," An NRCS IPM Conservation Activity Plan (activity code 114 or 154) for the farm has been developed or implemented (activity code 595), to identify and reduce environmental and human health risks, and improve crop yield and quality. S ",ScoreCard,3.0,,,,ipm plan developed in accordance with nrcs standards,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+15,,,,3. Pesticide-Risk Reduction ,3,13,1.0,"  Plant and tree canopies are maintained to allow penetration of light, air and spray material using pruning or plant growth regulators, e.g., Apogee (prohexadione calcium). S ",Required,,,pruning ,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+16,,,,3. Pesticide-Risk Reduction ,3,13,2.0,"2.  Pesticide and nutrient application equipment is calibrated at least annually.  Records are maintained and include name of person completing calibration, date of calibration, equipment description and procedures, results and adjustments from calibration. D ",Required,,,,,,,,,,,,,,,,sprayer calibration,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+17,,,,3. Pesticide-Risk Reduction ,3,13,3.0,3.  Pesticide drift is minimized by monitoring current wind direction and speed using (Please select all that apply) S:  A. Hand-held monitor  B. Weather station  C. Online resources with real time wind-speed data ,Required,,,,,,,,weather monitoring for reduce pesticide drift,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+18,,,,3. Pesticide-Risk Reduction ,3,13,4.0,"4.  If grain-based rodenticides (corn, oats) are used, they are applied in bait stations or burrows only.",Required,,,,,,,,,,,,,,grain-based rodenticides only in bait stations,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+19,,,,3. Pesticide-Risk Reduction ,3,14,1.0, Lower-risk pesticides are identified and used based on outcome from the Pesticide Risk Tool pesticide risk analysis. S ,ScoreCard,1.0,,,,use pesticide risk tool to reduce pesticide risks,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+20,,,,3. Pesticide-Risk Reduction ,3,14,2.0,2.  A full-block application is replaced by a partial-block pesticide application. D ,ScoreCard,2.0,,,,,,,,,,,,,,,partial block applications are used,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+21,,,,3. Pesticide-Risk Reduction ,3,14,3.0,.  A full-block pesticide application is replaced by an application to block perimeter. D ,ScoreCard,2.0,,,,,,,,,,,,,,,perimeter application,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+22,,,,3. Pesticide-Risk Reduction ,3,14,4.0,A full-block pesticide application is replaced by an alternate-row-middle (ARM) application. D ,ScoreCard,2.0,,,,,,,,,,,,,,,alternate-row application,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+23,,,,3. Pesticide-Risk Reduction ,3,14,6.0,6.  No organophosphates are used as insecticides. ,ScoreCard,1.0,,,,,,,,,,,,organophosphates,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+24,,,,3. Pesticide-Risk Reduction ,3,14,7.0, No synthetic pyrethroids are used as insecticides. D ,ScoreCard,1.0,,,,,,,,,,,, pyrethroids ,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+25,,,,3. Pesticide-Risk Reduction ,3,14,8.0,.  Tractor cabs plus required personal protective equipment are used to protect applicators during pesticide applications. S ,ScoreCard,2.0,,,,,,,,,workers spray from within tractor cabs,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+26,,,,3. Pesticide-Risk Reduction ,3,14,9.0,No ‘DANGER’ labeled pesticides are used. D ,ScoreCard,1.0,,,,,,,,,,,,"labelled ""danger""",,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+27,,,,3. Pesticide-Risk Reduction ,3,14,10.0,No ‘WARNING’ labeled pesticides are used. D ,ScoreCard,1.0,,,,,,,,,,,,"labelled ""warning""",,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+28,,,,3. Pesticide-Risk Reduction ,3,15,11.0,11.  Herbicides are not used in alleyways/drive rows. D,ScoreCard,1.0,,,,,,,,,,,,,,,herbicide only under crop,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+29,,,,3. Pesticide-Risk Reduction ,3,15,12.0,"12.  Spray pattern for pesticide application equipment is evaluated and adjusted by assessing droplet size and coverage using water-sensitive cards or dyes, sprayers101.com/confirm-coverage-with-water-sensitive-paper. S",ScoreCard,2.0,,,,,,,,,,,,,,,spray pattern evaluated,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+30,,,,3. Pesticide-Risk Reduction ,3,15,13.0,13.  Spray-control system is used to regulate pesticide application rates. S ,ScoreCard,1.0,,,,,,,,,,,,,,,spray-control system,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+31,,,,3. Pesticide-Risk Reduction ,3,15,14.0,A pre-harvest damage assessment is completed on all Eco blocks prior to the start of harvest. S ,ScoreCard,1.0,,,,,,,pre-harvest damage assessment,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+32,,,,3. Pesticide-Risk Reduction ,3,15,15.0,".  On-site Network for Environment and Weather Applications (NEWA) station is used for pest and disease management, newa.cornell.edu. D ",ScoreCard,3.0,,,,,,,weather station on-site,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+33,,,,4. Pollinator Protection ,4,16,1.0,1.  Existing habitat for pollinators and nesting sites are identified and protected from drift. S ,Required,,,,,,,,,,,,,,,,spraying buffers for pollinator habitat,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+34,,,,4. Pollinator Protection ,4,16,2.0,"2. Pesticides with an EPA pollinator toxicity advisory box on the label are not applied between pink and end of crop bloom, pesticidestewardship.org/wpcontent/uploads/sites/4/2016/07/bee-label-info-graphic.pdf. D ",Required,,,,,,,,,,,,,,epa-labelled pollinator risk: during crop bloom,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+35,,,,4. Pollinator Protection ,4,16,1.0, Non-blooming buffers of ≥ 60 feet are maintained around all field borders where pesticides toxic to pollinators are applied. S ,ScoreCard,1.0,,non-blooming buffers to protect pollinators,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+36,,,,5. Orchard Floor Management ,5,17,1.0,"1.  To suppress insect pest and disease inoculum, pruning debris remaining in the field is (Please select all that apply) S:  A. Flail chopped  B. Mowed  C. Removed ",Required,,,,pruning debris disposed of properly,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+37,,,,5. Orchard Floor Management ,5,17,2.0,2.  Weed-free areas in planting rows do not extend into the row middles or aisles. S,Required,,,weeds/vegetation between rows,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+38,,,,5. Orchard Floor Management ,5,17,3.0, Herbicide mode of action is rotated between each application (during and between seasons). D ,Required,,,,,,,,,,,,,,,,moa rotation (herbicide),,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+39,,,,5. Orchard Floor Management ,5,17,4.0,4.  No more than three applications of an herbicide are made per season to the same application site.  A fourth spot-treatment may be made if desired control is not achieved and must be supported with documentation which identifies weed species not controlled during previous applications. D ,Required,,,,,,,,,,,,more than 3 herbicide applications per site,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+40,,,,5. Orchard Floor Management ,5,18,1.0,".  Weeds targeted with herbicide applications are scouted at least once per season and weed species present and location, e.g., tree row or row middle, are documented. D ",ScoreCard,1.0,,,,,,,herbicide scouting (at least 1x/season),,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+41,,,,5. Orchard Floor Management ,5,18,2.0,"To suppress weeds, improve organic content and soil health prior to replanting, at least one of the following is used (Please select all that apply)S: A. Cover crop(s) (please list cover crop(s) used):  B. Compost C. Crop rotation D. Green manure ",ScoreCard,1.0,,"cover crops, crop rotation",,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+42,,,,5. Orchard Floor Management ,5,18,3.0,3.  Invasive weeds attractive to pollinators are removed from orchard and field borders.S ,ScoreCard,1.0,,,invasive plants removed,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+43,,,,5. Orchard Floor Management ,5,18,4.0, Herbicides are not used in planted rows; weeds are managed by the following non-chemical method(s) (Please select all that apply) D:  A. Cultivation  B. Aeration  C. Over-seeding  D. Avoiding compaction. ,ScoreCard,1.0,,groundcover suppresses alternate hosts of insect pests,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+44,,,,5. Orchard Floor Management ,5,18,5.0," Groundcover is managed to eliminate alternate hosts for plant bugs, e.g., winter-annual weeds, chickweeds, dandelion, clovers, vetch and other legumes. ",ScoreCard,1.0,,,,,,,,,,,,herbicides,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+45,,,,5. Orchard Floor Management ,5,18,6.0,Foraging pollinators are protected by reducing blooming groundcover and broadleaf weeds using mowing or herbicide applications which target drive rows and row middles. S ,ScoreCard,1.0,,,,,,,,,,,,,,,remove blooming plants prior to pesticide application,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+46,,,,5. Orchard Floor Management ,5,18,7.0, Alternate-row mowing is done to preserve beneficials.  Please describe when this practice is implemented:  S ,ScoreCard,1.0,,alternate-row mowing,,,,,,,,,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+47,,,,7. Energy and Waste Management ,7,21,1.0,"1.  Open burning complies with local ordinances and is limited to yard waste, wood, pruning debris and paper-based products.  Pesticide containers (including paper), plastics, rubber or industrial products may not be disposed of by burning. S ",Required,,,,,,,,,,,pesticide containers not burned,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+48,,,,7. Energy and Waste Management ,7,21,,"3. Disposal of lead-acid batteries, used oil, industrial chemicals and other hazardous materials meet state and federal guidelines, i.e., lead-acid batteries are disposed by taking to approved recycling drop-off locations, e.g., auto-service centers, municipal recycling facilities, etc. S ",Required,,,,,,,,,,,hazmat disposal follows law,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
+49,,,,7. Energy and Waste Management ,7,22,,12.  A pesticide mixing and loading facility is used to catch and retain pesticide rinsate. S ,ScoreCard,3.0,,,,,,,,,,pesticide rinsate caught and retained,,,,,,,,,,,,,,Red Tomato Eco,nan,nan,,nan,nan,nan,nan
 0,,,,4. Pest Management,4.0,9,1.0,"There is a documented pest management plan including prevention measures, monitoring and action thresholds, and effective and safe remedial actions. (3 points) ",ScoreCard,3.0,,,,producer has ipm plan,,,,,,,,,,,,,,,,,,,,Protected Harvest Citrus,nan,nan,nan,nan,nan,nan,nan
 1,,,,4. Pest Management,4.0,9,2.0,"Employees that handle and handle pesticides have received  appropriate training, which included use of proper notification and/or signage in treated area. (3 points) ",ScoreCard,3.0,,,,,,workers trained to handle pesticides,,,,,,,,,,,,,,,,,,Protected Harvest Citrus,nan,nan,nan,nan,nan,nan,nan
 2,,,,4. Pest Management,4.0,9,3.0,Sprayer calibration and spray coverage tests are done at least once a season and are based on manufacturers' recommendations and spray target characteristics. (3 points),ScoreCard,3.0,,,,,,,,,,,,,,,sprayer calibration 1x/season,,,,,,,,,Protected Harvest Citrus,nan,nan,nan,nan,nan,nan,nan
@@ -799,7 +1208,7 @@
 66,,,,Introduction: Protected Harvest Sustainable Citrus Standard Version 2.0 ,,3,,Certified operations must also not exceed a maximum number of pesticide impact points calculated using the pesticide Environmental Assessment System (PEAS). More information is available in the Sustainable Citrus Certification Manual.  ,Required,,Pesticide Environmental Assessment System ,,,,,,,,,,,,,,,,environmental impact unit cap for pesticide impacts: 400,,,,,,,Protected Harvest Citrus,nan,nan,nan,nan,nan,nan,nan
 0,,,,1 General Requirements,1.0,12,6,,Required,,,,,,,,,,,,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,follow the law (general),nan,nan,nan,nan
 1,,,,3 Production,2.0,21,2,You train your members on integrated pest management. You ensure that this training includes:  the monitoring of pests and diseases;  alternative ways to control pests and diseases;  preventive measures against pests and diseases;  measures to avoid that pests and diseases build up resistance to pesticides,Improvement,,,,,,,ipm training,,,,,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
-2,,,,3 Production,2.0,21,3,Your members are able to demonstrate that pesticides are applied based on knowledge of pests and diseases.,Improvement,,,,,,,,,,,,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
+2,,,,3 Production,2.0,21,3,Your members are able to demonstrate that pesticides are applied based on knowledge of pests and diseases.,Improvement,,,,,,,farmer knowledge,apply based on monitoring: vague,,,,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
 3,,,,3 Production,2.0,22,4,Training on safe handling of hazardous materials,Improvement,,,,,,,hazmat training,,,,hazmat training,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
 4,,,,3 Production,2.0,22,5,"You ensure that all people, including members and workers, wear appropriate personal protective equipment (PPE) when handling pesticides or hazardous chemicals.",Improvement,,,,,,,,,,appropriate ppe,,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
 5,,,,3 Production,2.0,22,6,"You raise awareness amongst all members and workers of the hazards and risks related to pesticides and other hazardous chemicals, even if they are not directly handling these Year 3 materials.",Improvement,,,,,,,awareness of hazmat dangers,,,awareness of hazmat dangers,awareness of hazmat dangers,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
@@ -824,16 +1233,16 @@ waste. In the absence of appropriate disposal facilities, small amounts of hazar
 waste can be burned in a well-ventilated area away from people, animals or crops. You and
 your members may only burn hazardous waste if it is allowed by local regulation and all safety
 recommendations are followed.",Improvement,,,,,,,,,,,proper disposal of hazmat,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
-23,,,,,3.0,38,11,"You and your members do not submit workers of less than 18 years of age to the unconditional worst forms of child labour or to any type of work which, by its nature or the circumstances under which it is carried out, is likely to jeopardize their health, safety, morals or their school attendance.",Required,,,,,,,,,,,workers who handle pesticides are: over 18,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
+23,,,,,3.0,38,11,"You and your members do not submit workers of less than 18 years of age to the unconditional worst forms of child labour or to any type of work which, by its nature or the circumstances under which it is carried out, is likely to jeopardize their health, safety, morals or their school attendance.",Required,,,,,,,,,,workers who handle pesticides are: over 18,,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
 24,,,,,3.0,44,30,You and your members have accessible first aid boxes and equipment and a sufficient number of people trained in first aid in the workplace at all times.,Required,,,,,,,,,,,first aid equipment,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
-25,,,,,,44,32,"You and your members provide training to workers who carry out hazardous work on the risks from this work to their health, to the environment, and on what to do in case of an accident.",Improvement,,,,,,,training for hazardous work,,,,training for hazardous work,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
-26,,,,,,44,33,"When you carry out hazardous work, you and your members display all information, safety instructions, re-entry intervals and hygiene recommendations clearly and visibly in the Year 3 workplace in the local language(s) and with pictograms",Improvement,,,,,,,,,,,safety instructions visible,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
-27,,,,,,44,34,You and your members provide and pay for personal protective equipment (PPE) for all workers who perform hazardous work. You make sure that the PPE is used and that Year 3 replacement equipment is ordered and distributed when the existing equipment wears out.,Improvement,,,,,,,,,,,ppe is available,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
+25,,,,,,44,32,"You and your members provide training to workers who carry out hazardous work on the risks from this work to their health, to the environment, and on what to do in case of an accident.",Improvement,,,,,,,training for hazardous work,,,training for hazardous work,,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
+26,,,,,,44,33,"When you carry out hazardous work, you and your members display all information, safety instructions, re-entry intervals and hygiene recommendations clearly and visibly in the Year 3 workplace in the local language(s) and with pictograms",Improvement,,,,,,,,,,safety instructions visible,,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
+27,,,,,,44,34,You and your members provide and pay for personal protective equipment (PPE) for all workers who perform hazardous work. You make sure that the PPE is used and that Year 3 replacement equipment is ordered and distributed when the existing equipment wears out.,Improvement,,,,,,,,,,ppe is available,,,,,,,,,,nan,,,,,Fair Trade Intl,nan,nan,,nan,nan,nan,nan
 0,,,,PRINCIPLE 1 – BCI Farmers Minimise The Harmful Impact Of Crop Protection Practices ,Criterion 1.1,13.0,Header,The Producer must adopt an Integrated Pest Management Programme that includes all of the following principles:  i. growing a healthy crop;  ii. preventing the build-up of pest populations and the spread of disease;  iii. preserving and enhancing populations of beneficial organisms;  iv. regular field observations of crop health and key pest and beneficial insects;  v. managing resistance.,Required,nan,,nan,nan,,,,nan,,,,,,,,,,,nan,nan,y,,,,BCI,nan,nan,nan,,nan,nan,nan
 1,,,,PRINCIPLE 1 – BCI Farmers Minimise The Harmful Impact Of Crop Protection Practices ,Criterion 1.1,13.0,1.1.1,"A locally adapted and time-bound plan, based on agro-ecosystem analysis, and which identifies appropriate specific practices to implement the five components of Integrated Pest Management, is established. ",Required,nan,,nan,nan,1,,,nan,,,,,,,,,,,nan,nan,,y,,,BCI,nan,nan,nan,,nan,nan,nan
 2,,,,PRINCIPLE 1 – BCI Farmers Minimise The Harmful Impact Of Crop Protection Practices ,Criterion 1.1,13.0,1.1.2,An Integrated Pest Management Programme is implemented that includes  all the following components: i. growing a healthy crop; ii. preventing the build-up of pest populations and the spread of disease; iii. preserving and enhancing populations of beneficial organisms; iv. regular field observations of crop health and key pest and beneficial insects; v. managing resistance.,Required,nan,,nan,nan,1,,,nan,,,,,,,,,,,nan,nan,,,y,y,BCI,nan,nan,nan,,nan,nan,nan
 3,,,,PRINCIPLE 1 – BCI Farmers Minimise The Harmful Impact Of Crop Protection Practices ,Criterion 1.1,13.0,1.1.3,A timeline for implementing the five components of the Integrated Pest Management plan is established. ,Required,nan,,nan,nan,1,,,nan,,,,,,,,,,,nan,nan,,y,,,BCI,nan,nan,nan,,nan,nan,nan
-4,,,,PRINCIPLE 1 – BCI Farmers Minimise The Harmful Impact Of Crop Protection Practices ,Criterion 1.1,13.0,1.1.4 ,There is no calendar or random spraying,Required,nan,,nan,nan,,,,nan,,,,1.0,,,,,,,nan,nan,,y,y,y,BCI,nan,nan,nan,,nan,nan,nan
+4,,,,PRINCIPLE 1 – BCI Farmers Minimise The Harmful Impact Of Crop Protection Practices ,Criterion 1.1,13.0,1.1.4 ,There is no calendar or random spraying,Required,nan,,nan,nan,,,,nan,,,,calendar/random spraying,,,,,,,nan,nan,,y,y,y,BCI,nan,nan,nan,,nan,nan,nan
 5,,,,PRINCIPLE 1 – BCI Farmers Minimise The Harmful Impact Of Crop Protection Practices ,Criterion 1.1,13.0,1.1.5,"Proportion of farmers adopting the five components of Integrated Pest Management, in accordance with the list of practices defined in the locally adapted and time-bound plan.  ",Improvement,nan,,nan,nan,1,,,nan,,,,,,,,,,,nan,nan,,y,,,BCI,nan,nan,nan,,nan,nan,nan
 6,,,,PRINCIPLE 1 – BCI Farmers Minimise The Harmful Impact Of Crop Protection Practices ,Criterion 1.1,13.0,1.1.6,Timeline against which 100% adoption on the five components of Integrated Pest Management should be achieved,Improvement,nan,,nan,nan,1,,,nan,,,,,,,,,,,nan,nan,,y,,,BCI,nan,nan,nan,,nan,nan,nan
 7,,,,PRINCIPLE 1 – BCI Farmers Minimise The Harmful Impact Of Crop Protection Practices ,Critierion 1.2,16.0,Header, The Producer must only handle pesticides that are: i. Registered nationally for the crop being treated; ii. Correctly labelled in at least one de facto or de jure official national or applicable official regional language. ,,nan,,nan,nan,,,,nan,,,,,,,,,,,nan,nan,n,,,,BCI,nan,nan,nan,,nan,nan,nan
@@ -935,7 +1344,7 @@ recommendations are followed.",Improvement,,,,,,,,,,,proper disposal of hazmat,,
 5,,,,Sustainability Criteria,Handling and application of pesticides,,,The Managing Entity provides sufficient evidence to demonstrate that it has an understanding about and actively pursues a strategy to manage the pesticides used for cotton cultivation aiming at minimizing impact on environment and health as well as pest resistance within their unit whenever economically and legally viable.,Required,nan,,,nan,"farmer understands impacts of pesticides, has a strategy",,"farmer understands impacts of pesticides, has a strategy",,"farmer understands impacts of pesticides, has a strategy",,,,,,,,,,nan,nan,,,,,CMIA,nan,nan,nan,nan,,,nan
 6,,,,Sustainability Criteria,Handling and application of pesticides,,,The Managing Entity provides sufficient evidence to demonstrate that farmers and affected workers (in the scope of the CmiA Unit) have been made aware of the risks and dangers related to the storage of pesticides (including leaking containers) and have been trained in appropriate safe storage measures such that access by children is prevented. (More than 80% of the farmers visited store their chemicals correctly and prevent access by children.),Required,nan,,,nan,,,farmers trained in pesticide storage,,,,"pesticides stored safely, pesticides out of reach of children",,,,,,,,nan,nan,,,,,CMIA,nan,nan,nan,nan,,,nan
 7,,,,Sustainability Criteria,Application of pesticides and user health protection,,,"Regarding application of pesticides, the Managing Entity demonstrates awareness about the possibilities of runoff or leaching of chemicals into streams or ground water and can prove that this is significant or non-significant for the Unit. If leaching of chemicals into streams or ground water is significant: Techniques to prevent runoff and leaching of chemicals are part of the farmer training. There is field evidence that farmers understand the concepts and these are applied by more than 66% of sampled farmers. Comment on ""non-significance"": When the farmer does not use application methods where more than 20 litres of spray mix/ha are applied in a single application (e.g. ULV or LV sprayers). In view of user health protection, the Managing Entity provides sufficient evidence to demonstrate that farmers have been trained in the use of safe spraying techniques, appropriate equipment and sufficient protective clothing as necessary for operator safety relative to the applied pesticide and the application equipment used (e.g. shirts with long sleeves, trousers, closed shoes, masks, gloves, safety goggles). More than 80% of the sampled operators use protective clothing throughout a campaign, that means - minimum shirt with long sleeves, long trousers, closed shoes, masks, gloves and safety goggles in the case of mixing/preparation - minimum shirt with long sleeves, long trousers and closed shoes in the case of application. Field evidence demonstrates that operators are not pregnant or nursing females or underaged. There are measures in place to promote the use of safer application equipment and success is measured.",Required,nan,,,nan,,,workers trained to handle pesticides,,,mimimal ppe,,,,,,,,,nan,nan,,,,,CMIA,nan,nan,nan,nan,,,nan
-8,,,,Sustainability Criteria,Handling and application of pesticides,,,"The Managing Entity provides sufficient evidence to demonstrate that farmers have been trained regarding the dangers of reusing empty pesticide containers and how to dispose of these in a safe manner such as burning, buring or disposal in a pit latrine and/or returning them. There is field evidence that farmers understand the concept and this is being generally applied. There are initiatives (communication) to design packaging and containers in a way that they can be disposed of safely in the field (e.g. burning, buring or disposal in a pit latrine w/o health and env. risk).",Required,nan,,,nan,,,farmers trained in container disposal,,,,,farmers trained in container disposal,,,,,,,nan,nan,,,,,CMIA,nan,nan,nan,nan,,,nan
+8,,,,Sustainability Criteria,Handling and application of pesticides,,,"The Managing Entity provides sufficient evidence to demonstrate that farmers have been trained regarding the dangers of reusing empty pesticide containers and how to dispose of these in a safe manner such as burning, buring or disposal in a pit latrine and/or returning them. There is field evidence that farmers understand the concept and this is being generally applied. There are initiatives (communication) to design packaging and containers in a way that they can be disposed of safely in the field (e.g. burning, buring or disposal in a pit latrine w/o health and env. risk).",Required,nan,,,nan,,,farmers trained in container disposal,,,,farmers trained in container disposal,,,,,,,,nan,nan,,,,,CMIA,nan,nan,nan,nan,,,nan
 9,,,,Sustainability Criteria,Handling and application of pesticides,,,"The Managing Entity provides sufficient evidence to demonstrate that farmers have been trained in the principles of scouting and pest thresholds, which lead to the use of less pesticides. There is field evidence that farmers understand the concept and it is being applied by at least 80% of sampled farmers.",Required,nan,,,nan,,,farmers trained in scouting/thresholds,farmers trained in scouting/thresholds,,,,,,,,,farmers trained in scouting/thresholds,,nan,nan,,,,,CMIA,nan,nan,nan,nan,,,nan
 0,,,,Scouting Section ,1.0,2.0,a,"What method of scouting did you most commonly use? 	Crop scouts followed specific patterns along pivot irrigation tracks, along field borders and in the interior of the field. = 5 points ",ScoreCard,5.0,,,,,,,scouting with specific methods,,,,,,,,,,,nan,nan,,,,,HealthyGrown,nan,nan,nan,nan,nan,nan,
 1,,,,Scouting Section ,1.0,2.0,b,Whose scouting data did you primarily use to make management decisions for this field? ,Scorecard,5.0,Prefers that data is taken by consultant or trained employee,,,,,,prefers that data is taken by consultant or trained employee,,,,,,,,,,,nan,nan,,,,,HealthyGrown,nan,nan,nan,nan,nan,nan,

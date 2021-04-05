@@ -4,6 +4,8 @@
 Created on Mon Nov 30 15:15:48 2020
 
 @author: bdube
+
+Fix the primary pesticide list of restricted chemicals. 
 """
 import os
 import pandas as pd
@@ -105,6 +107,6 @@ if __name__=='__main__':
            
         new_data+=[{**line.to_dict(), **{'CAS Number': cas}} for cas in cas_nums]      
     rp2=pd.DataFrame(new_data)
-    rp2.to_csv(os.path.join('pesticide_lists', 'restricted_lists2.txt'))
+    rp2.to_csv(os.path.join('pesticide_lists', 'treaty_lists.txt'))
     
     

@@ -13,6 +13,7 @@ from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import time
+import re
 
 @contextmanager
 def progress_saver(*filepaths):
@@ -30,16 +31,18 @@ def progress_saver(*filepaths):
             with open(fp, 'w+') as f:
                 print(json.dumps(ds), file=f)
                 
-def other_name_finder(browser):
-    text=browser.find_element_by_xpath("html").text
+def other_name_finder(text):
     results=[]
-    for string in text.split('OTHER NAMES FOR')[1].split('\n')[1]:
-        if not any([text in string for text in ['Code', 'CAS Number']]):
+    for string in text.split('OTHER NAMES FOR')[1].split('\n')[1:]:
+        if 'WELCOME TO THE NEW PESTICIDE INFO' in string:
+            return [r for r in results if r]
+        elif not any([text in string for text in ['Code', 'CAS Number']]):
             results.append(string.strip())
-    return results
+    return [r for r in results if r]
     
-def backup_searcher(name, browser):
-    browser=webdriver.Firefox()
+def backup_searcher(name, browser=None):
+    if not browser:
+        browser=webdriver.Firefox()
     url=f'https://www.pesticideinfo.org/search-result?page=1&sort=Chem_Name&order=ASC&search={name}&type=chemical'
     browser.get(url)
     time.sleep(5)
@@ -51,7 +54,6 @@ def backup_searcher(name, browser):
         open_new_window(browser, e)
     time.sleep(len(elems))
     for i in range(len(elems)):
-        print(i)
         browser.switch_to_window(browser.window_handles[(i+1)*-1])
         time.sleep(5)
         
@@ -61,19 +63,22 @@ def backup_searcher(name, browser):
         if new_cas:
             other_names+=other_name_finder(browser)
         time.sleep(5)
-    #return results, other_names
+    return [r for r in results if r], other_names
+
+
 def find_cas(text):
-    '''FIll in lAter!'''
-    pass
+    match = re.search('(?<=CAS Number\n:\n)[\d-]+', text)
+    if match:
+        return match.group()
 
 
 def open_new_window(browser, element):
     ActionChains(browser).key_down(Keys.CONTROL).click(element).key_up(Keys.CONTROL).perform()
-                
-with progress_saver('all_results.txt', 'aliases2.txt') as (all_results, all_other_names):
-    
-    
-    for name in [n for n in names if n not in all_results]:
-        results, other_names=backup_searcher(name)
-        all_results[name]=[r for r in results if r]
-        all_other_names[name]=[o for o in other_names if o]
+
+if __name__ == "__main__":                
+    with progress_saver('all_results.txt', 'aliases2.txt') as (all_results, all_other_names):
+        
+        for name in [n for n in all_other_names if n not in all_results]:
+            results, other_names=backup_searcher(name)
+            all_results[name]=[r for r in results if r]
+            all_other_names[name]=[o for o in other_names if o]

@@ -155,28 +155,42 @@ search_functions=[webchem_search, wikiSearcher, get_from_chembook]
 
 
 def full_searcher(name, pieces=True):
+    '''Use all available methods to look up the CAS number for a name.
+    searching webchem (webchem_search,)
+    scraping wikipedia: wikiSearcher
+    and scraping chembook: get_from_chembook
+    '''
+    
     for search_function in search_functions:
         valid, tup=search_function(name)
         if valid:
             return [tup]
     
     if pieces:
+        print(pieces)
         if len(name.split(' '))>1:
             responses=[]
             for n in [n for n in name.split(' ') if len(n)>3]:
-                responses+=full_searcher(n)
+                res = full_searcher(n)
+                if res:
+                    responses.append(res)
             return [r for r in responses if r]
     else:
         return []
 
 def full_search_and_append(name, dic, aliases):
     if name not in dic and name not in aliases:
+    
         responses=full_searcher(name)
+        
         dic[name]=[]
+        if not responses:
+            return dic, aliases
         for tup in responses:
-            dic[tup[0]]=tup[1]
-            if tup[0]!=name:
-                aliases[tup[0]]=name
+            if len(tup)>1:
+                dic[tup[0]]=tup[1]
+                if tup[0]!=name:
+                    aliases[tup[0]]=name
     return dic, aliases
 
 
@@ -211,27 +225,47 @@ def initial_loader():
             out.append({})
     return out
         
+def check_is_dict(string):
+    try:
+        json.loads(string)
+        return True
+    except:
+        return False
 
 if __name__=='__main__':
     os.chdir('pesticide_lists')
     
     results, aliases=initial_loader()
+    if os.path.exists('finished.txt'):
+        finished_files = open('finished.txt').read().split('\n')
+    else:
+        finished_files = []
     #results=read_csv_list()
     mapping=json.loads(open('manual_fixes.txt').read())
     
     for f in [f for f in os.listdir() if f[-4:]=='.txt']:
-        if f in ['aliases.txt', 'chemical_ref_nums.txt',
-                 'restricted_pesticides.txt', 'chemical_ref_nums2.txt',
-                 'manual_fixes.txt', 'man_fixes_nums.txt']:
+        if f in finished_files + ['aliases.txt', 'chemical_ref_nums.txt',
+                 'restricted_pesticides.txt', 'treaty_lists.txt', 'chemical_ref_nums2.txt',
+                 'manual_fixes.txt', 'man_fixes_nums.txt', 'all_results.txt', 'aliases2.txt', 'finished.txt']:
+           
             continue
         with open(f, encoding='latin1') as file:
             print(f)
             for line in file.read().split('\n'):
-                
-                line=replacer(line, mapping)
-                if line and line not in results:
-                    results, aliases=full_search_and_append(line, results, aliases)
-                
+                try:
+                    if check_is_dict(line):
+                        continue
+                    line=replacer(line, mapping)
+                    if line and line not in results:
+    
+                        results, aliases=full_search_and_append(line, results, aliases)
+                except:
+                    data_saver(results, aliases)
+                    with open('finished.txt', 'w+') as f:
+                        print('\n'.join(finished_files), file = f)
+                    raise ValueError
+            finished_files.append(f)   
+                    
     data=pd.read_csv('restricted_pesticides.txt', sep='\t')
     for name in data['Chemical Name'].tolist():
         name=replacer(name, mapping)

@@ -1,6 +1,7 @@
 arsen and its compounds
 arsenic pentoxide
-cacodylic acid; dimethylarsinic acid
+cacodylic acid
+dimethylarsinic acid
 msma
 sodium arsenate
 cacolydate
@@ -13,13 +14,6 @@ copper arsenate
 lead arsenate
 sodium arsenite
 paraffin oils
-paraffin oil
-paraffin oil
-paraffin oil
-paraffin oil
-paraffin oil
-paraffin oil
-paraffin oil
 paraffin oil
 paraffin oil
 3-chloro-1, 2-propanediol (alpha-
@@ -134,7 +128,8 @@ nitrobenzene
 omethoate
 oxamyl
 oxydemeton-methyl
-paraffin oils; mineral oils*
+paraffin oils
+mineral oils
 paraquat dichloride
 permethrin
 phosmet

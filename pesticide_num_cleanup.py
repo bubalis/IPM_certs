@@ -141,6 +141,11 @@ new_man_fixes={'carbendizum': ['10605-21-7'],
  '64742-65-0',
  '72623-86-0',
  '97862-82-3'],
+
+'Glyphosate and its salts': [	
+'1071-83-6', 
+'38641-94-0', 
+'70393-85-0', '81591-81-3'], 
   
    
    
@@ -273,12 +278,12 @@ for key in keys_to_change:
     results[key]=results[key.strip()]
 #%%
 
-compounds=['arsenic and its compounds','Arsenic and its compounds', 
+compounds=['arsenic and its compounds','Arsenic and its compounds', 'arsen and its compounds', 
           'mercury and inorganic mercury compounds', 
           'mercury and mercury compounds',
-          'inorganic mercury compounds', 'mercury and its compounds']
+          'inorganic mercury compounds', 'mercury and its compounds', 'mercury compounds']
 
-for c, string in zip(compounds, ['arsen', 'merc', 'merc', 'merc', 'merc', 'merc']):
+for c, string in zip(compounds, ['arsen', 'arsen', 'arsen',  'merc', 'merc', 'merc', 'merc', 'merc', 'merc']):
     data=[]
     for r in [r for r in results if string in r and r not in compounds]:
         try:

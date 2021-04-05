@@ -9,9 +9,10 @@ Beta –cyfluthrin
 Bifenthrin
 Carbaryl
 Carbendazim
-Chlorantraniliprole,
+Chlorantraniliprole
 Chlorothalonil
-Chlorpyrifos, Chlorpyrifos-methyl
+Chlorpyrifos
+Chlorpyrifos-methyl
 Clothianidin
 Cypermethrin & its alpha and beta isomer
 Deltamethrin

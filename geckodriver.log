@@ -251,3 +251,88 @@ Gdk-Message: 15:52:53.278: firefox: Fatal IO error 11 (Resource temporarily unav
 Exiting due to channel error.
 Exiting due to channel error.
 Exiting due to channel error.
+1614544175787	geckodriver	INFO	Listening on 127.0.0.1:34495
+1614544176781	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileuSTqVR"
+[GFX1-]: glxtest: libEGL initialize failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1614544180302	Marionette	INFO	Listening on port 33719
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1614544180415	Marionette	WARN	TLS certificate errors will be ignored for this session
+1614544180428	Marionette	ERROR	[15] No reply from Marionette:Register
+1614544512950	Marionette	ERROR	[35] No reply from Marionette:Register
+1614544513281	Marionette	ERROR	[37] No reply from Marionette:Register
+1614544513566	Marionette	ERROR	[39] No reply from Marionette:Register
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1614544597172	Marionette	ERROR	[43] No reply from Marionette:Register
+1614544597461	Marionette	ERROR	[45] No reply from Marionette:Register
+1614544597776	Marionette	ERROR	[47] No reply from Marionette:Register
+1614544984332	geckodriver	INFO	Listening on 127.0.0.1:45453
+1614544985335	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilee8j4gI"
+[GFX1-]: glxtest: libEGL initialize failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1614544987752	Marionette	INFO	Listening on port 38145
+1614544987864	Marionette	WARN	TLS certificate errors will be ignored for this session
+1614544987881	Marionette	ERROR	[18] No reply from Marionette:Register
+1614544997196	Marionette	ERROR	[35] No reply from Marionette:Register
+1614544997549	Marionette	ERROR	[37] No reply from Marionette:Register
+1614544997877	Marionette	ERROR	[39] No reply from Marionette:Register
+1614545070645	Marionette	INFO	Stopped listening on port 33719
+1614545071508	Marionette	INFO	Stopped listening on port 38145
+1614545103343	geckodriver	INFO	Listening on 127.0.0.1:58301
+1614545104347	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileI3dS9u"
+[GFX1-]: glxtest: libEGL initialize failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1614545106756	Marionette	INFO	Listening on port 37611
+1614545106878	Marionette	WARN	TLS certificate errors will be ignored for this session
+1614545106894	Marionette	ERROR	[15] No reply from Marionette:Register
+1614545114640	Marionette	ERROR	[35] No reply from Marionette:Register
+1614545114941	Marionette	ERROR	[37] No reply from Marionette:Register
+1614545115240	Marionette	ERROR	[39] No reply from Marionette:Register
+1614545203127	Marionette	INFO	Stopped listening on port 37611
+1614545212866	geckodriver	INFO	Listening on 127.0.0.1:45903
+1614545213870	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilem0S5tL"
+[GFX1-]: glxtest: libEGL initialize failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1614545216392	Marionette	INFO	Listening on port 38421
+1614545216500	Marionette	WARN	TLS certificate errors will be ignored for this session
+1614545216517	Marionette	ERROR	[15] No reply from Marionette:Register
+1614545224288	Marionette	ERROR	[35] No reply from Marionette:Register
+1614545224600	Marionette	ERROR	[37] No reply from Marionette:Register
+1614545224893	Marionette	ERROR	[39] No reply from Marionette:Register
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+Gdk-Message: 10:59:09.816: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server 192.168.170.81:0.
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1617134646865	geckodriver	INFO	Listening on 127.0.0.1:51659
+1617134647868	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilePQeInn"
+[GFX1-]: glxtest: libEGL initialize failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1617134650555	Marionette	INFO	Listening on port 39575
+1617134650599	Marionette	WARN	TLS certificate errors will be ignored for this session
+1617134650621	Marionette	ERROR	[15] No reply from Marionette:Register
+1617134717086	Marionette	ERROR	[35] No reply from Marionette:Register
+1617134718771	Marionette	ERROR	[37] No reply from Marionette:Register
+1617134719784	Marionette	ERROR	[39] No reply from Marionette:Register
+1617134869439	geckodriver	INFO	Listening on 127.0.0.1:57341
+1617134870443	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileQd7YON"
+[GFX1-]: glxtest: libEGL initialize failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1617134873613	Marionette	INFO	Listening on port 46661
+1617134873684	Marionette	WARN	TLS certificate errors will be ignored for this session
+1617134873702	Marionette	ERROR	[15] No reply from Marionette:Register
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1617135071666	Marionette	INFO	Stopped listening on port 46661
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1617135071790	Marionette	INFO	Stopped listening on port 39575

@@ -7,8 +7,9 @@ Alachlor
 Aldicarb
 Aldrin
 Allyl alcohol
-alpha-BHC;alpha-HCH
-Alpha-chlorohydrin*
+alpha-BHC
+alpha-HCH
+Alpha-chlorohydrin
 Amitrole
 Anthracene oil
 Arsenic and its compounds
@@ -18,12 +19,13 @@ Azinphos-ethyl
 Azinphos-methyl
 Azocyclotin
 Benomyl
-beta-HCH; beta-BCH
+beta-HCH
+beta-BCH
 Binapacryl
 Blasticidin-S
-Brodifacoum*
-Bromadiolone*
-Bromethalin*
+Brodifacoum
+Bromadiolone
+Bromethalin
 Bromoxynil
 Bromoxynil heptanoate
 Bromoxynil octanoate
@@ -47,30 +49,33 @@ Chlorfenvinphos
 Chlorfluazuron
 Chlormephos
 Chlorobenzilate
-Chlorophacinone*
+Chlorophacinone
 Chloropicrin
 Chlorotoluron
 Copper arsenate
-Coumaphos*
-Coumatetralyl*
-CPMA (Chloromethoxypropyl-mercuric-acetate)
+Coumaphos
+Coumatetralyl
+CPMA 
+Chloromethoxypropyl-mercuric-acetate
 Creosote
 Cyhexatin
 DBCP
-DDD (dichlorodiphenyl – dichloroethan)
+DDD 
+dichlorodiphenyl – dichloroethan
 DDT
 Demeton-S-methyl
-Dichlorvos; DDVP
+Dichlorvos 
+DDVP
 Dicofol
 Dicrotophos
 Dieldrin
-Difenacoum*
-Difethialone*
+Difenacoum
+Difethialone
 Dimoxystrobin
 Dinocap
 Dinoseb and its salts and esters
 Dinoterb
-Diphacinone*
+Diphacinone
 Diquat dibromide
 Diquat dichloride
 Disulfoton
@@ -82,11 +87,15 @@ E-Phosphamidon
 Epichlorohydrin
 EPN
 Ethiofencarb
-Ethoprophos; Ethoprop
-Ethylene dichloride, EDC
+Ethoprophos
+Ethoprop
+Ethylene dichloride
+EDC
 Ethylene oxide
 Ethylene thiourea
-Ethylenedibromide;1,2-dibromoethane, EDB
+Ethylenedibromide
+1,2-dibromoethane 
+EDB
 Famphur
 Fenamiphos
 Fenarimol
@@ -109,7 +118,9 @@ Halfenprox
 Heptachlor
 Heptenophos
 Hexachlorobenzene (HCB)
-Hexachlorocyclohexane  HCH(Benzene hexachloride)
+Hexachlorocyclohexane  
+HCH
+Benzene hexachloride
 Hexaflumuron
 Ioxynil
 Isopyrazam
@@ -121,7 +132,7 @@ Linuron
 Magnesium phosphide
 Maneb
 Mecarbam
-Mercury compounds, including inorganic mercury compounds, alkyl mercury compounds and alkyloxyalkyl and aryl mercury compounds
+Mercury compounds
 Metam-sodium
 Methamidophos
 Methidathion
@@ -152,8 +163,10 @@ Phorate
 Phosphamidon
 Picloram
 PMDS Di(phenylmercuric) dodecenyl succinate
-Polybrominated biphenyls mixture PBB
-Polychlorinated biphenyls PCB (except mono and dichlorinated) Aroclor
+Polybrominated biphenyls mixture 
+PBB
+Polychlorinated biphenyls 
+PCB
 Polychlorinated Terphenyls (PCTs)
 Potasan
 Profoxydim
@@ -190,7 +203,8 @@ Thiourea
 Thiram
 Tolfenpyrad
 Tolylfluanid
-Toxaphene; Camphechlor
+Toxaphene 
+Camphechlor
 Tri-allate
 Triazophos
 Tributyltin compounds
@@ -202,7 +216,7 @@ Tris(2,3 - dibromopropyl) phosphate
 Vamidothion
 Vinclozolin
 Vinyl chloride
-Warfarin*
+Warfarin
 Zeta-Cypermethrin
 Zinc phosphide
 Zineb

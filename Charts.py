@@ -24,8 +24,11 @@ def is_valid(string):
     else:
         return 0
     
-    
-
+def flip_dict_list(di):
+    out = {} 
+    for key, value in di.items():
+        out.update({v: key for v in value})
+    return out
 
 def string_replacer(string, mapping):
     '''Replace the string by looking it up in the mapping.
@@ -211,14 +214,15 @@ def make_pesticide_dfs(index, re_index_list):
                             
 def pest_list_plotter(pest_dfs, handles):
     '''Plotter function for pesticide data.'''
-    
+    ymax = np.sum([np.array(df[[c for c in df.columns if 'Pesticides' in c]]) for df in pest_dfs[0]], axis=0).max()*1.1
     fig, axes=plt.subplots(1,2, figsize=(20,5))
     for group, string , ax in zip(pest_dfs, ('Banned', 'Restricted'), axes):
         ax=stackplot_col(ax, f'{string} Pesticides', group, ['', r'\\\\'])
+        ax.set_ylim(0, ymax)
     axes[0].set_ylabel('Number of Pesticides', size=20)
     plt.legend(handles=handles, markerscale=4)
     plt.tight_layout()
-    axes[0].scatter(6, 150, marker='*', s=350)
+    axes[0].scatter(6, 150, marker='*', s=350, c=handles[0]._original_facecolor )
     
     
     plt.savefig(os.path.join('figures', 'pesticide_plotter.png'))
@@ -231,6 +235,12 @@ def clean_data(df):
     df=df[df['CertName']!='']
     df=df[df['CertName']!='Eco Apple Stonefruit']
     df['CertName']=df['CertName'].apply(ecoapple_fix)
+    df = df.rename(columns = {'Biosecurity/Sanitation': 
+                              'Biosecurity / Sanitation',
+                              'Education/training':
+                                  'Education / Training',
+                                  'Materials/Waste Mgmt':
+                                      'Materials / Waste Mgmt'})
     df=df.apply(buffer_switcher, axis=1)
     df=df.apply(performance_switcher, axis=1)
     df=df.apply(threshold_fixer, axis=1)
@@ -241,13 +251,15 @@ def add_columns(df):
     '''Add additional calculated columns to dataframe based on 
     text the elements of the data.'''
     
-    df['MOA rotation']=df['Pesticide Practices'].str.contains('moa rotation')
-    df['Sprayer Calibration']=df['Pesticide Practices'].str.contains('calibration')    
-    df['crop rotation']=df['Agronomic Practices'].str.contains('rotation')
-    df['cover crop']=df['Agronomic Practices'].str.contains('cover crop')    
-    df['weather model']=df['Monitoring'].str.contains('dd model|weather model', regex=True)
-    df['pesticide containers']=df['Materials/Waste Mgmt'].str.contains('containers')
-    df['ppe']=df['Worker Safety'].str.contains('ppe')
+    df['MOA rotation'] = df['Pesticide Practices'].str.contains('moa rotation')
+    df['Sprayer Calibration'] = df['Pesticide Practices'].str.contains('calibration')    
+    df['crop rotation'] = df['Agronomic Practices'].str.contains('rotation')
+    df['cover crop'] = df['Agronomic Practices'].str.contains('cover crop')    
+    df['model'] = df['Monitoring'].str.contains('model')
+    df['pesticide containers'] = df['Materials / Waste Mgmt'].str.contains('containers')
+    df['ppe'] = df['Worker Safety'].str.contains('ppe')
+    df['threshold'] = df['Monitoring'].str.contains('threshold')
+    df['Spray Buffer'] = df['Pesticide Practices'].str.contains('buffer')
     
     df['requirement']=(df['Required/Core or Improvement'].str.lower()=='required') | (df['Required/Core or Improvement'].str.lower()=='level 2')
     df['scorecard']=(df['Required/Core or Improvement'].str.lower()=='scorecard') | (df['Required/Core or Improvement']=='C')
@@ -277,6 +289,7 @@ def plot_cert_structures(dic):
     results=[len(li) for li in dic.values()]
     plt.pie(results, labels=dic.keys())
     print(results)
+    plt.title('Certifications by Structure')
     plt.savefig(os.path.join(charts_dir, 'struct_pie.png'))
     plt.show()
 
@@ -308,7 +321,7 @@ def set_abbrvs(re_index_list, corrections):
 
 def group_certs(c_dict):
     category_dict = OrderedDict()
-    for key1 in ['Domestic', 'Regional Designation', 'Global South']:
+    for key1 in ['Regional Designation', 'Domestic', 'Global South']:
         for key2 in ['Single Commodity', 'Multi-Commodity']:
             category_dict[f'{key1}, {key2}'] = intersect_lists(
                                                 c_dict[key1],
@@ -326,8 +339,10 @@ def pie_from_dict(di):
 
 def cert_type_pie(category_dict):
     ax = pie_from_dict(category_dict)
+    plt.tight_layout()
     plt.title('Types of Certifications in the Sample')
-    plt.savefig(os.path.join(charts_dir, 'Cert_type_pie'))
+    
+    plt.savefig(os.path.join(charts_dir, 'Cert_type_pie'), bbox_inches='tight')
     plt.show()
 
 def json_from_file(path):
@@ -357,7 +372,9 @@ classifier_dict = json_from_file(
 
 
 category_dict = group_certs(classifier_dict)
-re_index_list=[x for y in category_dict.values() for x in y]
+cert_type_pie(category_dict)
+
+re_index_list = [x for y in category_dict.values() for x in y]
 
 
 norm_df=re_indexer(norm_df, re_index_list)
@@ -365,7 +382,7 @@ norm_df=re_indexer(norm_df, re_index_list)
 
 
 commodities = json_from_file(os.path.join('data', 'commodities.json'))
-ax=pie_from_dict(commodities)
+ax = pie_from_dict(commodities)
 plt.title('Single Commodity Certifications')
 plt.savefig(os.path.join(charts_dir, 'cropspie.png'))
 plt.show()
@@ -382,9 +399,9 @@ colors=[]
 for cat, color in zip(category_dict.values(), category_colors):
     colors+=[color]*len(cat)
 
-labels=['US, Multi-Comm',
+labels=['Regional, 1-Comm',
+        'US, Multi-Comm',
 #'US, Single-Comm',
-'Regional, 1-Comm',
  'Low-Inc, 1-Comm',
 'Low-Inc, Multi-Comm']
 
@@ -414,8 +431,8 @@ crop_1=norm_df[norm_df['CertName'].isin(classifier_dict['Single Commodity'])]
 any_crop=norm_df[norm_df['CertName'].isin(classifier_dict['Multi-Commodity'])]
 
 
-by_com=pd.DataFrame(np.array([crop_1.mean(), any_crop.mean()]).T, index=norm_df.columns, 
-             columns=['Single Commodity', 'Multi-Commodity'])
+#by_com=pd.DataFrame(np.array([crop_1.mean(), any_crop.mean()]).T, index=norm_df.columns, 
+#             columns=['Single Commodity', 'Multi-Commodity'])
    
 
 counts=pd.concat([df[df.columns[:9]],df[df.columns[9:]].applymap(is_valid)], axis=1)
@@ -435,6 +452,9 @@ data_nonreq = transform_for_plotting(by_req_type[non_reqindexer.tolist()])
 
 data_sets=[data_req, data_impr, data_nonreq]
 
+
+#for ds in data_sets:
+#    ds['class'] = ds['CertName'].replace(flip_dict_list(classifier_dict))
 
 
 #Make patches for plotting
@@ -460,18 +480,20 @@ pest_list_plotter(pest_dfs, handles = patches_p)
 cols_dict={
     'admin': ['Record-Keeping',
  'Planning',
- 'Education/training',
+ 'Education / Training',
  'Monitoring'],
   
-    'worker' : [
- 'Worker Safety',
- 'Materials/Waste Mgmt'],
+    
 
 'farm_pratices' :
       ['Pesticide Practices', 
       'Prohibited Practice',  
       'Agronomic Practices',
-      'Biosecurity/Sanitation',]
+      'Biosecurity / Sanitation',],
+      
+  'worker' : [
+ 'Worker Safety',
+ 'Materials / Waste Mgmt'],
      }
 
 
@@ -479,6 +501,137 @@ for name, cols in cols_dict.items():
     std_stack_plot(cols, data_req, data_impr, data_nonreq,  
                f"{name}.png", handles=patches)
 
+plt.show()
+plt.close()
+fig, ax = plt.subplots()
 plt.legend(handles=patches)
-ax=plt.gca()
 ax.axis('off')
+plt.savefig(os.path.join('figures', 'lengend.png'))
+plt.show()
+
+keep_cols = [x for y in cols_dict.values() for x in y]
+#%%
+gb = counts.groupby('CertName')
+totals = gb.sum()[keep_cols].reset_index()
+totals['class'] = totals['CertName'].replace(flip_dict_list(category_dict))
+totals.drop(columns = ['CertName'], inplace = True)
+
+
+means = totals.groupby('class').mean().T
+maxes = totals.groupby('class').max().T
+mins = totals.groupby('class').min().T
+
+
+def add_leading_sp(num, _len = 4):
+    string = str(num)
+    if len(string) ==_len:
+        return string
+    else:
+        return ' '*(_len - len(string)) + string
+    
+    
+@np.vectorize
+def write_table(mean, _min, _max):
+    return f'{int(mean)} tab ({add_leading_sp(_min)} - {add_leading_sp(_max)})'
+
+#=============================================================================
+column_order = [ 'Regional Designation, Single Commodity', 'Domestic, Multi-Commodity',
+             'Global South, Single Commodity', 'Global South, Multi-Commodity',
+       ]
+
+
+
+sums = pd.DataFrame(write_table(means, mins, maxes),                     
+                     index = means.index, columns = list(means.columns))
+
+#sums.rename(columns = {'Regional Designation, Single Commodity': })
+sums.index.name = 'Criteria Category'
+sums = sums[column_order]
+
+
+def make_latex_table(df, fp, replacers = {}, **kwargs):
+    text_string = df.to_latex(**kwargs)
+    for k, v in replacers.items():
+        text_string = text_string.replace(k, v)
+    print (text_string)
+    with open(fp, 'w+') as file:
+        print(r'''\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\newcolumntype{L}{>{\centering\arraybackslash}m{3cm}}
+\usepackage{booktabs}
+\usepackage{lscape}
+\usepackage{multirow}
+\usepackage{makecell}
+
+
+\begin{document}
+\begin{landscape}''', file = file)
+        print(text_string, file = file)
+        print(r'''\end{landscape}
+\end{document}''', file = file)
+
+make_latex_table(sums, os.path.join('tables', 'table_3.txt'), 
+                 replacers = {' tab ': r'\ \ \ ', '  ': r'\ ' },
+                 column_format = "lLLLL")
+
+
+#%%
+cols = ['MOA rotation',
+ 'Sprayer Calibration',
+ 'crop rotation',
+ 'cover crop',
+ 'model',
+ 'threshold', 'Spray Buffer',
+ 'pesticide containers',
+ 'ppe',
+ ]
+
+def aggregate_mention_counts(df_dict, cols):
+    agg_dict = {}
+    for label, df in df_dict.items():
+        df['class'] = df['CertName'].replace(flip_dict_list(category_dict))
+        agg_dict[label] = df.groupby('class')[cols].agg(
+            lambda li: sum([bool (i) for i in li])/len(li))
+    total = pd.DataFrame(sum([df[cols].to_numpy() for df in df_dict.values()]), columns = cols)
+    total['CertName'] = df_dict['required']['CertName'].tolist()
+    #total['class'] = total['CertName'].replace(flip_dict_list(category_dict))     
+    gb = total.groupby('CertName')[cols].sum().astype(bool).reset_index()
+    gb['class'] = gb['CertName'].replace(flip_dict_list(category_dict))
+    agg_dict['total'] = gb.groupby('class').mean()
+    
+    agg_df = pd.concat(agg_dict.values(), keys = agg_dict.keys(), names =['type']).reorder_levels([1,0])
+    agg_df.sort_index(level = 0, inplace = True)
+    return agg_dict
+    
+df_dict = {'required': data_req, 'improvement' : data_impr, 'scorecard': data_nonreq}
+
+agg_dict = aggregate_mention_counts(df_dict, cols)
+
+#%%
+# =============================================================================
+# make_latex_table(a, os.path.join('tables', 'table_2.txt'), 
+#                  multirow=True, 
+#                  float_format="{:0.2f}".format, 
+#                  #column_format = 'p{2cm}p{2cm}rrrrrrr',
+#                  replacers = {**{'{*}': '{2cm}'}, **{c: r"\thead{" + c.replace(', ', r' \\ ') +'}' for c in a.columns},
+#                  })
+# =============================================================================
+
+
+
+#%%
+ts = agg_dict['total'].T
+ts.index.name = 'Criteria'
+ts = ts[column_order]
+make_latex_table(ts, os.path.join('tables', 'table_5.txt'),
+                 float_format="{:0.2f}".format,
+                 replacers = {c: r"\thead{" + c.replace(', ', r' \\ ') +'}' for c in ts.columns})
+
+#%%
+import seaborn as sns
+ax = sns.heatmap(ts, annot = True, cmap = 'winter', )
+ax.set_xticklabels(labels)
+plt.savefig(os.path.join('figures', 'heatmap.png'), bbox_inches ='tight')
+plt.show()
+#=============================================================================
