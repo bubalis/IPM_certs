@@ -336,3 +336,48 @@ console.log: WebExtensions: reset-default-search: No addons in our list are inst
 ###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
 1617135071790	Marionette	INFO	Stopped listening on port 39575
+1617981748012	geckodriver	INFO	Listening on 127.0.0.1:40417
+1617981748018	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileAojg0c"
+[GFX1-]: glxtest: libEGL initialize failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1617981750259	Marionette	INFO	Listening on port 44049
+1617981750351	Marionette	WARN	TLS certificate errors will be ignored for this session
+1617981750366	Marionette	ERROR	[15] No reply from Marionette:Register
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1617988440063	Marionette	INFO	Stopped listening on port 44049
+1617991979995	geckodriver	INFO	Listening on 127.0.0.1:39311
+1617991980999	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileRLd7IU"
+[GFX1-]: glxtest: libEGL initialize failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1617991984070	Marionette	INFO	Listening on port 42211
+1617991984149	Marionette	WARN	TLS certificate errors will be ignored for this session
+1617991984167	Marionette	ERROR	[15] No reply from Marionette:Register
+1617992326374	Marionette	INFO	Stopped listening on port 42211
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1617994022237	geckodriver	INFO	Listening on 127.0.0.1:46113
+1617994023241	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileiHosup"
+[GFX1-]: glxtest: libEGL initialize failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1617994026264	Marionette	INFO	Listening on port 36689
+1617994026371	Marionette	WARN	TLS certificate errors will be ignored for this session
+1617994026391	Marionette	ERROR	[15] No reply from Marionette:Register
+1617994034279	geckodriver	INFO	Listening on 127.0.0.1:56969
+1617994035283	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileo3IaEN"
+[GFX1-]: glxtest: libEGL initialize failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1617994038398	Marionette	INFO	Listening on port 41169
+1617994038515	Marionette	WARN	TLS certificate errors will be ignored for this session
+1617994038536	Marionette	ERROR	[15] No reply from Marionette:Register
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1617994831479	Marionette	INFO	Stopped listening on port 36689
+1617994831550	Marionette	INFO	Stopped listening on port 41169
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+

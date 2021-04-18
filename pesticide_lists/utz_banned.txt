@@ -16,8 +16,7 @@ Beta-HCH
 Beta-BCH
 Blasticidin-S
 Borax 
-disodium tetraborate 
-decahydrate 
+disodium tetraborate decahydrate 
 Boric acid
 Brodifacoum
 Bromadiolone
@@ -144,8 +143,7 @@ Thiodicarb
 Thiofanox
 Thiometon
 Thiourea
-Thiram in formulations with 
-benomyl and carbofuran
+#Thiram in formulations with  benomyl and carbofuran
 Triazamate
 Triazophos
 Tributyltin compounds
@@ -172,8 +170,6 @@ Calcium arsenate
 Copper arsenate
 Lead arsenate
 Sodium arsenite
-
-
 Mercuric chloride
 Mercuric oxide
 Chloromethoxypropylmercuric acetate
@@ -191,16 +187,11 @@ Tributyltin benzoate
 Tributyltin chloride
 Tributyltin linoleate
 Tributyltin naphthenate
-
-
-
-
 Nonylphenol ethoxylate
 Nonylphenol ethoxylate
 Nonylphenol ethoxylate
 Nonylphenol ethoxylate
 Nonylphenol ethoxylate
-
 Paraffin oil
 Paraffin oil
 Paraffin oil

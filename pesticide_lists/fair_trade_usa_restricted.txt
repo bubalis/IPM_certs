@@ -16,15 +16,13 @@ sodium arsenite
 paraffin oils
 paraffin oil
 paraffin oil
-3-chloro-1, 2-propanediol (alpha-
-chlorohydrin)
+3-chloro-1, 2-propanediol (alpha-chlorohydrin)
 abamectin
 acetochlor
 acrolein
 allyl alcohol
 aluminum phosphide
 amisulbrom
-restricted active ingredient
 anthracene oil
 arsen and its compounds
 atrazine
@@ -139,7 +137,8 @@ potasan
 propargite
 propetamphos
 propoxur
-propylene oxide, oxirane
+propylene oxide
+oxirane
 prothiofos
 pyrazoxon
 pyridalyl
@@ -147,7 +146,6 @@ quinoxyfen
 quizalofop-p-tefuryl
 resmethrin
 silafluofen
-restricted active ingredient
 sodium cyanide
 strychnine
 tcmtb

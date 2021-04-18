@@ -15,11 +15,20 @@ from spatial_utils import total_area_eq_val,  get_rast_crs, parallelize_on_rows
 import matplotlib.pyplot as plt
 import pymc3 as pm
 import arviz as az
+import scipy as sp
 
 import numpy as np
 import pickle
 from functools import partial
 import itertools
+from theano import shared
+
+def plot_summary(subset):
+    year_sum = subset.groupby('YEAR').sum()[['ACRES_PLANTED', "LBS_AI"]]
+    year_sum['LBS_per_ac'] = year_sum['LBS_AI']/year_sum['ACRES_PLANTED']
+    year_sum['LBS_per_ac'].plot()
+    plt.show()
+
 
 def try_merge(left, right, chunksize=1000, **kwargs):
     '''Merge two dataframes together, using the standard pd.merge function.
@@ -39,7 +48,31 @@ def try_merge(left, right, chunksize=1000, **kwargs):
         os.remove('scratch.csv')
         return pd.concat(out)
 
-
+def check_rec_bad(row):
+    '''Guidelines here: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.168.6558&rep=rep1&type=pdf
+    for determining if records are bad.'''
+    try:
+        return any([(row['LBS_PER_AC'] > row['median_rate']*50),
+            ((row['FUMIGANT_SW']!='X') & (row['LBS_PER_AC']>200)),
+            ((row['FUMIGANT_SW'] == 'X') & (row['LBS_PER_AC']>1000) )])
+    except:
+        print(row)
+        raise
+    
+def fix_bad_recs(apps):
+    '''Apply the guideline here: that applications that are 50x the median
+    must be in error. '''
+    
+    medians = apps.groupby('CHEMNAME')['LBS_PER_AC'].median().to_dict()
+    #with mp.Pool(4) as pool:
+    #    apps['median_rate'] = pool.map(medians.get, apps['CHEMNAME'])
+    apps['median_rate'] = apps['CHEMNAME'].apply(medians.get )
+    indicies = apps.apply(check_rec_bad, axis = 1)
+    #indicies = parallelize_on_rows(apps, check_rec_bad, 4)
+    
+    apps.loc[indicies, "LBS_AI"] = apps.loc[indicies, 'median_rate'] * apps.loc[indicies, 'AREA_TREATED']
+    apps['LBS_PER_AC'] = apps['LBS_AI']/apps['AREA_TREATED']
+    return apps, indicies
 
 
 
@@ -86,6 +119,34 @@ def get_cert_years(shapes_gdf, points_gdf, year_col, year_range,
 
 
 def make_random_effects(df, col):
+    '''Pass a dataframe and a column. 
+    Return a vector of ordinal values corresponding with the sorted unique values
+    of the column, and a dictionary with those codes.
+    
+    df:
+        a
+    0   Sam
+    1   Sam 
+    2   Ben 
+    3   Meg
+    4   Meg
+    5   Sam
+    6   Ben
+    
+    make_random_effects(df, 'a')
+    returns  a series:
+        
+    0   2
+    1   2
+    2   0
+    3   1
+    4   1
+    5   2
+    6   0
+    
+    and a dictionary: {0: 'Ben', 1: 'Meg', 2: 'Sam'}
+    '''
+    
     dic = {e: i for i, e in enumerate(np.sort(df[col].unique()))}
     return df[col].replace(dic).values, dic
 
@@ -105,11 +166,36 @@ def collect_neighbors(geometry, gdf, sindex = None, id_col = "COMTRS"):
     else:
         return sub[~sub['geometry'].disjoint(geometry)]
 
-def agg_neighbors(geometry, gdf, col, sindex, agg_func = np.sum):
-    return agg_func(collect_neighbors(geometry, gdf)[col])
 
 
-
+def agg_from_neighbors(indicies, gdf, agg_col, matcher_col= 'COMTRS'):
+    '''Function for aggregating form listed neighbors'''
+    
+    try:
+        if matcher_col:
+            d = gdf[gdf[matcher_col].isin(indicies)]
+            return d[agg_col].sum() 
+        else: 
+            return gdf.loc[indicies, agg_col].sum()
+    except:
+        print(indicies)
+        raise
+    
+    
+def vector_neigh_match(gdf, agg_col, index_col = 'neighbors',  subset_col = 'YEAR',
+                 matcher_col = 'COMTRS'):
+    '''Vectorized function for collecting data from neighbors of each shape. '''
+    out = []
+    for subset_val  in gdf[subset_col].unique():
+        print(subset_val)
+        subset = gdf[gdf[subset_col] == subset_val]
+        func = partial(agg_from_neighbors, gdf = subset, 
+                       agg_col = agg_col, matcher_col = matcher_col)
+        
+        out.append(subset[index_col].apply(func))
+        # gdf.loc[subset.index, new_col_name] = subset[new_col_name]
+        
+    return pd.concat(out)
 
 
 
@@ -121,10 +207,12 @@ if os.path.exists( preped_data_path):
     data = pd.read_csv(preped_data_path)
 else: 
     comtrs = gpd.read_file(os.path.join('intermed_data', 'ava_comtrs'))
+    comtrs['neighbors'] = comtrs['neighbors'].apply(lambda x: x.split(','))
     
+    
+    #assemble organic data
     org_vineyards = gpd.read_file(os.path.join('intermed_data', 
                                                'organic_vineyards_shp'))
-    
     org_vineyards['Year'] = org_vineyards['Effective'].apply(lambda x: 
                                                              int(x.split('-')[-1]))
     
@@ -134,14 +222,7 @@ else:
     org_vineyards = org_vineyards[org_vineyards.geometry.is_valid]
     
     
-    #load in the lodi data
-    lodi_comtrs = gpd.read_file(os.path.join('intermed_data', 'lodi_comtrs'))
-    lodi_cert_acres = pd.read_csv(os.path.join('source_data', 'lodi_acres.csv'))
-    lodi_grape_acres = pd.read_csv(os.path.join('intermed_data', 'lodi_total_grape_acres.csv'))
-    lodi_cert_by_year = lodi_cert_acres.merge(lodi_grape_acres, on = 'Year')
     
-    lodi_cert_by_year['perc_certified'] = lodi_cert_by_year['lodi_acres']/lodi_cert_by_year['acres_grapes']
-    lodi_cert_dict = dict(zip(lodi_cert_by_year['Year'].tolist(), lodi_cert_by_year['perc_certified'].tolist()))
     
     
     
@@ -151,12 +232,9 @@ else:
     
     del org_vineyards
     
-    
-    
-    #rast_fp = os.path.join('source_data', 'Cali_CDL', 'CDL_2018.tif')
-    #rast_crs = get_rast_crs(rast_fp)
-    
-    acres_grapes = pd.read_csv(os.path.join('intermed_data', 'california_grape_acres.csv')).drop(columns = 'Unnamed: 0')
+     
+    acres_grapes = pd.read_csv(os.path.join('intermed_data', 'california_grape_acres.csv')
+                               ).drop(columns = 'Unnamed: 0')
     acres_grapes = acres_grapes.melt(id_vars = 'COMTRS', 
                                      value_name ='acres_grapes', 
                                      var_name = 'YEAR')
@@ -165,25 +243,40 @@ else:
     
     
     
-    
-    
-    
-    
+
     
     #add a column listing the neighbors of each COMTRS
-    comtrs['neighbors'] = comtrs['geometry'].apply(partial(collect_neighbors, 
-                                        gdf = comtrs, sindex = comtrs.sindex))
+    #comtrs['neighbors'] = comtrs['geometry'].apply(partial(collect_neighbors, 
+    #                                    gdf = comtrs, sindex = comtrs.sindex))
     
     
-    #%%
+    #prep the applications data
     apps = pd.read_csv(os.path.join('source_data', 'PIP_recs.txt'), sep = '\t')
     
     apps = apps[['COMTRS', 'GROWER_ID', 
-                 'AREA_PLANTED', 'YEAR', 'LBS_AI', 'PRODNO',
+                 'AREA_PLANTED', 'YEAR', 
+                 'LBS_AI', 'PRODNO', 'PRODUCT_NAME', 'UNIT_TREATED',
+                 'UNIT_PLANTED', 'AREA_TREATED', 'CHEMNAME'
                  ]]
+    apps = apps
+    
+    
+    apps.loc[ apps['UNIT_PLANTED']=='S', 'AREA_PLANTED' ] = apps.loc[
+        apps['UNIT_PLANTED']=='S',  'AREA_PLANTED' ] /43560
+    
+    apps['GROWER_CODE'] = apps['GROWER_ID'].apply(lambda x: x[-7:] if type(x)==str else '') 
+    
+    
     prod_data = pd.read_csv(os.path.join('intermed_data', 'pesticide_products.csv'))
     
-    apps = apps.merge(prod_data[['PRODNO', 'SIGNLWRD_IND']], on = 'PRODNO', how = 'left')
+    apps = apps.merge(prod_data[['PRODNO', 'SIGNLWRD_IND', 'FUMIGANT_SW', 'GEN_PEST_IND']], 
+                      on = 'PRODNO', how = 'left')
+    
+    apps['LBS_PER_AC'] = apps['LBS_AI']/apps['AREA_TREATED']
+    apps, fixed_indicies = fix_bad_recs(apps)
+    apps.drop(columns = ['AREA_TREATED', "LBS_PER_AC"], inplace = True)
+    
+    #set all Null values to No signalword (safest level)
     apps['SIGNLWRD_IND'] = apps['SIGNLWRD_IND'].fillna(5)
     
     del prod_data
@@ -192,30 +285,7 @@ else:
     
     
     
-    def agg_from_neighbors(indicies, gdf, agg_col, matcher_col= 'COMTRS'):
-        try:
-            if matcher_col:
-                d = gdf[gdf[matcher_col].isin(indicies)]
-                return d[agg_col].sum() 
-            else: 
-                return gdf.loc[indicies, agg_col].sum()
-        except:
-            print(indicies)
-            raise
     
-    
-    def vector_neigh_match(gdf, agg_col, index_col = 'neighbors',  subset_col = 'YEAR',
-                     matcher_col = 'COMTRS'):
-        '''Vectorized function for collecting data from neighbors of each shape. '''
-        out = []
-        for subset_val  in gdf[subset_col].unique():
-            print(subset_val)
-            subset = gdf[gdf[subset_col] == subset_val]
-            func = partial(agg_from_neighbors, gdf = subset, agg_col = agg_col, matcher_col = matcher_col)
-            out.append(subset[index_col].apply(func))
-            # gdf.loc[subset.index, new_col_name] = subset[new_col_name]
-            
-        return pd.concat(out)
     #
     
     cert_by_year = cert_by_year.merge(comtrs[['COMTRS', "neighbors"]], on = 'COMTRS')
@@ -223,59 +293,85 @@ else:
     
     #%%
     cols_to_keep = ['COMTRS',
-                    'NAME', 
-                    'YEAR', 
-                    'acres_grapes', 
+                    'NAME',  
                     'neighbors', 
-                     'INACNAME'
-                                        ]
+                     'INACNAME', 
+                     ]
+    comtrs = comtrs[cols_to_keep]
     
-    data = comtrs.merge(acres_grapes, on = ['COMTRS'], how = 'left')
+    data = try_merge(comtrs, apps, chunksize=1000,  on = 'COMTRS', 
+                     how = 'inner')
+    
+    data = data.merge(acres_grapes, on = ['COMTRS', 'YEAR'], how = 'left')
+    
     #data = data[(data['acres_grapes']>20) | (data['acres_grapes'].isna())][cols_to_keep]
     
-    data = data[cols_to_keep]
-    
+    #data = data[cols_to_keep]
     data =  data.merge(cert_by_year, on = ['YEAR', 'COMTRS'], how = 'left') 
-    data = try_merge(data, apps, chunksize=1000,  on = ['COMTRS', 'YEAR'], how = 'left')
+    
     
     del apps
-    operations = data.groupby(['COMTRS', 'YEAR'])[['GROWER_ID']].agg(lambda x: len(set(x))
-                            ).rename(columns={'GROWER_ID': 'num_operations'})
     
-    operations = operations.join(comtrs[['COMTRS', "neighbors"]].set_index('COMTRS')).reset_index()
+    def len_uniq_valid_str(li):
+        return len(set([i for i in li if type(i)==str and i]))
+    
+    data['GROWER_CODE'] = data['GROWER_CODE'].fillna('')
+    #add indicator for number of distinct operations for each COMTRS each YEAR
+    operations = data.groupby(['COMTRS', 'YEAR'])[['GROWER_CODE']].agg(len_uniq_valid_str
+                            ).rename(columns={'GROWER_CODE': 'num_operations'}).reset_index()
+    
+    operations = operations.merge(
+        comtrs[['COMTRS', "neighbors"]], on = 'COMTRS', how = 'right')
+    
+    operations['num_operations'] = operations['num_operations'].fillna(0)
+    
+    operations['num_operations_neigh'] = vector_neigh_match(
+                                operations, 'num_operations').fillna(0)
     
     
-    
-    operations['num_operations_neigh'] = vector_neigh_match(operations, 'num_operations')
-    
-    
-    
+    #add data for certified operations
     data = data.merge(operations, how = 'inner', on = ['COMTRS', 'YEAR'])
+    
     data['N_organic'] = data['N_organic'].fillna(0)
     data['perc_certified_lodi'] = 0
-    data.loc[data['COMTRS'].isin(lodi_comtrs['COMTRS'].tolist()), 'perc_certified_lodi'] = data.loc[data['COMTRS'].isin(
-        lodi_comtrs['COMTRS'].tolist()), 'YEAR'].apply(
-            lambda x: lodi_cert_dict.get(x, 0))
     
     
+    #%%
+    #Add in LODI certifications
+    lodi_comtrs = gpd.read_file(os.path.join('intermed_data', 'lodi_comtrs'))
+    lodi_cert_acres = pd.read_csv(os.path.join('source_data', 'lodi_acres.csv'))
+    lodi_grape_acres = pd.read_csv(os.path.join('intermed_data', 'lodi_total_grape_acres.csv'))
+    lodi_cert_by_year = lodi_cert_acres.merge(lodi_grape_acres, on = 'Year')
+    
+    lodi_cert_by_year['perc_certified'] = lodi_cert_by_year['lodi_acres']/lodi_cert_by_year['acres_grapes']
+    
+    lodi_cert_dict = dict(zip(lodi_cert_by_year['Year'].tolist(), lodi_cert_by_year['perc_certified'].tolist()))
+    
+    lodi_cert_perc = data.loc[
+        data['COMTRS'].isin(lodi_comtrs['COMTRS'].tolist()), 'YEAR'].apply(
+                                        lambda x: lodi_cert_dict.get(x, 0))
+    
+    data.loc[
+        data['COMTRS'].isin(lodi_comtrs['COMTRS'].tolist()), 'perc_certified_lodi'] = lodi_cert_perc 
     
     
-    
-    
-    #add in indicator for Napa Valley:
+    #Napa Data:
     napa_data = pd.read_csv(os.path.join('intermed_data', 'synthetic_napa_data.csv'))
     napa_dict = dict(zip(napa_data['Year'], napa_data['perc_napagreen']))
-    
-    
-    
     data['perc_certified_napa'] = 0
-    data.loc[data['NAME'] == 'Napa', 'perc_certified_napa'] = data.loc[
+    napa_cert_perc = data.loc[
         data['NAME'] == 'Napa', 'YEAR'].apply(lambda x: napa_dict.get(x, 0))
+    data.loc[data['NAME'] == 'Napa', 'perc_certified_napa'] = napa_cert_perc
+    
+    
+    
+    
+    
     
         
     
     
-    type_df = pd.read_csv(os.path.join('intermed_data', 'pesticide_types.csv'))
+    
     
     
     #data['N_organic_neigh'] = data.apply(lambda x: org_agg_func(x['neighbors'], x['YEAR']), axis =1)
@@ -290,51 +386,73 @@ else:
     #data = data.merge(type_df, on = 'PRODNO')
     
     
-    data = data.drop(columns = ['neighbors_x', 'neighbors_y', 'neighbors', 
-                                ])
+   
     del lodi_comtrs
     del comtrs
     del acres_grapes
     del cert_by_year
     del operations
+    
+    data.drop(columns = ['neighbors_x', 'neighbors_y', 'neighbors',
+                         ], inplace = True)
     data.to_csv(preped_data_path)
+type_df = pd.read_csv(os.path.join('intermed_data', 'pesticide_types.csv'))
 #%%
 
-def prep_gb(data, full_data):
+def prep_gb(data, full_data, logit = False):
     '''Regroup pesticide data aggregated based on COMTRS and 
     make necessary calcuated columns.'''
     
-    df = data.groupby(['COMTRS', 'YEAR', 'GROWER_ID'])[['LBS_AI']].sum()
+    gb_columns = ['COMTRS', 'YEAR']
     
-    df = df.reset_index().set_index(['COMTRS', "YEAR"])
-    
-    gb = full_data.groupby(['COMTRS', 'YEAR'])
-    df = df.merge(gb[['NAME',  'num_operations', 'N_organic', 'acres_grapes',
+    data_cols_1 = ['LBS_AI']
+    data_cols_2 = ['NAME',  'num_operations', 'N_organic', 'acres_grapes',
                        'num_operations_neigh', 'N_organic_neigh', 'INACNAME', 
                        'perc_certified_lodi', 'perc_certified_napa'
-                       ]].agg('first'),
+                       ]
+    
+    
+    if logit:
+        gb_columns.append('GROWER_CODE')
+        data_cols_1.append('AREA_PLANTED')
+        
+    
+    df = data.groupby(gb_columns
+                       )[data_cols_1].sum()
+    
+    
+    #collect by-tract production data, which should include all tracts.
+    #not just tracts that had entries for chemicals of interest
+    gb = full_data.groupby(gb_columns) 
+    df = df.merge(gb[data_cols_2].agg('first'),
                   how= 'right', left_index= True, right_index = True)
     
-    df = df.merge(gb[['AREA_PLANTED']].agg(lambda x: x.unique().sum()),
+    if not logit:
+        df = df.merge(gb[['AREA_PLANTED']].agg(lambda x: x.unique().sum()),
                   how = 'right', left_index= True, right_index = True)
+    
     
     df['LBS_AI'] = df['LBS_AI'].fillna(0)
     
     df.rename(columns = {'NAME': 'County', 'AREA_PLANTED': 'ACRES_PLANTED'}, inplace =True)
     
-    filter_1 = lambda x: x if x<=1 else 1
-    #df['LBS_PER_AC_area_from_PUR'] = df['LBS_AI']/df['ACRES_PLANTED']
-    #df['LBS_PER_AC_area_from_geodata'] = df['LBS_AI'] / df['acres_grapes']
+    df['LBS_PER_AC'] =  df['LBS_AI']/ df['ACRES_PLANTED']
+    
+    
+    filter_1 = lambda x: x if x<=1 else 1 #constrain 1 as the highest value. 
+    
+    #flag for whether raster data of grape acreage is present
     df['geodata_available'] = (df['acres_grapes'].isna() == False).astype(int)
     
-    
+    #calculate ratio of organic operations to total operations
     df['perc_certified_org'] = (df['N_organic'] / df['num_operations']
-                                )#.apply(filter_1)
-    
+                                ).apply(filter_1)
     df['perc_certified_neigh_org'] = (df['N_organic_neigh'] / df['num_operations_neigh']
-                                      )#.apply(filter_1)
+                                      ).apply(filter_1)
 
-    return df
+    return df.reset_index(
+        ).replace({np.inf: np.nan, np.inf*-1: np.nan}
+                  ).dropna(subset = ['LBS_AI', 'ACRES_PLANTED'])
 
 
 #operations = df.reset_index().groupby('COMTRS')['OPERATOR_ID'].agg(lambda x: len(set(x)))
@@ -346,28 +464,144 @@ import sys
 
 
 #%%
+
+def make_year_spline(subset, k = 5):
+    year_sum = subset.groupby('YEAR').sum()[['ACRES_PLANTED', "LBS_AI"]].sort_index()
+    year_sum['LBS_per_ac'] = year_sum['LBS_AI']/year_sum['ACRES_PLANTED']
+
+    year_sum.reset_index(inplace = True)
+    return sp.interpolate.UnivariateSpline(year_sum.index, year_sum['LBS_per_ac'],
+                                           k = k)
+    
+
+
 def fit_model(subset, 
               #organic_est, 
-              area_eff_col):
+              area_eff_col, log = True):
+    '''Linear model for predcicting lbs_ai of the subsetted data.
+    Subset: data to fit to
+    area_eff_col: area-grouping for area random-effects. 
+    log: Whether to log-transform the data.'''
+    
+    
+    year_idx, year_dict = make_random_effects(subset, 'YEAR')
+    
+    #attempt at adding a spline for time-series
+    
+    
     with pm.Model() as model:
-        subset = subset.dropna(subset = ['ACRES_PLANTED'])
+        #subset = subset.dropna(subset = ['ACRES_PLANTED'])
         county_idx, county_dict = make_random_effects(subset, 
                                                       area_eff_col)
         
-        year_idx, year_dict = make_random_effects(subset, 'YEAR')
+        
         #organic = subset[organic_est].values
-        lodi = subset['perc_certified_lodi'].fillna(0).values
+        
         
         #Estimate total acres of grapes based on two data sources
-        acres_PUR = subset["ACRES_PLANTED"].fillna(0).values
+        #acres_PUR = subset["ACRES_PLANTED"].fillna(0).values
         #f = pm.HalfCauchy('f', 3)
-        acres_geodata = subset['acres_grapes'].fillna(0).values
-        geodata_avail = subset['geodata_available'].values
+        #acres_geodata = subset['acres_grapes'].fillna(0).values
+        #geodata_avail = subset['geodata_available'].values
+        #weight_1 = 1        
+        # if geodata grape acreage is available weight it with acres_PUR
+        #if not just use acres_PUR
+        #acres_grapes = (acres_PUR*weight_1 + acres_geodata*(1-weight_1))*geodata_avail \
+        #    + acres_PUR*((geodata_avail - 1)*-1)
+        
+        #estimate organic as an ensemble of the two estimates 
+        weight_2 = pm.Beta('weight_farms', alpha =3, beta =3)
+        
+        #weight_2 = .75
+        organic_cell = subset['perc_certified_org'].fillna(0).values
+        organic_neigh = subset['perc_certified_neigh_org'].fillna(0).values
+        organic = organic_cell*weight_2 + organic_neigh * (1-weight_2) 
+        
+        lbs_per_ac = subset['LBS_PER_AC'].values
+        if log:
+            lbs_per_ac_min = subset[subset['LBS_PER_AC']>0]['LBS_PER_AC'].min()
+            print(lbs_per_ac_min)
+            lbs_per_ac = np.log(lbs_per_ac_min/2 +lbs_per_ac)
+    
+        #year_slope = pm.Normal('y_slope', mu =0, sigma =10)
+        napa = subset['perc_certified_napa'].fillna(0).values
+        lodi = subset['perc_certified_lodi'].fillna(0).values
+        
+        year_sig = pm.HalfCauchy('y_sig', 3)
+        y_eff = pm.Normal('y_eff', mu = 0, sigma = year_sig, 
+                              shape = max(year_idx)+1)
+        
+        b_org = pm.Normal('b_org', mu = 0, sigma = 10)
+        b_lodi = pm.Normal('b_lodi', mu = 0, sigma = 10)
+        b_napa = pm.Normal('b_napa', mu = 0, sigma = 10)
+        
+        a = pm.Normal('a', mu = 0, sigma = 10)
+        sigma = pm.HalfCauchy('sig', 3)
+        
+        county_sig = pm.HalfCauchy('c_sig', 3)
+        county_effects = pm.Normal('c_eff', mu = 0, 
+                                sigma = county_sig, shape = max(county_idx)+1)
+        
+        est_LBS_AI = a  + b_org * organic + b_lodi * lodi \
+            + y_eff[year_idx] + county_effects[county_idx] + napa * b_napa
+          
+        likelihood = pm.Normal('likelihood',  
+                           mu = est_LBS_AI, 
+                           sigma = sigma, 
+                           observed = lbs_per_ac)
+        
+        trace = pm.sample(
+                    init = 'advi', 
+                      cores = 8,
+                      draws = 1500, tune = 1000, 
+                      )
+        
+    return trace, county_dict, year_dict
+
+
+def fit_dummy_model(subset, area_eff_col, log = True):
+    '''Dummy model for testing basic parameterization.
+    Tries to predict soley using the estimates of organic prevalence. 
+    Subset: data to fit to
+    area_eff_col: area-grouping for area random-effects. 
+    log: Whether to log-transform the data.
+    '''
+    
+    
+    year_idx, year_dict = make_random_effects(subset, 'YEAR')
+    
+    #attempt at adding a spline for time-series
+    
+    spl = make_year_spline(subset)
+    
+    
+    with pm.Model() as model:
+        #subset = subset.dropna(subset = ['ACRES_PLANTED'])
+        county_idx, county_dict = make_random_effects(subset, 
+                                                      area_eff_col)
+        
+        
+        #organic = subset[organic_est].values
+        
+        #Estimate total acres of grapes based on two data sources
+        #acres_PUR = subset["ACRES_PLANTED"].fillna(0).values
+        #f = pm.HalfCauchy('f', 3)
+        #acres_geodata = subset['acres_grapes'].fillna(0).values
+        #geodata_avail = subset['geodata_available'].values
+        lbs_per_ac = subset['LBS_PER_AC'].values
+       
+        
+        if log:
+            lbs_per_ac_min = subset[subset['LBS_PER_AC']>0]['LBS_PER_AC'].min()
+            print(lbs_per_ac_min)
+            lbs_per_ac = np.log(lbs_per_ac_min/2 +lbs_per_ac)
+        
         weight_1 = 1        
         # if geodata grape acreage is available weight it with acres_PUR
         #if not just use acres_PUR
-        acres_grapes = (acres_PUR*weight_1 + acres_geodata*(1-weight_1))*geodata_avail \
-            + acres_PUR*((geodata_avail - 1)*-1)
+        #acres_grapes = (acres_PUR*weight_1 + acres_geodata*(1-weight_1))*geodata_avail \
+        #    + acres_PUR*((geodata_avail - 1)*-1)
+        #acres_grapes = acres_PUR
         
         #estimate organic as an ensemble of the two estimates 
         weight_2 = pm.Beta('weight_farms', alpha =2, beta =2)
@@ -376,50 +610,127 @@ def fit_model(subset,
         organic_neigh = subset['perc_certified_neigh_org'].fillna(0).values
         organic = organic_cell*weight_2 + organic_neigh * (1-weight_2) 
         
+        #lbs_ai = subset["LBS_AI"].values/acres_PUR
+        #year_slope = pm.Normal('y_slope', mu =0, sigma =10)
         
+        year_sig = pm.HalfCauchy('y_sig', 3)
+        year_effects = pm.Normal('y_eff', mu = 0, sigma = year_sig, 
+                              shape = max(year_idx)+1)
         
-        
-      
-        #lbs_ai = np.log(subset[lbs_per_ac_est]+.01)
-        
-        
-        lbs_ai = subset["LBS_AI"].values
-        year_slope = pm.Normal('y_slope', mu =0, sigma =10)
-        napa = subset['perc_certified_napa'].values
-        #year_sig = pm.HalfCauchy('y_sig', 3)
-        #year_effects = pm.Normal('y_eff', mu = 0, sigma = year_sig, 
-        #                      shape = max(year_idx)+1)
-        
-        b_org = pm.Normal('b_org', mu = 0, sigma = 10)
-        b_lodi = pm.Normal('b_lodi', mu = 0, sigma = 10)
-        b_napa = pm.Normal('b_napa', mu = 0, sigma = 10)
+        b_org = pm.Normal('b_org', mu = 0, sigma = 3)
         a = pm.Normal('a', mu = 0, sigma = 10)
+        
+        
         
         sigma = pm.HalfCauchy('sig', 3)
         
         county_sig = pm.HalfCauchy('c_sig', 3)
         county_effects = pm.Normal('c_eff', mu = 0, 
-                                sigma = county_sig, shape = max(county_idx)+1)
+                               sigma = county_sig, shape = max(county_idx)+1)
         
         #est_LBS_AI = a  + year_effects[year_idx] + county_effects[county_idx]           
         
-        est_LBS_AI = (a  + b_org * organic + b_lodi * lodi \
-            + year_slope*year_idx + county_effects[county_idx] + napa * b_napa)\
-            * acres_grapes
-        
+        est_LBS_AI = a  + b_org * organic + year_effects[year_idx]  + county_effects[county_idx]
+            
         
         likelihood = pm.Normal('likelihood',  
                            mu = est_LBS_AI, 
                            sigma = sigma, 
-                           observed = lbs_ai)
+                           observed = lbs_per_ac)
+        
         trace = pm.sample(
                     init = 'advi', 
-                      cores = 8,
-                      draws = 1500, tune = 1500, 
+                      cores = 4,
+                      draws = 500, tune = 500, 
                       )
         
-    return trace, county_dict, year_dict
+    return trace
 
+
+def fit_logit_model(subset, area_eff_col, dummy = False):
+    '''A logit model for predicting whether a class of product is NOT USED
+    within a given plot-year. '''
+    
+    year_idx, year_dict = make_random_effects(subset, 'YEAR')
+    county_idx, county_dict = make_random_effects(subset, 
+                                                      area_eff_col)
+    #attempt at adding a spline for time-series
+    
+    #spl = make_year_spline(subset)
+    with pm.Model() as model:
+        #subset = subset.dropna(subset = ['ACRES_PLANTED'])
+        if not dummy:
+            area = subset['acres_grapes'].values
+            
+            napa = subset['perc_certified_napa'].fillna(0).values
+            lodi = subset['perc_certified_lodi'].fillna(0).values
+            
+            b_lodi = pm.Normal('b_lodi', mu = 0, sigma = 10)
+            b_napa = pm.Normal('b_napa', mu = 0, sigma = 10)
+            b_area = pm.Normal('b_area', mu = 0, sigma = 10)
+        
+        #estimate organic as an ensemble of the two estimates 
+        weight_2 = pm.Beta('weight_farms', alpha =2, beta =2)
+        #weight_2 = .75
+        organic_cell = subset['perc_certified_org'].fillna(0).values
+        organic_neigh = subset['perc_certified_neigh_org'].fillna(0).values
+        organic = organic_cell*weight_2 + organic_neigh * (1-weight_2) 
+        
+        lbs_ai = subset["LBS_AI"]==0
+        #year_slope = pm.Normal('y_slope', mu =0, sigma =10)
+        
+        year_sig = pm.HalfCauchy('y_sig', 3)
+        year_effects = pm.Normal('y_eff', mu = 0, sigma = year_sig, 
+                              shape = max(year_idx)+1)
+        
+        b_org = pm.Normal('b_org', mu = 0, sigma = 10)
+        
+        
+        a = pm.Normal('a', mu = 0, sigma = 10)
+        
+        
+        
+        #sigma = pm.HalfCauchy('sig', 3)
+        
+        county_sig = pm.HalfCauchy('c_sig', 3)
+        county_effects = pm.Normal('c_eff', mu = 0, 
+                               sigma = county_sig, shape = max(county_idx)+1)
+        
+        #est_LBS_AI = a  + year_effects[year_idx] + county_effects[county_idx]           
+        if dummy:
+            p = pm.Deterministic('p',
+                             pm.math.sigmoid(
+    b_org*organic + a + year_effects[year_idx]+county_effects[county_idx]
+                                                           ))
+        else:
+            p = pm.Deterministic('p',
+                             pm.math.sigmoid(
+    b_org*organic + b_lodi*lodi+ b_napa*napa + a + year_effects[year_idx],
+                                                           ))
+            
+        
+        likelihood = pm.Bernoulli('likelihood',  
+                            p, 
+                           observed = lbs_ai)
+        
+        if dummy:
+            draws = 500
+            tune = 500
+            cores = 6
+        
+        else:
+            draws = 1500
+            tune = 1000
+            cores = 8
+        
+        trace = pm.sample(
+                    init = 'advi', 
+                      cores = cores,
+                      draws = draws, tune = tune, 
+                      )
+        
+    return trace, county_dict,  year_dict
+    
 #%%
 def report_means_CI(data, name, t):
     return f'Estimated impact of {name} on {t}: {data.mean()}, ({np.quantile(data, .025)} - {np.quantile(data, .975)})'
@@ -428,12 +739,14 @@ def report_means_CI(data, name, t):
 def run_and_analyze(subset, area_eff_col, r_dir,
                     tracked_vars = ['b_org', 'b_lodi', 'b_napa', 
                                            #'weight_area',
-                                           'weight_farms',
-                                           'y_slope'
+                                            'weight_farms',
+                                           #'y_slope'
                         ]):
     
     
     with open(os.path.join(r_dir, f'summary_{area_eff_col}.txt'), 'w+') as out_file:
+        print('Total lbs of AI applied:', subset['LBS_AI'].sum(), file = out_file)
+        print('Total COMTRS with applications:', (subset['LBS_AI']>0).sum(), out_file)
         trace, county_dict, year_dict = fit_model(subset, 
                                                         area_eff_col)
         #y_effs = trace.get_values('y_eff', burn =500, thin = 2)
@@ -468,9 +781,9 @@ def run_and_analyze(subset, area_eff_col, r_dir,
         c_effs = trace.get_values('c_eff')
         pickle.dump(trace, open(os.path.join(r_dir, f'trace_{area_eff_col}.p'),'wb'))
         print(f'Results for  {area_eff_col}', file = out_file)
-        print(report_means_CI(b_org, "Organic Farming", t), file = out_file)
-        print(report_means_CI(b_lodi, "LODI RULES", t), file = out_file)
-        print(report_means_CI(b_napa, 'NAPAGREEN', t), file = out_file)
+        print(report_means_CI(b_org, "Organic Farming",use_type), file = out_file)
+        print(report_means_CI(b_lodi, "LODI RULES",use_type), file = out_file)
+        print(report_means_CI(b_napa, 'NAPAGREEN',use_type), file = out_file)
         
         
         
@@ -507,59 +820,122 @@ def run_and_analyze(subset, area_eff_col, r_dir,
 
 #%%
 
-for t in [
+### Checks using just organic as a predictor
+### Testing with and without log transformation
+r_dir = os.path.join('results', 'organic_check')
+if not os.path.exists(r_dir):
+    os.makedirs(r_dir)
+    
+subset_1 = data[data['GEN_PEST_IND']=='M']
+subset_2 = filter_data(data, 'PRODNO', type_df, 'TYPEPEST_CAT', 'HERBICIDE')
+for subset, subset_name in zip( 
+        (subset_1, subset_2),
+        ('organic_microbe', 'organic_herbicide')):
+    
+    subset = prep_gb(subset, data)
+    for _bool in (True, False):
+        log_flag = 'log'*_bool
+        
+    
+    
+    
+        trace = fit_dummy_model(subset, 'INACNAME', _bool)     
+        pm.plots.traceplot(trace, var_names = ['b_org'])
+        plt.savefig(os.path.join(r_dir, f'trace_{subset_name}_{log_flag}.png'), 
+                    bbox_inches = 'tight')
+        plt.close()
+    
+    trace, _ , _ = fit_logit_model(subset, 'INACNAME', dummy = True)
+    pm.plots.traceplot(trace, var_names = ['b_org'])
+    plt.savefig(os.path.join(r_dir, f'trace_{subset_name}_logit.png'), 
+                    bbox_inches = 'tight')
+    plt.close()
+
+#%%
+
+
+
+
+          
+
+area_eff_cols = ['INACNAME', 
+                     #'County'
+                     ]
+
+for use_type in [
         'HERBICIDE', 
         'INSECTICIDE', 
         'FUNGICIDE']:
 
-    
-    #for t in ['Herbicide', "Insecticide", "Rodenticide", "Fungicide", 'Other']:   
+   
     lbs_per_ac_ests =['LBS_PER_AC_area_from_PUR', 'LBS_PER_AC_area_from_geodata']
     organic_ests = ['perc_certified_org', 'perc_certified_neigh_org']
-    area_eff_cols = ['INACNAME', 
-                     #'County'
-                     ]
-    r_dir = os.path.join('results', t)
+    
+    r_dir = os.path.join('results', use_type)
     if not os.path.exists(r_dir):
         os.makedirs(r_dir)
 
     #sys.stdout = open(os.path.join(r_dir, 'summaries.txt'), 'w+')
     for   area_eff_col in  area_eff_cols:
          
-         #fit_data = fit_data[fit_data[lbs_per_ac_est]>0]
-         #subset= subset[subset[lbs_per_ac_est]<20]
-         subset = filter_data(data, 'PRODNO', type_df, 'TYPEPEST_CAT', t)
-         subset = prep_gb(subset,
-                          data).reset_index(
-            ).replace({np.inf: np.nan, np.inf*-1: np.nan}
-                      ).dropna(subset = ['LBS_AI', 'ACRES_PLANTED'])
-                      
+        #fit_data = fit_data[fit_data[lbs_per_ac_est]>0]
+        #subset= subset[subset[lbs_per_ac_est]<20]
+        subset = filter_data(data, 
+                                'PRODNO', 
+                                type_df, 'TYPEPEST_CAT',use_type)
+        if use_type!= 'FUNGICIDE':
+            subset = subset[subset['PRODUCT_NAME'].str.contains('SULFUR')==False]
+        
+        subset = prep_gb(subset,
+          data)
+          
          
-         run_and_analyze(subset, area_eff_col, r_dir)
-         del subset
+        run_and_analyze(subset, area_eff_col, r_dir)
+        del subset
+       
+
 #%%      
     #sys.stdout.close()
-for t in [
-        'HERBICIDE', 
+for use_type in [
         'INSECTICIDE', 
+        'HERBICIDE', 
+        
         'FUNGICIDE']:
-    for signl_code, name  in zip((2,3,4), ('DANGER', 'WARNING', 'CAUTION')):
+    for signl_code, name  in zip((3,4), ('WARNING', 'CAUTION')):
     
-        r_dir = os.path.join('results', t+'_'+name)
+        r_dir = os.path.join('results', use_type +'_'+name)
         if not os.path.exists(r_dir):
             os.makedirs(r_dir)
         
-        sys.stdout = open(os.path.join(r_dir, 'summaries.txt'), 'w+')
+        #sys.stdout = open(os.path.join(r_dir, 'summaries.txt'), 'w+')
         for   area_eff_col in  area_eff_cols:
-            print(f'Results for  {area_eff_col}')
-            subset = data[data['SIGNLWRD_IND']<=signl_code]
-            subset = filter_data(data, 'PRODNO', 
-                                 type_df, 'TYPEPEST_CAT', t)
+            
+            subset = filter_data(data[data['SIGNLWRD_IND']<=signl_code], 
+                                 'PRODNO', 
+                                 type_df, 'TYPEPEST_CAT',use_type)
+            if use_type!= 'FUNGICIDE':
+                subset = subset[subset['PRODUCT_NAME'].str.contains('SULFUR')==False]
+            
             subset = prep_gb(subset,
-                          data).reset_index(
-            ).replace({np.inf: np.nan, np.inf*-1: np.nan}
-                      ).dropna(subset = ['LBS_AI'])
-                      
+                          data, logit = False)
             
             run_and_analyze(subset, area_eff_col, r_dir)
             del subset
+
+signl_code = 2
+name = 'DANGER'
+r_dir = os.path.join('results', use_type +'_'+name)
+if not os.path.exists(r_dir):
+    os.makedirs(r_dir)
+for   area_eff_col in  area_eff_cols:
+            
+            subset = filter_data(data[data['SIGNLWRD_IND']<=signl_code], 
+                                 'PRODNO', 
+                                 type_df, 'TYPEPEST_CAT',use_type)
+            if use_type!= 'FUNGICIDE':
+                subset = subset[subset['PRODUCT_NAME'].str.contains('SULFUR')==False]
+            
+            subset = prep_gb(subset,
+                          data, logit = False)
+            
+            run_and_analyze(subset, area_eff_col, r_dir, logit = True)

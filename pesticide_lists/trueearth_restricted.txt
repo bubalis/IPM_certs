@@ -22,8 +22,8 @@ copper hydroxide,copper oxychloride
 copper hydroxide
 benzovindiflupyr
 penthiopyrad
-fluopyram,trifloxystrobin
-fluxapyroxad,pyraclostrobin
+fluopyramtrifloxystrobin
+fluxapyroxadpyraclostrobin
 Miravi
 thiamethoxam
 acetamiprid

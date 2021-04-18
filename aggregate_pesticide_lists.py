@@ -16,6 +16,8 @@ import pandas as pd
 import json
 import os
 from browser_automation_scraper import backup_searcher
+import re
+from functools import partial
 #%%
 def filter_reqs(df):
     '''Only get requirements that are fully required, eventually.
@@ -34,8 +36,12 @@ ban=filter_reqs(df)
 ban['Prohibited Material'].unique()
 
 #%%
+def only_alphanumeric(string):
+    return re.sub('[^a-zA-Z0-9]', '', string)
+
+
 ref_num_dict=load_ref_num_dict('chemical_ref_nums2.txt')
-assert ('Tributyltin Compounds'.lower() in ref_num_dict)
+#assert ('Tributyltin Compounds'.lower() in ref_num_dict)
 assert ('Mercury and its compounds'.lower() in ref_num_dict)
 
 def fix_ref_num_dict(ref_num_dict):
@@ -55,10 +61,12 @@ def fix_ref_num_dict(ref_num_dict):
     return ref_num_dict
 
 
-ref_num_dict=fix_ref_num_dict(ref_num_dict)
+ref_num_dict = fix_ref_num_dict(ref_num_dict)
+backup_ref_dict = {only_alphanumeric(k): v for k, v in ref_num_dict.items()}
 
 
-assert ('Tributyltin Compounds'.lower() in ref_num_dict)
+
+#assert ('Tributyltin Compounds'.lower() in ref_num_dict)
 
 
 
@@ -111,28 +119,50 @@ def load_epa_CAS():
         df=pd.read_csv("Pesticides - Active Ingredients.csv")
         return df['CAS #'].tolist()
     
-assert ('Tributyltin Compounds'.lower() in ref_num_dict)
+#assert ('Tributyltin Compounds'.lower() in ref_num_dict)
 errors=[]
 
+def first_look(chem_name):
+    return CAS_getter( ref_num_dict, chem_name)
 
+def srch_backup_dict(chem_name):
+    return CAS_getter(backup_ref_dict, only_alphanumeric(chem_name))
+
+def srch_alias(chem_name):
+    pieces = [p for p in chem_name.split() if p]
+    if re.search(r'\(\w+\)', pieces[-1]):
+        return CAS_getter(ref_num_dict, pieces[-1].strip(r'\(\) '))
+
+def srch_non_alias(chem_name):
+    pieces = [p for p in chem_name.split() if p]
+    if re.search(r'\(\w+\)', pieces[-1]):
+        return CAS_getter(ref_num_dict, ' '.join(pieces[:-1]))
+    
 def load_CASlist(file):
     global errors
-    chem_names=open(file).read().split('\n')
+    chem_names=[c for c in open(file).read().split('\n') if c]
+    chem_names = [c for c in chem_names if '#'!=c[0]]
     cas_nums=[]
     for chem_name in chem_names:  
+        pieces = [p for p in chem_name.split() if p]
         if not chem_name.strip():
             continue
         res=CAS_getter(ref_num_dict, chem_name)
-        if res:
-            cas_nums+=res
+        for func in (first_look, srch_backup_dict, 
+                     srch_alias, srch_non_alias):
+            res = func(chem_name)
+            if res:
+                cas_nums += res
+                break
+        
         else:
-            #results, other_names = backup_searcher(chem_name)
-            #if results:
-            #    cas_nums+=results
-            #else:
-                print(chem_name)
-                print(chem_name==chem_name.strip())
-                errors.append((chem_name, file))
+                results, other_names = backup_searcher(chem_name)
+                if results:
+                   cas_nums+=results
+                else:
+                    print(chem_name)
+                    print(chem_name==chem_name.strip())
+                    errors.append((chem_name, file))
     return [n for n in cas_nums if type(n)==str]
 
 
@@ -258,4 +288,6 @@ for list_type, column in zip(
     
     data_to_save = summarize_data(data, list_type)
     data_to_save=data_saver(data_to_save, list_type)
-
+    with open('errors.tx', 'w+') as file:
+        for e in errors: 
+            print(e[0], ':', e[1], file = file)

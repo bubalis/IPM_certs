@@ -40,7 +40,7 @@ def other_name_finder(text):
             results.append(string.strip())
     return [r for r in results if r]
     
-def backup_searcher(name, browser=None):
+def backup_searcher(name, browser=None, other_names = False):
     if not browser:
         browser=webdriver.Firefox()
     url=f'https://www.pesticideinfo.org/search-result?page=1&sort=Chem_Name&order=ASC&search={name}&type=chemical'
@@ -60,7 +60,7 @@ def backup_searcher(name, browser=None):
         text=browser.find_element_by_xpath("html").text
         new_cas=find_cas(text)
         results.append(new_cas)
-        if new_cas:
+        if new_cas and other_names:
             other_names+=other_name_finder(browser)
         time.sleep(5)
     return [r for r in results if r], other_names

@@ -14,8 +14,10 @@ from rasterio.warp import calculate_default_transform, reproject, Resampling
 #from rasterio.enums import Resampling
 from spatial_utils import  dissolve_all, get_rast_crs, intersects, max_area_attr_join
 import numpy as np
+
 import pandas as pd
 
+from functools import partial
 
 
 '''
@@ -55,9 +57,24 @@ def make_grape_rasters(source_dir, dst_dir, dst_crs, start_year=2007, stop_year 
                 
 '''
    #%%
+def collect_neighbors(geometry, gdf, sindex = None, id_col = "COMTRS"):
+    '''Get all the neighbors of a geometry from a gdf.
+    If id_col is passed, return a list of values for id_col.
+    pass a spatial index (sindex) to speed queries. 
+    '''
+    if sindex:
+        indicies =list(sindex.intersection(geometry.bounds))
+        sub = gdf.loc[indicies]
+    else:
+        sub = gdf
+    if id_col:
+        return sub[~sub['geometry'].disjoint(geometry)][id_col].tolist()
+    else:
+        return sub[~sub['geometry'].disjoint(geometry)]
+   
    
 if __name__ == '__main__':
-    #os.chdir('spatial')
+    os.chdir('spatial')
     
     lodi_data = json.loads(open(os.path.join('source_data', 'lodi_data.txt')).read())
     
@@ -66,6 +83,8 @@ if __name__ == '__main__':
     lodi_bounds.to_crs(counties.crs, inplace = True)
     lodi_counties = gpd.overlay(counties, lodi_bounds)
     
+    
+    #load in and format lodi vineyard location data
     vineyards = gpd.GeoDataFrame(data = [key for key in lodi_data],                
                                  geometry= gpd.points_from_xy([float(entry['lon']) for entry in lodi_data.values()],
                              [float(entry['lat']) for entry in lodi_data.values()]), 
@@ -74,17 +93,18 @@ if __name__ == '__main__':
     vineyards.to_crs(lodi_bounds.crs,inplace=True)
     
     lodi_vineyards = gpd.clip(vineyards, lodi_bounds)
+    lodi_vineyards.to_file(os.path.join('intermed_data', 'lodi_vineyards'))
     
     
     comtrs = gpd.read_file(os.path.join('source_data', 'comtrs'))
-    comtrs.to_crs(lodi_bounds.crs)
+    comtrs.to_crs(lodi_bounds.crs, inplace= True)
     lodi_comtrs = comtrs[comtrs.geometry.intersects(lodi_bounds.geometry.iloc[0])]
     #lodi_comtrs = lodi_comtrs[lodi_comtrs.geometry.area>10000]
     lodi_comtrs.to_file(os.path.join('intermed_data', 'lodi_comtrs'))
     
     
     
-    lodi_vineyards.to_file(os.path.join('intermed_data', 'lodi_vineyards'))
+    
 
 
     source_dir = os.path.join('source_data', 'Lodi_CDL')
@@ -92,7 +112,7 @@ if __name__ == '__main__':
     if not os.path.exists(dst_dir):
         os.makedirs(dst_dir)
     
-    
+    '''
     acres_grapes = {}
     for i, file in enumerate(os.listdir(source_dir)):
         fp = os.path.join(source_dir, file,)
@@ -102,18 +122,27 @@ if __name__ == '__main__':
             acres_grapes[int(year)] = np.where(r.read(1)==69, 1, 0).sum()*900*.0002477105
             
     pd.DataFrame(acres_grapes.items(), columns = ['years', 'total_acres_grapes']).to_csv(os.path.join('intermed_data', 'lodi_total_grape_acres.csv'))
+    '''
+    #make transformations and add data to the COMTRS shapfile
     
-    
-    
-    #comtrs = gpd.read_file(os.path.join('source_data', 'comtrs'))
+    #clip the COMTRS data to only designated wine-growing regions
     avas = gpd.read_file(os.path.join('source_data', 'CA_avas_shapefile'))
     avas.to_crs(comtrs.crs, inplace =True )
-
     ava_dissolve = dissolve_all(avas)
     comtrs = intersects(comtrs, ava_dissolve)
+    
+    #add bioregion data to the COMTRS shapefile
     bio_regions = gpd.read_file(os.path.join('source_data', 'cali_bioregions')
                                 ).to_crs(comtrs.crs)
     comtrs = max_area_attr_join(comtrs, bio_regions, 'COMTRS', 'INACNAME')
+    
+    #add a column listing the neighbors of each COMTRS
+    #comtrs = gpd.sjoin(comtrs, counties[['NAME', 'geometry']])
+    
+    comtrs['neighbors'] = comtrs['geometry'].apply(partial(collect_neighbors, 
+                                        gdf = comtrs, sindex = comtrs.sindex))
+    
+    comtrs['neighbors'] = comtrs['neighbors'].apply(lambda x: ','.join(x))
     
     comtrs.to_file(os.path.join('intermed_data', 'ava_comtrs'))
     

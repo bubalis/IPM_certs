@@ -222,7 +222,8 @@ def pest_list_plotter(pest_dfs, handles):
     axes[0].set_ylabel('Number of Pesticides', size=20)
     plt.legend(handles=handles, markerscale=4)
     plt.tight_layout()
-    axes[0].scatter(6, 150, marker='*', s=350, c=handles[0]._original_facecolor )
+    te_idx = list([L._text for L in axes[0].get_xticklabels()]).index('TE')
+    axes[0].scatter(te_idx, 150, marker='*', s=350, c=handles[0]._original_facecolor )
     
     
     plt.savefig(os.path.join('figures', 'pesticide_plotter.png'))

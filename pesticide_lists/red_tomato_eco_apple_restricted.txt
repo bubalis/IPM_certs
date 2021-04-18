@@ -22,7 +22,7 @@ benzovindiflupyr
 penthiopyrad
 fluopyram
 trifloxystrobin
-fluxapyroxad, 
+fluxapyroxad
 pyraclostrobin
 pydiflumetofen
 fluxapyroxad
@@ -31,7 +31,7 @@ boscalid
 pyraclostrobin
 kresoxim-methyl
 fenbuconazole
-cyprodinil, 
+cyprodinil
 difenoconazole
 fenarimol
 triflumizole

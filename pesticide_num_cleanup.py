@@ -12,7 +12,7 @@ from main_list_fixer import load_ref_num_dict
 
 #%%
 
-results=load_ref_num_dict('ref_nums.txt')
+results=load_ref_num_dict('chemical_ref_nums.txt')
 os.chdir('pesticide_lists')
 assert ('ddt' in results)
 
@@ -147,10 +147,9 @@ new_man_fixes={'carbendizum': ['10605-21-7'],
 '38641-94-0', 
 '70393-85-0', '81591-81-3'], 
   
-   
-   
-   'Tributyltin compounds'
-                'tributyltin compounds': '''266-560-5
+'bhc': ['319-84-6', '319-85-7'], 
+
+   'Tributyltin compounds': '''266-560-5
 266-955-2
 277-638-3
 279-149-0
@@ -201,12 +200,27 @@ new_man_fixes={'carbendizum': ['10605-21-7'],
 200-268-0
 200-269-6
 '''.split('\n'), 
+'Captafol': ['2425-06-1'],
+'CPMA' : ['1319-86-4'],
+'Hexabromdiphenylether '       :  ['446255-03-4', '36483-60-0'],
+'Heptabromdiphenylether' : ['446255-20-5','68928-80-3'],
+'lambda-cyhalothrin' : ['91465-08-6'],
+'Etofenprox' : ['80844-07-1'],
+'1,2,3,4,5,6-hch': ['319-84-6', '319-85-7', '58-89-9', '319-86-8', '608-73-1'],
+'heptaclor': ['76-44-8'],
+'2,4,5-trichlorophenate':['95-95-4'],
+'Pentachlorphenol': ['87-86-5'],
+'DNOC and its salts': ['534-52-1'],
+'Tecnazene': ['117-18-0'],
+
 
 }
 
 
 
-alias_man_fixes={'copper hydroxide,': 'copper hydroxide',
+alias_man_fixes={
+    'copper acetoarsenite (paris green)':'cupric acetoarsenite',
+    'copper hydroxide,': 'copper hydroxide',
                  'carbarylâ\x9c\x95': 'carbaryl',
                  'verdepryn': 'cyclaniliprole',
                   'dinoseb, its acetate and salts': 'dinoseb', 
@@ -220,7 +234,18 @@ alias_man_fixes={'copper hydroxide,': 'copper hydroxide',
                  'endrin, other related': 'endrin',
                  'pcp, potassium salt': 'pcp',
                  '2,4,5 tcp': '2,4,5-trichlorophenate',
-                 'borax disodium': 'borax'
+                 'borax disodium': 'borax',
+                 'Z-Phosphamidon' : 'Phosphamidon',
+                 'Polybrominated biphenyls mixture ': 'PBB',
+                 'Tributyltin' : 'Tributyltin Compounds',
+                 'DDD, other related' : 'DDD',
+                 '(1alpha,2alpha,3beta,4alpha,5alpha,6beta)-1,2,3,4,5,6-hch': '1,2,3,4,5,6-hch',
+                 'hch' : '1,2,3,4,5,6-hch',
+                 'Hexchlorocyclohexane': '1,2,3,4,5,6-hch',
+                 'PMDS': 'Di(phenylmercury)dodecenylsuccinate',
+                 'Lambda-cyhalothin': 'lambda-cyhalothrin' ,
+                 'copper (ii) hydroxide': 'copper hydroxide',
+                 'BHC (other than gamma isomer': 'bhc',
                  }
 
 #%%
@@ -247,6 +272,7 @@ to_delete_from_alias=['acetate', 'Magnesium sulfate', 'ethyl', 'potassium',
 
 aliases=json.loads(open('aliases2.txt').read())
 results.update(new_man_fixes)
+results ={k.strip().lower(): v for k, v in results.items()}
 for key in to_delete_from_alias:
     if key in aliases:
         del aliases[key]
@@ -258,15 +284,17 @@ remove_from_ref_nums=[]
 for key, values in aliases.items():
     for v in values:
         try:
-            results[v]=results[key]
+            results[v.lower().strip()]=results[key.lower().strip()]
         except:
-            print(key)
+            #print(key)
+            continue
     
 for key, value in alias_man_fixes.items():
     try:
-        results[value]=results[key]
+        results[value.lower().strip()]=results[key.lower().strip()]
     except:
-        continue
+        print(key)
+        
     
 keys_to_change=[]
 for key in results:
@@ -297,10 +325,19 @@ for c, string in zip(compounds, ['arsen', 'arsen', 'arsen',  'merc', 'merc', 'me
 
 
 
+
 #%%
-assert ('Tributyltin compounds'.lower() in results)
+#assert ('Tributyltin compounds'.lower() in results)
 
 results={k.lower().strip(): v for k,v in results.items()}
+more_results = {}
+for k, v in results.items():
+    if 'hexachlorocyclohexane' in k:
+        more_results[k.replace('hexachlorocyclohexane', 'hch')] = v
+        more_results[k.replace('hexachlorocyclohexane', 'bch')] = v
+
+results = {**results, **more_results}
+
 assert ('Mercury and its compounds'.lower() in results)
 with open('chemical_ref_nums2.txt', 'w+') as f:
     print(json.dumps(results), file=f)

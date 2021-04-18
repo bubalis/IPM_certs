@@ -20,5 +20,5 @@ Lindane
 Mirex
 Pentachlorobenzene
 Pentachlorophenol
-Perfluorooctanoic acid (PFOA), its salts and PFOA-related compounds
-Perfluorooctane sulfonic acid (PFOS), its salts and perfluorooctane sulfonyl fluoride
+Perfluorooctanoic acid  its salts and PFOA-related compounds (PFOA)
+Perfluorooctane sulfonic acid its salts and perfluorooctane sulfonyl fluoride (PFOS)

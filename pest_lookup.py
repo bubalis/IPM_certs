@@ -19,6 +19,7 @@ import time
 
 
 
+
 def fetch_results(search_term, number_results, language_code='en'):
     USER_AGENT = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'}
     assert isinstance(search_term, str), 'Search term must be a string'
@@ -165,6 +166,13 @@ def full_searcher(name, pieces=True):
         valid, tup=search_function(name)
         if valid:
             return [tup]
+    last = name.split(' ')[-1]
+    regex = r'\('+'\w+' + r'\)'
+    if re.search(regex, last):
+        for search_function in search_functions:
+            valid, tup=search_function(last.strip(r'\(\),'))
+            if valid:
+                return [(name, tup[1])]
     
     if pieces:
         print(pieces)
