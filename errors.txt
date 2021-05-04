@@ -1,0 +1,18 @@
+Alkyl mercury compounds : rotterdam.txt
+Alkyloxyl and aryl mercury compounds : rotterdam.txt
+BHC delta : rotterdam.txt
+Pentachlorophenol, zinc salt of alkyl*-N-propanediamine : rotterdam.txt
+Trichlorophenoxyacetic acid, triethanolamine salt : rotterdam.txt
+Dinoseb and its salts : pesticide_lists/irrelevant_pesticides.txt
+Dinoseb and its salts and esters : pesticide_lists/irrelevant_pesticides.txt
+Propylene oxide, Oxirane : utz_banned.txt
+Technazene : utz_banned.txt
+triorganostannic compounds : utz_banned.txt
+METHYLDITHIOCARBAMATE : live_banned.txt
+Dichloro Diphenyl Trichloroethane : florverde_banned.txt
+2,4,5-Trichlorophenoxy P Acid  : florverde_banned.txt
+dichlorodiphenyl – dichloroethan : fair_trade_intl_banned.txt
+Dinoseb and its salts and esters : fair_trade_intl_banned.txt
+demeton (demeton s-methyl) : bloomcheck_banned.txt
+decahydrate : rainforest_alliance_banned.txt
+Cerevisane : live_restricted.txt

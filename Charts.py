@@ -411,7 +411,8 @@ abbrvs, abbrv_dict = set_abbrvs(re_index_list,
                     corrections = {'Global GAPS': 'GGAPS',
                                    'LODI Rules' : 'LODI',
                                    'Red Tomato Eco Apple' :'EA',
-                                   'Fair Trade Intl' : 'FTMH'})
+                                   'Fair Trade Intl' : 'FTMH',
+                                   'Long Island Sustainable': 'LISW'})
 
 
 

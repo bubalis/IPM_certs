@@ -257,7 +257,7 @@ def parse_COMTRS(row):
     M = row['Meridian'][0]
     T = row['Township'][1:]
     R = row['Range'][1:]
-    S = str(row['Section'])
+    S = add_leading_0s(str(row['Section']))
     return co+M+T+R+S
 
 def add_comtrs(comtrs_gdf, counties_gdf):
@@ -281,12 +281,15 @@ def points_gdf_from_dict(data, dst_crs, extra_keys=[]):
 #%%
 if __name__=='__main__':
     os.chdir('spatial')
+    
     lodi_path = os.path.join('source_data', 'lodi_data.txt') 
     sip_path = os.path.join('source_data', 'sip_data.txt')
     sip_data = get_sip_data()
     with open(sip_path, 'w+') as f:
             print(json.dumps(sip_data), file = f)
-    '''
+    sip_df = pd.DataFrame(sip_data)
+    sip_df.to_csv(os.path.join('source_data', 'sip_data_tsv.txt'), sep ='\t')
+    
     if not os.path.exists(lodi_path):
         lodi_data = get_lodi_data()
         with open(lodi_path, 'w+') as f:
@@ -317,7 +320,7 @@ if __name__=='__main__':
         merge['COMTRS'] = merge.apply(parse_COMTRS, axis =1 )
         merge.to_file(comtrs_path)
     
-
+    '''
     p = points_gdf_from_dict(lodi_data, counties.crs)
     p = gpd.clip(p, counties)
     

@@ -288,6 +288,6 @@ for list_type, column in zip(
     
     data_to_save = summarize_data(data, list_type)
     data_to_save=data_saver(data_to_save, list_type)
-    with open('errors.tx', 'w+') as file:
+    with open('errors.txt', 'w+') as file:
         for e in errors: 
             print(e[0], ':', e[1], file = file)
