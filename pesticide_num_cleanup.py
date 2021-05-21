@@ -55,6 +55,7 @@ new_man_fixes={'carbendizum': ['10605-21-7'],
    'î²-hexachlorocyclohexane': ['319-85-7'],
    	'dichlorvos ddvp':['62-73-7'],
        'dinoseb and dinoseb salts': ['88-85-7'],
+       'pentachlorophenol, zinc salt of alkyl*-N-propanediamine' : ['87-86-5', ],
    '2,4,5-t, 2-ethylhexyl ester': ['1928-47-8'],
    '(3-hydroxy-2-methoxypropyl)mercuric acetate': ['69653-69-6'],
        '2,4,5-T, Triethylamine Salt': ['2008-46-0'],
@@ -212,13 +213,39 @@ new_man_fixes={'carbendizum': ['10605-21-7'],
 'Pentachlorphenol': ['87-86-5'],
 'DNOC and its salts': ['534-52-1'],
 'Tecnazene': ['117-18-0'],
+'Triorganostannic compounds': [ i.strip() for  i in '''
+14254-22-9
+639-58-7
+661-69-8
+892-20-6
+994-31-0
+994-32-1
+1066-44-0
+1066-45-1
+2587-76-0
+2767-54-6
+13121-70-5
+13356-08-6
+90552-69-5
+56-24-6
+3151-41-5
+76-63-1
+                     '''.split('\n')
+                               if i],
+'technazene': ['117-18-0'],
 
+'demeton (demeton s-methyl)': ['126-75-0'],
+
+'propylene oxide, oxirane': ['75-56-9'],
+'dichlorodiphenyl  dichloroethan' : ['72-54-8'],
+'metamidophos': ['10265-92-6'],
 
 }
 
 
 
-alias_man_fixes={
+alias_man_fixes={'dichloro diphenyl trichloroethane': 'DDT',
+    'metomil':'methomyl',   
     'copper acetoarsenite (paris green)':'cupric acetoarsenite',
     'copper hydroxide,': 'copper hydroxide',
                  'carbarylâ\x9c\x95': 'carbaryl',
@@ -246,6 +273,10 @@ alias_man_fixes={
                  'Lambda-cyhalothin': 'lambda-cyhalothrin' ,
                  'copper (ii) hydroxide': 'copper hydroxide',
                  'BHC (other than gamma isomer': 'bhc',
+                 'FENAMIFOS': 'FENAMIPHOS'.lower(),
+                 'METAMIDOFOS' : "METAMIDOPHOS".lower(),
+                 'ALDICARD': 'ALDICARB'.lower(),
+                 
                  }
 
 #%%

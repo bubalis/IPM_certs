@@ -120,6 +120,8 @@ def load_epa_CAS():
         return df['CAS #'].tolist()
     
 #assert ('Tributyltin Compounds'.lower() in ref_num_dict)
+
+new_vals = {}
 errors=[]
 
 def first_look(chem_name):
@@ -139,7 +141,9 @@ def srch_non_alias(chem_name):
         return CAS_getter(ref_num_dict, ' '.join(pieces[:-1]))
     
 def load_CASlist(file):
-    global errors
+    global errors 
+    global new_vals
+    
     chem_names=[c for c in open(file).read().split('\n') if c]
     chem_names = [c for c in chem_names if '#'!=c[0]]
     cas_nums=[]
@@ -147,18 +151,23 @@ def load_CASlist(file):
         pieces = [p for p in chem_name.split() if p]
         if not chem_name.strip():
             continue
-        res=CAS_getter(ref_num_dict, chem_name)
+        res = CAS_getter(ref_num_dict, chem_name)
+        if  res:
+            cas_nums += res
+            continue
         for func in (first_look, srch_backup_dict, 
                      srch_alias, srch_non_alias):
             res = func(chem_name)
             if res:
                 cas_nums += res
+                new_vals[chem_name] = res
                 break
         
         else:
                 results, other_names = backup_searcher(chem_name)
                 if results:
                    cas_nums+=results
+                   new_vals[chem_name] = res
                 else:
                     print(chem_name)
                     print(chem_name==chem_name.strip())
@@ -265,29 +274,38 @@ def summarize_data(data, string):
     return data_to_save
 
 #%%
-for list_type, column in zip(
-        ('banned', 'restricted'),
-        ('Prohibited Material','Limited Use Substances')): 
-    
-    print(list_type)
-    by_cert={cert: [i for i in 
-                    ban[ban['CertName']==cert][column].unique() if i]
-                    for cert in df['CertName'].unique()}
-    by_cert={key: [x for y in value for x in y.split(',')]
-             for key, value in by_cert.items()}
-    
-    by_cert={key:[v for v in value if v not in exclude] 
-             for key, value in by_cert.items()}
-    
-    by_cert={key:simplify_listnames(vals) for key, vals in by_cert.items() if key}
+if __name__ == '__main__':
     
     
-    
-    data= {key: get_CAS_list(key, values, list_type) for key, values in by_cert.items()}
-    
-    
-    data_to_save = summarize_data(data, list_type)
-    data_to_save=data_saver(data_to_save, list_type)
-    with open('errors.txt', 'w+') as file:
-        for e in errors: 
-            print(e[0], ':', e[1], file = file)
+    for list_type, column in zip(
+            ('banned', 'restricted'),
+            ('Prohibited Material','Limited Use Substances')): 
+        
+        print(list_type)
+        by_cert={cert: [i for i in 
+                        ban[ban['CertName']==cert][column].unique() if i]
+                        for cert in df['CertName'].unique()}
+        by_cert={key: [x for y in value for x in y.split(',')]
+                 for key, value in by_cert.items()}
+        
+        by_cert={key:[v for v in value if v not in exclude] 
+                 for key, value in by_cert.items()}
+        
+        by_cert={key:simplify_listnames(vals) for key, vals in by_cert.items() if key}
+        
+        
+        
+        data= {key: get_CAS_list(key, values, list_type) for key, values in by_cert.items()}
+        
+        
+        data_to_save = summarize_data(data, list_type)
+        data_to_save=data_saver(data_to_save, list_type)
+        with open(os.path.join('pesticide_lists', 'errors.txt'), 'w+') as file:
+            for e in errors: 
+                print(e[0], ':', e[1], file = file)
+        with open(os.path.join('pesticide_lists','man_fixes_nums.txt')) as f:
+            print(f.read())
+            man_fix_dict = json.loads(f.read())
+        with open(os.path.join('pesticide_lists','man_fixes_nums.txt'), 'w+') as f:
+            man_fix_dict.update(new_vals)
+            print(json.dumps(man_fix_dict), file =f)

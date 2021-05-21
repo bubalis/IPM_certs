@@ -56,9 +56,9 @@ def clip_alias(string):
 def CAS_getter(dic, name):
     '''Retrieve the CAS number of name from dic.'''
     
-    res=dic.get(name.strip().lower())
+    res = dic.get(name.strip().lower())
     if not res:
-        res=dic.get(clip_alias(name.strip()).lower())
+        res = dic.get(clip_alias(name.strip()).lower())
     return res
     
 def string_fixer(string):

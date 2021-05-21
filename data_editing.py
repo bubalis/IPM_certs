@@ -95,7 +95,14 @@ def check_replace(string, mapping):
 def corrector(string):
     return check_replace(string, corrections)
 
-
+principles_dict = {1: 'Prevention and suppression',
+                           2 : 'Monitoring', 
+                           3 : 'Thresholds', 
+                           4 : 'Non-Chemical Control',
+                           5 : 'Pesticide Selection',
+                           6 : 'Reduced Pesticide Use',
+                           7 : 'Manage Resistance',
+                           8 : 'Evaluation'}
 
 
 if __name__ == '__main__':
@@ -105,10 +112,14 @@ if __name__ == '__main__':
     
     df=pd.DataFrame()
     for sheet in wb.sheetnames:
-        if sheet=='Master':
+        if sheet in ['Master', 'Excluded']:
             pass
         else:
-            df2=pd.read_excel(wb_path, sheet_name=sheet, engine='openpyxl')
+            df2=pd.read_excel(wb_path, sheet_name=sheet, engine='openpyxl',
+                              dtype = {'IPM Principles': str})
+            if 'IPM Principles' not in df2.columns:
+                print(f'{sheet} missing IPM principles')
+            
             df2=df2.dropna(how='all')
             df2=df2.fillna('')
             for col in df2.columns[8:]:
@@ -126,6 +137,9 @@ if __name__ == '__main__':
     
     
     
+    for k, v in principles_dict.items():
+        df[f'{k}: {v}'] = df['IPM Principles'].str.contains(str(k))
+    df.drop(columns = 'IPM Principles', inplace = True)
      
     df.to_csv(os.path.join('data', 'all_data.csv'))
 
