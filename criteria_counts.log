@@ -1,0 +1,63 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.19)  21 MAY 2021 16:21
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**criteria_counts.dvi
+(./criteria_counts.dvi
+LaTeX2e <2020-02-02> patch level 2
+L3 programming layer <2020-02-14>
+
+! Package inputenc Error: Invalid UTF-8 byte "F7.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 ÷
+     ^^B^^Aƒ’À^^\;^^@^^@^^@^^@^^Cè^^[ TeX output 2021.05.21:1620‹^^@^^@^^@^^...
+
+? 
+
+! Package inputenc Error: Unicode character ^^B (U+0002)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 ÷^^B
+        ^^Aƒ’À^^\;^^@^^@^^@^^@^^Cè^^[ TeX output 2021.05.21:1620‹^^@^^@^^@^^...
+
+? 
+! Interruption.
+\GenericError  ...                                
+                                                  \endgroup 
+l.1 ÷^^B
+        ^^Aƒ’À^^\;^^@^^@^^@^^@^^Cè^^[ TeX output 2021.05.21:1620‹^^@^^@^^@^^...
+
+? 
+
+! Package inputenc Error: Unicode character ^^A (U+0001)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 ÷^^B^^A
+           ƒ’À^^\;^^@^^@^^@^^@^^Cè^^[ TeX output 2021.05.21:1620‹^^@^^@^^@^^...
+
+? 
+! Emergency stop.
+ ...                                              
+                                                  
+l.1 ÷^^B^^A
+           ƒ’À^^\;^^@^^@^^@^^@^^Cè^^[ TeX output 2021.05.21:1620‹^^@^^@^^@^^...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+ 
+Here is how much of TeX's memory you used:
+ 17 strings out of 481239
+ 626 string

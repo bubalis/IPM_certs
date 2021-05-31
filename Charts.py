@@ -15,6 +15,7 @@ from collections import OrderedDict
 import seaborn as sns
 from data_editing import principles_dict
 from scipy import stats
+import subprocess
 
 charts_dir='figures'
 
@@ -49,9 +50,7 @@ def string_replacer(string, mapping):
         return string
     
 
-def ecoapple_fix(string):
-    '''Fix for combining the Red Tomato Eco with Eco-Apple as one Cert'''
-    return string_replacer(string, {'Red Tomato Eco':"Red Tomato Eco Apple"})
+
 
 
 def multi_remove(string, pieces):
@@ -227,7 +226,7 @@ def add_leading_sp(num, _len = 4):
     such that its length = _len'''
     
     string = str(num)
-    if len(string) >=_len:
+    if len(string) >= _len:
         return string
     else:
         return ' '*(_len - len(string)) + string
@@ -235,24 +234,33 @@ def add_leading_sp(num, _len = 4):
 
 def p_df(index, val_dict, pest_cat, re_index_list):
     '''Make a dataframe of numbers of pesticide counts.'''
-    data=[val_dict.get(i) for i in index]
-    df=pd.DataFrame({f"{pest_cat} Pesticides".title(): data, 'CertName': index})
-    df=re_indexer(df, re_index_list)
+    data = [val_dict.get(i) for i in index]
+    df = pd.DataFrame({f"{pest_cat} Pesticides".title(): data, 'CertName': index})
+    df = re_indexer(df, re_index_list)
     return df
 
 def make_pesticide_dfs(index, re_index_list):
-    '''Assemble dfs for pesticides.'''
+    '''Assemble dfs for pesticides from the json files that contain the 
+    pesticide values.
+    '''
+    
     dfs=[]
     for category in ('banned', 'restricted'):
-        pest_lists=json_from_file(
+        pest_lists = json_from_file(
             os.path.join('data', f'cert_pest_lists_{category}.txt'))
-        pesticide_dfs=[p_df(index, pest_lists[key], category, re_index_list) for key in ('num_epa_reg', 'num_not_reg_epa')]
+        pesticide_dfs=[p_df(
+            index, pest_lists[key], category, re_index_list) 
+            for key in ('num_epa_reg', 'num_not_reg_epa')]
+        
         dfs.append(pesticide_dfs)
+        
     return dfs
                             
 def pest_list_plotter(pest_dfs, handles):
     '''Plotter function for pesticide data.'''
-    ymax = np.sum([np.array(df[[c for c in df.columns if 'Pesticides' in c]]) for df in pest_dfs[0]], axis=0).max()*1.1
+    ymax = np.sum(
+        [np.array(df[[c for c in df.columns if 'Pesticides' in c]]
+                  ) for df in pest_dfs[0]], axis=0).max()*1.1
     
     fig, axes=plt.subplots(1,2, figsize=(20,5))
    
@@ -272,19 +280,24 @@ def pest_list_plotter(pest_dfs, handles):
     plt.savefig(os.path.join('figures', 'pesticide_plotter.png'))
 
 
+def ecoapple_fix(string):
+    '''Fix for combining the Red Tomato Eco with Eco-Apple as one Cert'''
+    return string_replacer(string, {'Red Tomato Eco':"Red Tomato Eco Apple"})
 
 def clean_data(df):
     '''Clean the loaded dataframe.'''
+    
     df.fillna('', inplace=True)
-    df=df[df['CertName']!='']
-    df=df[df['CertName']!='Eco Apple Stonefruit']
-    df['CertName']=df['CertName'].apply(ecoapple_fix)
+    df=df[df['CertName']!=''] #filter datapoints that don't link to a certification
+    df=df[df['CertName']!='Eco Apple Stonefruit'] #filter EA stonefruit
+    df['CertName']=df['CertName'].apply(ecoapple_fix) 
     df = df.rename(columns = {'Biosecurity/Sanitation': 
                               'Biosecurity / Sanitation',
                               'Education/training':
                                   'Education / Training',
                                   'Materials/Waste Mgmt':
                                       'Materials / Waste Mgmt'})
+        
     df=df.apply(buffer_switcher, axis=1)
     df=df.apply(performance_switcher, axis=1)
     df=df.apply(threshold_fixer, axis=1)
@@ -403,7 +416,7 @@ def cert_type_pie(category_dict):
     plt.show()
 
 def aggregate_mention_counts(df_dict, cols):
-    '''Take a diction  '''
+    '''Take the dictionary of dataframes,   '''
     
     
     agg_dict = {}
@@ -423,8 +436,13 @@ def aggregate_mention_counts(df_dict, cols):
     agg_df.sort_index(level = 0, inplace = True)
     return agg_df
 
-def make_latex_table(df, fp, replacers = {}, **kwargs):
-    text_string = df.to_latex(**kwargs)
+#%%
+
+def make_latex_table(df, name, replacers = {}, **kwargs):
+    fp = name + '.tex'
+    
+    
+    text_string = df.to_latex(sparsify = False, **kwargs)
     for k, v in replacers.items():
         text_string = text_string.replace(k, v)
     print (text_string)
@@ -445,6 +463,7 @@ def make_latex_table(df, fp, replacers = {}, **kwargs):
         print(r'''\end{landscape}
 \end{document}''', file = file)
 
+#%%
 
 def practice_heatmap(agg_df, save_name,  corrections = {} ):
     '''Make a heatmap of practice frequencies from an aggregated dataframe.'''
@@ -459,7 +478,7 @@ def practice_heatmap(agg_df, save_name,  corrections = {} ):
         print(ts.columns)
         print(column_order)
         raise
-    make_latex_table(ts, os.path.join('tables', f'table_{save_name}.txt'),
+    make_latex_table(ts, os.path.join('tables', f'table_{save_name}'),
                      float_format="{:0.2f}".format,
                      replacers = {c: r"\thead{" + c.replace(', ', r' \\ ') +'}' for c in ts.columns})
     
@@ -529,12 +548,23 @@ if __name__ == '__main__':
     for cat, color in zip(category_dict.values(), category_colors):
         colors+=[color]*len(cat)
     
+    
+    
     labels = ['Regional, 1-Comm',
             'US, Multi-Comm',
-    #'US, Single-Comm',
+   
      'Low-Inc, 1-Comm',
     'Low-Inc, Multi-Comm', 
     'Low-Inc, 1-county, 1-Comm']
+    labels_dict = {cat: abbrv for cat, abbrv in 
+                   zip(
+                       ['Regional Designation, Single Commodity',
+                    'Domestic, Multi-Commodity',
+                    'Global South, Single Commodity',
+                    'Global South, Multi-Commodity',
+                     'Global South (One Country), Single Commodity']
+                        ,labels)
+                   }
     
     
     abbrvs, abbrv_dict = set_abbrvs(re_index_list, 
@@ -693,7 +723,7 @@ if __name__ == '__main__':
     
     
     
-    make_latex_table(sums, os.path.join('tables', 'table_3.txt'), 
+    make_latex_table(sums, os.path.join('tables', 'table_3'), 
                      replacers = {' tab ': r'\ \ \ ', '  ': r'\ ' },
                      column_format = "lLLLL")
     
@@ -780,13 +810,26 @@ if __name__ == '__main__':
     req_counts = df[df['requirement']].groupby('CertName')[['Required/Core or Improvement']].count()
     impr_counts = df[df['improvement']].groupby('CertName')[['Required/Core or Improvement']].count()
     score_counts = df[df['scorecard']].groupby('CertName')[['Required/Core or Improvement']].count()
-    
+    #%%
     criteria_counts = pd.concat([req_counts, impr_counts, score_counts], axis =1)
     criteria_counts.columns = ['Pass-Fail', 'Improvement to Pass-Fail', 'Score-card']
     criteria_counts['total'] = criteria_counts.sum(axis = 1)
     criteria_counts.fillna(0, inplace = True)
     criteria_counts = criteria_counts.astype(int)
     criteria_counts['class'] = criteria_counts.index.to_series().replace(flip_dict_list(category_dict))
-    criteria_counts.sort_values('class', inplace = True)
-    make_latex_table(criteria_counts, os.path.join('tables', 'criteria_counts.txt'))
+    criteria_counts['class'] = criteria_counts['class'].replace(labels_dict)
     
+    
+    criteria_counts.sort_values('class', inplace = True)
+    
+    criteria_counts.index.name ='Certification Name'
+    criteria_counts.set_index('class', append = True, 
+                              inplace = True, 
+                              )
+    make_latex_table(criteria_counts, os.path.join('tables', 'criteria_counts'),
+                      bold_rows = True, replacers = {'{llrrrr}': '{ll|rrrr}'})
+    
+    os.chdir('tables')
+    for file in [f for f in os.listdir() if '.tex' in f]:
+        subprocess.run(['pdflatex', file])
+    os.chdir('..')
