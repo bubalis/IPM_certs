@@ -1,0 +1,11 @@
+Alkyl mercury compounds : rotterdam.txt
+Alkyloxyl and aryl mercury compounds : rotterdam.txt
+Trichlorophenoxyacetic acid, triethanolamine salt : rotterdam.txt
+Dinoseb and its salts : pesticide_lists/irrelevant_pesticides.txt
+Dinoseb and its salts and esters : pesticide_lists/irrelevant_pesticides.txt
+dichloropropene + chloropicrin : flor_ecuador_banned.txt
+2,4,5-Trichlorophenoxy P Acid : florverde_banned.txt
+Dinoseb and its salts and esters : fair_trade_intl_banned.txt
+decahydrate : rainforest_alliance_banned.txt
+Tin (stannate) and tin compounds : fsa_restricted.txt
+Cerevisane : live_restricted.txt

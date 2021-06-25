@@ -30,8 +30,8 @@ def filter_reqs(df):
         'Improvement'])==False]
 
 
-df=data_loader()
-ban=filter_reqs(df)
+df = data_loader()
+ban = filter_reqs(df)
 #%%
 ban['Prohibited Material'].unique()
 
@@ -40,19 +40,27 @@ def only_alphanumeric(string):
     return re.sub('[^a-zA-Z0-9]', '', string)
 
 
-ref_num_dict=load_ref_num_dict('chemical_ref_nums2.txt')
+ref_num_dict = load_ref_num_dict('chemical_ref_nums2.txt')
 #assert ('Tributyltin Compounds'.lower() in ref_num_dict)
 assert ('Mercury and its compounds'.lower() in ref_num_dict)
 
 def fix_ref_num_dict(ref_num_dict):
     #ref_num_dict={k:v for k,v in ref_num_dict.items() if all([subv for subv in v])}
+    
     to_del=[]
     for k,v in ref_num_dict.items():
-       
-        if k=='\\\\\\':
-            to_del.append(k)
-        elif any([', ' in subv for subv in v]):
-            ref_num_dict[k]=[item.strip() for item in v[0].split(',')]
+        try:
+            if v == None:
+                v = []
+                ref_num_dict[k] = []
+            if k=='\\\\\\':
+                to_del.append(k)
+            elif any([', ' in subv for subv in v]):
+                ref_num_dict[k]=[item.strip() for item in v[0].split(',')]
+        except:
+            print(k)
+            print(v)
+            raise
     
     for k in to_del:
         del ref_num_dict[k]
@@ -103,7 +111,7 @@ def simplify_listnames(vals):
     
     for k in keys_to_simplify:
         if any([k in v for v in vals]):
-            vals=[v for v in vals if k not in v]
+            vals = [v for v in vals if k not in v]
             vals.append(k)
             
     return vals
@@ -120,7 +128,8 @@ def load_epa_CAS():
         return df['CAS #'].tolist()
     
 #assert ('Tributyltin Compounds'.lower() in ref_num_dict)
-
+global new_vals
+global errors
 new_vals = {}
 errors=[]
 
@@ -144,8 +153,11 @@ def load_CASlist(file):
     global errors 
     global new_vals
     
-    chem_names=[c for c in open(file).read().split('\n') if c]
+    chem_names = [c.strip() for c in open(file).read().split('\n') if c]
     chem_names = [c for c in chem_names if '#'!=c[0]]
+    if all([re.search('^[\d-]*$', chem) for chem in chem_names]):
+        return chem_names
+    
     cas_nums=[]
     for chem_name in chem_names:  
         pieces = [p for p in chem_name.split() if p]
@@ -202,7 +214,7 @@ def load_propre_list(name, list_type, cas_nums_incl=False):
             pass
         
         if '.txt' in file:
-            cas_nums=load_CASlist(file)
+            cas_nums = load_CASlist(file)
             
             
         
@@ -214,14 +226,14 @@ def load_propre_list(name, list_type, cas_nums_incl=False):
     
 
 
-specific_chems=['paraquat', 'carbofuran']
+specific_chems = ['paraquat', 'carbofuran']
         
 
 
 
 #%%%
 
-CAS_to_ignore=load_CASlist(os.path.join('pesticide_lists/irrelevant_pesticides.txt'))
+CAS_to_ignore = load_CASlist(os.path.join('pesticide_lists/irrelevant_pesticides.txt'))
 CAS_to_ignore.append('Not Listed')
 
 
@@ -230,21 +242,28 @@ def get_CAS_list(cert_name, values, list_type):
     '''From the data values for restricted or 
     banned chemicals, create a list of unique CAS numbers.'''
     
-    cas_list=[]
-    for key in keys_to_simplify:
-        if key in values:
-            cas_list+=plist_dic[key]
-    if 'propreitary list' in values:
-        cas_list+=load_propre_list(cert_name, list_type)
+    
+    
+    if all([re.search('^[\d-]*$', chem) for chem in values]):
+        cas_list = values
         
-        #meythl bromide is listed in the montreal protocol
-    if any(['montreal' in v for v in values]):
-        cas_list+=CAS_getter(ref_num_dict, 'methyl bromide')
-    for chem in specific_chems:
-        if chem in values:
-            res=CAS_getter(ref_num_dict, chem)
-            if res:
-                cas_list+=res
+    else:
+        cas_list=[]
+        for key in keys_to_simplify:
+            if key in values:
+                cas_list += plist_dic[key]
+        if 'propreitary list' in values:
+            cas_list += load_propre_list(cert_name, list_type)
+            
+            #meythl bromide is listed in the montreal protocol
+        if any(['montreal' in v for v in values]):
+            cas_list += CAS_getter(ref_num_dict, 'methyl bromide')
+            
+        for chem in specific_chems:
+            if chem in values:
+                res=CAS_getter(ref_num_dict, chem)
+                if res:
+                    cas_list+=res
                 
     return set([c for c in cas_list if c not in CAS_to_ignore])
         
@@ -263,7 +282,7 @@ def summarize_data(data, string):
     
     '''
     
-    epa_cas=load_epa_CAS()
+    epa_cas = load_epa_CAS()
     data_to_save={}
     data_to_save['num']={k: len(v) for k,v in data.items()}
     data_to_save['num_not_reg_epa']={k: len(
@@ -282,30 +301,34 @@ if __name__ == '__main__':
             ('Prohibited Material','Limited Use Substances')): 
         
         print(list_type)
-        by_cert={cert: [i for i in 
+        by_cert = {cert: [i for i in 
                         ban[ban['CertName']==cert][column].unique() if i]
                         for cert in df['CertName'].unique()}
-        by_cert={key: [x for y in value for x in y.split(',')]
+        
+        by_cert = {key: [x for y in value for x in y.split(',')]
                  for key, value in by_cert.items()}
         
-        by_cert={key:[v for v in value if v not in exclude] 
+        by_cert = {key:[v for v in value if v not in exclude] 
                  for key, value in by_cert.items()}
         
-        by_cert={key:simplify_listnames(vals) for key, vals in by_cert.items() if key}
+        by_cert = {key:simplify_listnames(vals) for key, vals in by_cert.items() if key}
         
         
         
-        data= {key: get_CAS_list(key, values, list_type) for key, values in by_cert.items()}
+        data = {key: get_CAS_list(key, values, list_type) for key, values in by_cert.items()}
         
         
         data_to_save = summarize_data(data, list_type)
-        data_to_save=data_saver(data_to_save, list_type)
+        data_to_save = data_saver(data_to_save, list_type)
+        
+        
         with open(os.path.join('pesticide_lists', 'errors.txt'), 'w+') as file:
             for e in errors: 
                 print(e[0], ':', e[1], file = file)
+       
         with open(os.path.join('pesticide_lists','man_fixes_nums.txt')) as f:
-            print(f.read())
-            man_fix_dict = json.loads(f.read())
+            man_fix_dict = json.loads(f.read().strip())
+        
         with open(os.path.join('pesticide_lists','man_fixes_nums.txt'), 'w+') as f:
             man_fix_dict.update(new_vals)
             print(json.dumps(man_fix_dict), file =f)

@@ -106,27 +106,28 @@ principles_dict = {1: 'Prevention and suppression',
 
 
 if __name__ == '__main__':
-    wb_path=os.path.join('data','Cert_coding.xlsx')
-    wb=xl.load_workbook(wb_path)
-    names=all_unique_codes(wb)
+    wb_path = os.path.join('data','Cert_coding.xlsx')
+    wb = xl.load_workbook(wb_path)
+    names = all_unique_codes(wb)
     
-    df=pd.DataFrame()
+    df = pd.DataFrame()
     for sheet in wb.sheetnames:
         if sheet in ['Master', 'Excluded']:
             pass
         else:
-            df2=pd.read_excel(wb_path, sheet_name=sheet, engine='openpyxl',
+            df2 = pd.read_excel(wb_path, sheet_name=sheet, engine='openpyxl',
                               dtype = {'IPM Principles': str})
+            
             if 'IPM Principles' not in df2.columns:
                 print(f'{sheet} missing IPM principles')
-            
-            df2=df2.dropna(how='all')
-            df2=df2.fillna('')
+            print(sheet)
+            df2 = df2.dropna(how='all')
+            df2 = df2.fillna('')
             for col in df2.columns[8:]:
-                df2[col]=df2[col].apply(lambda x: str(x).lower())
-                df2[col]=df2[col].apply(corrector)
-                df2['CertName']=sheet
-            df=df.append(df2)
+                df2[col] = df2[col].apply(lambda x: str(x).lower())
+                df2[col] = df2[col].apply(corrector)
+            df2['CertName'] = sheet
+            df = df.append(df2)
     
     df.rename(columns={'Required Practice': 'Pesticide Practices'}, inplace=True)
     

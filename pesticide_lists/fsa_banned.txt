@@ -1,0 +1,322 @@
+1,2-Dichloropropane
+2,4,5-T and salts and esters
+2,3,4,5-Bistetrahydro2-furaldehyde
+Acrylonitrile
+Alachlor
+Aldicarb
+Aldoxycarb
+Aldrin
+Allidochlor
+Allyxycarb
+Alpha-hexachlorocyclohexane
+Amidithion
+Aminocarb
+Anilazine
+ANTU
+Aramite
+Arsenous oxide
+Athidathion
+Atraton
+Azinphos-methyl
+Aziprotryne
+Azothoate
+Barban
+Barium carbonate
+Benodanil
+Benomyl
+Benquinox
+Benzoximate
+Benzolylprop-ethyl
+Benzthiazuron
+Beta-hexachlorocyclohexane
+Binapacryl
+Bis(tributyltin) oxide
+Bisthiosemi
+Bromocyclen
+Bromofenoxim
+Bromophos
+Bromophos-ethyl
+Bufencarb
+Butacarb
+Buthidazole
+Buthiobate
+Butonate
+Butopyonoxyl
+Buturon
+Calcium cyanamide
+Camphechlor (Toxaphene)
+Captafol
+Carbamorph
+Carbanolate
+Carbofuran
+Carbon disulfide
+Carbophenothion
+Chlomethoxyfen
+Chloramben
+Chloraniformethan(e) 
+Chloranil
+Chloranocryl
+Chlorbenside
+Chlorbufam
+Chlorbicyclen
+Chlorbormuron
+Chlordane
+Chlordecone (Kepone)
+Chlordimeform
+Chlorfenethol
+Chlorfenprop-methyl
+Chlorfenson
+Chlorfensulfide
+Chlorflurenol
+Chlormebuform
+Chlormethiuron
+Chlornitrofen
+Chloroneb
+Chlorobenzilate
+Chloropropylate
+Chloroxuron
+Chlorphoxim
+Chlorquinox
+Chlorthiamid
+Chlorthiophos
+Cloethocarb
+Clofop
+Coumachlor
+Crimidine
+Credazine
+Crotoxyphos
+Crufomate
+Cyanofenphos
+Cyanthoate
+Cycloheximide
+Cycluron
+Cyometrinil
+Cypendazole
+Cyprofuram
+Cypromid
+DDT
+Delachlor
+Demephion-O
+Demephion-S
+Demeton-O
+Demeton-S
+Demeton-S methylsulphon
+Desmetryn(e)
+Dialifos
+Diallate
+Diamidafos
+Dibromochloroproane (DBCP)
+Dibutyl phthalate (DBP)
+Dibutyl succinate
+Dichlofenthion
+Dichlozoline
+Diclobutrazol
+Dicofol
+Dieldrin
+Dienochlor
+Diethatyl
+Difenoxuron
+Dimefox
+Dimetilan
+Dimexano
+Dinex
+Dinocton
+Dinoseb and salts and esters
+Dinoseb acetate
+Dioxabenzophos (Salithion)
+Dioxacarb
+Dioxathion
+Dipropetryn
+Disul 
+Ditalimfos
+DNOC and salts and esters
+Drazoxolon
+E-Phosphamidon
+Eglinazine
+Endosulfan
+Endothion
+Endrin
+EPBP
+Erbon
+ESP (Oxydeprofos)
+Etacelacil
+Etaconazole
+Ethidimuron
+Ethiolate
+Ethirimol
+Ethoate-methyl;               Dimethoate-ethyl
+Ethohexadiol
+Ethylene dibromide (EDB)                     (1,2-Dibromoethane)
+Ethylene dichoride                              (1,2-Dichloroethane)
+Ethylene oxide
+Etrimfos
+EXD; Dixanthogen
+Fenaminosulf
+Fenazaflor
+Fenchlorphos
+Fenitropan
+Fenoprop (Silvex)
+Fenoxaprop-ethyl
+Fenson
+Fensulfothion
+Fenthiaprop
+Fenuron
+Fenuron trichloroacetate (TCA)
+Flamprop
+Fluazifop
+Flubenzimine
+Fluenetil (Fluenethyl)
+Fluoroacetamide
+Fluorodifen
+Fluoromide
+Fluotrimazole
+Fluvalinate
+Fonofos
+Formothion
+Fosmethilan
+Fosthietan
+Furconazole-cis
+Furmecyclox
+Glyodin
+Glyphosine
+Griseofulvin
+Halacrinate
+Haloxydine
+Heptachlor
+Heptopargil
+Hexachloroacetone
+Hexachlorobenzene (HCB)
+Hexachlorobutadiene (HCBD)
+Hexachlorocyclohexane (HCH), mixed isomers
+Hexaflurate
+Hydroxyquinoline sulfate
+Iodofenphos (Jodfenphos)
+Ipazine(e) 
+IPSP
+Isazophos
+Isobenzan
+Isobornyl thiocyanoacetate
+Isocarbamid(e) 
+Isocil
+Isodrin
+Isofenphos
+Isomethiozin
+Isonururon
+Isopropalin
+Isothioate
+Isoxapyrifop
+Karbutilate
+Kelevan
+Kinoprene
+Leptophos
+Lindane (Gamma-HCH)
+Lythidathion
+Malonoben
+Mebenil
+Mecarbinzid
+Mecarphon
+Medinoterb acetate
+Menazon
+Mephospholan
+Mercury and its compounds
+Methamidiphos
+Methazole
+Methiuron
+Methoprotryne
+Methoxyethylmercurysilicate
+Methoxymethyl mercurychloride
+Methoxyphenone
+Methyl bromide
+Methylmercury dicyandiamide
+Methyl-parathion
+Metsulfovax
+Mexacarbate
+Mipafox
+Mirex
+Monalide
+Monocrotophos
+Monuron
+Monuron-TCA
+Morfamquat
+Myclozolin
+Naphthalene
+Naphthalic anhydride
+Nitralin
+Nitrilacarb
+Nitrofen (TOK)
+Norbormide
+Noruron
+Oxapyrazon
+Oxydisulfoton
+Parafluron
+Parathion
+Pentachlorobenzene (PeCB)
+Pentachlorophenol (PCP)                    and salts and esters
+Perfluidone
+Perfluoroctane sulfonic acid                            and salts
+Perfluoroctane sulfonyl flouride
+Phenisopham
+Phenkapton
+Phenobenzuron
+Phenylmercurydimethyl-dithiocarbamate
+Phenylmercury nitrate
+Phorate
+Phosacetim
+Phosdiphen
+Phosfolan
+Phosphamidon
+Pindone
+Piproctanyl
+Pirimiphos-ethyl
+Potassium cyanate
+Profluralin
+Proglinazine
+Promacyl
+Promecarb
+Propaphos
+Propyl isome
+Prothiocarb
+Prothoate
+Proxan
+Pydanon
+Pyracarbolid
+Pyridinitril
+Quinacetol sulfate
+Quinonamid
+Ryania
+Sabadilla (Veratrine)
+Salicyclanilide
+Schradan
+Scilliroside
+Secbumeton
+Sesamex
+Sodium hexafluorosilicate
+Strobane,                                      Terpene polychlorinates
+Sulfallate
+Sulfoxide
+Sulprofos
+SWEP
+TCA-ethadyl
+TDE
+TEPP
+Terbutol (Terbucarb)
+Tetrasul
+Thiazafluron
+Thicyofen
+Thionazin
+Thiophanate
+Thioquinox
+Thiram
+Triamiphos
+Triapenthenol
+Triarimol
+Tributyltin (TBT) compounds
+Tricamba
+Trichlamide
+Trichlorfon
+Trichloronat
+Tridiphane
+Trifenmorph
+Trimethacarb
+Vernolate
+Z-Phosphamidon

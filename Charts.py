@@ -389,7 +389,7 @@ def group_certs(c_dict):
     
     category_dict = OrderedDict()
     for key1 in ['Regional Designation', 'Domestic', 
-                 'Global South', 'Global South (One Country)']:
+                 'Global South', 'Global South (One Country)', 'Global']:
         for key2 in ['Single Commodity', 'Multi-Commodity']:
             category_dict[f'{key1}, {key2}'] = intersect_lists(
                                                 c_dict[key1],
@@ -484,7 +484,9 @@ def practice_heatmap(agg_df, save_name,  corrections = {} ):
     
     
     
-    ax = sns.heatmap(ts, annot = True, cmap = 'winter', cbar_kws={'label': '% of certifications'} )
+    ax = sns.heatmap(ts, annot = True, cmap = 'winter', 
+                     cbar_kws={'label': '% of certifications'} )
+    
     ax.set_xticklabels(labels)
     
     plt.savefig(os.path.join('figures', f'{save_name}_heatmap.png'), bbox_inches ='tight')
@@ -542,7 +544,8 @@ if __name__ == '__main__':
                      'goldenrod',  
                      'skyblue', 
                      'palegreen', 
-                     'plum']
+                     'plum', 
+                     'cyan']
     
     colors=[]
     for cat, color in zip(category_dict.values(), category_colors):
@@ -552,17 +555,19 @@ if __name__ == '__main__':
     
     labels = ['Regional, 1-Comm',
             'US, Multi-Comm',
-   
      'Low-Inc, 1-Comm',
     'Low-Inc, Multi-Comm', 
-    'Low-Inc, 1-county, 1-Comm']
+    'Low-Inc, 1-county, 1-Comm',
+    'Global, Any Crop'
+    ]
     labels_dict = {cat: abbrv for cat, abbrv in 
                    zip(
                        ['Regional Designation, Single Commodity',
                     'Domestic, Multi-Commodity',
                     'Global South, Single Commodity',
                     'Global South, Multi-Commodity',
-                     'Global South (One Country), Single Commodity']
+                     'Global South (One Country), Single Commodity',
+                     'Global, Multi-Commodity']
                         ,labels)
                    }
     
@@ -586,18 +591,20 @@ if __name__ == '__main__':
                          index=norm_df.columns, columns=labels)
     
     
-    summary['Category']=summary.index
+    summary['Category'] = summary.index
     
     
-    crop_1=norm_df[norm_df['CertName'].isin(classifier_dict['Single Commodity'])]
-    any_crop=norm_df[norm_df['CertName'].isin(classifier_dict['Multi-Commodity'])]
+    crop_1 = norm_df[norm_df['CertName'].isin(classifier_dict['Single Commodity'])]
+    any_crop = norm_df[norm_df['CertName'].isin(classifier_dict['Multi-Commodity'])]
     
     
     #by_com=pd.DataFrame(np.array([crop_1.mean(), any_crop.mean()]).T, index=norm_df.columns, 
     #             columns=['Single Commodity', 'Multi-Commodity'])
        
     
-    counts = pd.concat([df[df.columns[:8]],df[df.columns[8:]].applymap(is_valid)], axis=1)
+    counts = pd.concat([df[df.columns[:8]],
+                        df[df.columns[8:]].applymap(is_valid)], axis=1)
+    
     counts ['CertName'] = df['CertName'] 
     gb = counts.groupby(['CertName', 'requirement', 'improvement'])
     by_req_type = gb.sum()
@@ -605,9 +612,9 @@ if __name__ == '__main__':
     by_req_type.reset_index()['requirement']
     
     req_indexer = by_req_type.reset_index()['requirement']==1
-    data_req= transform_for_plotting(by_req_type[req_indexer.tolist()])
-    improve_indexer=(by_req_type.reset_index()['improvement']==1)
-    data_impr=transform_for_plotting(by_req_type[improve_indexer.tolist()])
+    data_req = transform_for_plotting(by_req_type[req_indexer.tolist()])
+    improve_indexer = (by_req_type.reset_index()['improvement']==1)
+    data_impr = transform_for_plotting(by_req_type[improve_indexer.tolist()])
     
     non_reqindexer=(req_indexer+improve_indexer)==0
     data_nonreq = transform_for_plotting(by_req_type[non_reqindexer.tolist()])
@@ -631,13 +638,14 @@ if __name__ == '__main__':
                      
                      ]
     
-    patches_p=base_patches+[ mpatches.Patch(label='Not Registered by EPA', hatch=r'\\\\', edgecolor='black', facecolor='white'),
-                      mpatches.Patch(label='Registered by EPA', facecolor='white', edgecolor='black'), 
+    patches_p = base_patches+[ 
+ mpatches.Patch(label='Not Registered by EPA', hatch=r'\\\\', edgecolor='black', facecolor='white'),
+ mpatches.Patch(label='Registered by EPA', facecolor='white', edgecolor='black'), 
                      ]
     
     
     
-    pest_dfs=make_pesticide_dfs(counts['CertName'].unique(), re_index_list)
+    pest_dfs = make_pesticide_dfs(counts['CertName'].unique(), re_index_list)
     pest_list_plotter(pest_dfs, handles = patches_p)
     
     
@@ -709,7 +717,8 @@ if __name__ == '__main__':
                     'Domestic, Multi-Commodity',
                  'Global South, Single Commodity', 
                  'Global South, Multi-Commodity',
-                 'Global South (One Country), Single Commodity'
+                 'Global South (One Country), Single Commodity',
+                 'Global, Multi-Commodity'
            ]
     
     
@@ -828,6 +837,8 @@ if __name__ == '__main__':
                               )
     make_latex_table(criteria_counts, os.path.join('tables', 'criteria_counts'),
                       bold_rows = True, replacers = {'{llrrrr}': '{ll|rrrr}'})
+    
+    
     
     os.chdir('tables')
     for file in [f for f in os.listdir() if '.tex' in f]:

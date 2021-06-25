@@ -29,9 +29,9 @@ def string_replacer(string, mapping):
 
 
 def data_loader():
-    df=pd.read_csv(os.path.join('data','all_data.csv'))
+    df = pd.read_csv(os.path.join('data','all_data.csv'))
     df.fillna('', inplace=True)
-    df=df[df['CertName']!='Eco Apple Stonefruit']
+    df = df[df['CertName']!='Eco Apple Stonefruit']
     df['CertName']=df['CertName'].apply(ecoapple_fix)
     return df
 
